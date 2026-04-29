@@ -1,7 +1,9 @@
 import * as React from "react";
 
 const YT_ID = "HZet4A8DAyc";
-const EMBED_SRC = `https://www.youtube.com/embed/${YT_ID}?autoplay=1&mute=1&loop=1&playlist=${YT_ID}&controls=0&modestbranding=1&playsinline=1&rel=0&showinfo=0`;
+const START_SECONDS = 5;
+// nocookie domain + disablekb + iv_load_policy=3 hides annotations; start= skips the title overlay window.
+const EMBED_SRC = `https://www.youtube-nocookie.com/embed/${YT_ID}?autoplay=1&mute=1&loop=1&playlist=${YT_ID}&controls=0&modestbranding=1&playsinline=1&rel=0&showinfo=0&iv_load_policy=3&disablekb=1&fs=0&cc_load_policy=0&start=${START_SECONDS}`;
 const VISIBILITY_DEBOUNCE_MS = 1500;
 
 function usePrefersReducedMotion() {
