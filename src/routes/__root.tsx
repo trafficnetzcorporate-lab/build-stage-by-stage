@@ -106,6 +106,7 @@ function RootShell({ children }: { children: React.ReactNode }) {
 }
 
 function RootComponent() {
+  useExorciseStaleCaches();
   return (
     <div className="flex min-h-screen flex-col bg-cream text-navy">
       <Header />
