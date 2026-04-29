@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Hero } from "@/components/home/Hero";
+import { NamePlate } from "@/components/home/NamePlate";
 import { PartnershipMath } from "@/components/home/PartnershipMath";
 import { FeaturedCommunities } from "@/components/home/FeaturedCommunities";
 import { LiveInventory } from "@/components/home/LiveInventory";
@@ -36,6 +37,7 @@ function HomePage() {
   return (
     <>
       <Hero />
+      <NamePlate />
       <PartnershipMath />
       <FeaturedCommunities />
       <LiveInventory />
