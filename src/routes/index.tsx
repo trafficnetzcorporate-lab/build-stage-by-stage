@@ -1,26 +1,47 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Section } from "@/components/layout/Section";
-import { Container } from "@/components/layout/Container";
-import { Eyebrow } from "@/components/layout/Eyebrow";
+import { Hero } from "@/components/home/Hero";
+import { PartnershipMath } from "@/components/home/PartnershipMath";
+import { FeaturedCommunities } from "@/components/home/FeaturedCommunities";
+import { LiveInventory } from "@/components/home/LiveInventory";
+import { MeetNancy } from "@/components/home/MeetNancy";
+import { VideoShowcase } from "@/components/home/VideoShowcase";
+import { Testimonials } from "@/components/home/Testimonials";
+import { DualPathCta } from "@/components/home/DualPathCta";
 
 export const Route = createFileRoute("/")({
-  component: Index,
+  head: () => ({
+    meta: [
+      { title: "Nancy Clarke — #1 Adams Homes Realtor, St. Lucie County FL" },
+      {
+        name: "description",
+        content:
+          "Bring your buyer. Keep your full commission. Nancy Clarke is the #1 sales associate for Adams Homes in St. Lucie County — partnering with realtors whose buyers want a brand-new Adams Home.",
+      },
+      {
+        property: "og:title",
+        content: "Nancy Clarke — #1 Adams Homes Realtor, St. Lucie County FL",
+      },
+      {
+        property: "og:description",
+        content:
+          "Realtors keep 100% of their buyer-side commission. Nancy handles the build, the financing, and the close.",
+      },
+    ],
+  }),
+  component: HomePage,
 });
 
-function Index() {
+function HomePage() {
   return (
-    <Section tone="cream" size="lg">
-      <Container>
-        <Eyebrow>Scaffold ready</Eyebrow>
-        <h1 className="text-display-1 mt-6 max-w-3xl text-navy">
-          Foundation in place. Homepage lands in Prompt 2.
-        </h1>
-        <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground">
-          Design tokens, layout primitives, navigation, footer, and the placeholder
-          guard system are wired up. Tap the dev banner at the bottom of the screen
-          to see the unresolved values that still need verification before launch.
-        </p>
-      </Container>
-    </Section>
+    <>
+      <Hero />
+      <PartnershipMath />
+      <FeaturedCommunities />
+      <LiveInventory />
+      <MeetNancy />
+      <VideoShowcase />
+      <Testimonials />
+      <DualPathCta />
+    </>
   );
 }
