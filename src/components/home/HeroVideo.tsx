@@ -71,7 +71,7 @@ export function HeroVideo() {
     <div ref={ref} className="absolute inset-0 overflow-hidden bg-navy-deep">
       {/* Poster — LCP target, permanent fallback. */}
       <img
-        src="/hero/hero-01.jpg"
+        src="/public/hero/hero-01.jpg"
         alt=""
         aria-hidden="true"
         fetchPriority="high"

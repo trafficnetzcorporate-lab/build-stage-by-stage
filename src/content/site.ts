@@ -79,14 +79,14 @@ export const MORTGAGE_DISCLAIMER =
  * Files live in /public/hero/ and are referenced by absolute path.
  */
 export const HERO_IMAGES = [
-  { src: "/hero/hero-01.jpg", alt: "Waterstone clubhouse exterior" },
-  { src: "/hero/hero-02.jpg", alt: "Waterstone clubhouse interior lounge" },
-  { src: "/hero/hero-03.jpg", alt: "Community fitness center" },
-  { src: "/hero/hero-04.jpg", alt: "Community kids playroom" },
-  { src: "/hero/hero-05.jpg", alt: "Resort-style community pool from above" },
-  { src: "/hero/hero-06.jpg", alt: "Pickleball court at Waterstone" },
-  { src: "/hero/hero-07.jpg", alt: "Community playground" },
-  { src: "/hero/hero-08.jpg", alt: "Aerial view of Waterstone community" },
+  { src: "/public/hero/hero-01.jpg", alt: "Waterstone clubhouse exterior" },
+  { src: "/public/hero/hero-02.jpg", alt: "Waterstone clubhouse interior lounge" },
+  { src: "/public/hero/hero-03.jpg", alt: "Community fitness center" },
+  { src: "/public/hero/hero-04.jpg", alt: "Community kids playroom" },
+  { src: "/public/hero/hero-05.jpg", alt: "Resort-style community pool from above" },
+  { src: "/public/hero/hero-06.jpg", alt: "Pickleball court at Waterstone" },
+  { src: "/public/hero/hero-07.jpg", alt: "Community playground" },
+  { src: "/public/hero/hero-08.jpg", alt: "Aerial view of Waterstone community" },
 ] as const;
 
 export const NAV_LINKS = [
