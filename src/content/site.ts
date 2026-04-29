@@ -2,6 +2,14 @@
  * Single source of truth for content that may change frequently or that
  * requires verification before launch.
  */
+import hero01 from "@/assets/hero/hero-01.jpg";
+import hero02 from "@/assets/hero/hero-02.jpg";
+import hero03 from "@/assets/hero/hero-03.jpg";
+import hero04 from "@/assets/hero/hero-04.jpg";
+import hero05 from "@/assets/hero/hero-05.jpg";
+import hero06 from "@/assets/hero/hero-06.jpg";
+import hero07 from "@/assets/hero/hero-07.jpg";
+import hero08 from "@/assets/hero/hero-08.jpg";
 
 export const SITE = {
   name: "Nancy Clarke",
