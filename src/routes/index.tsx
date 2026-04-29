@@ -1,26 +1,26 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Section } from "@/components/layout/Section";
+import { Container } from "@/components/layout/Container";
+import { Eyebrow } from "@/components/layout/Eyebrow";
 
 export const Route = createFileRoute("/")({
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. For sites with multiple pages (About, Services, Contact, etc.),
-// create separate route files (about.tsx, services.tsx, contact.tsx) — don't put all pages in this file.
-function PlaceholderIndex() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
-}
-
 function Index() {
-  return <PlaceholderIndex />;
+  return (
+    <Section tone="cream" size="lg">
+      <Container>
+        <Eyebrow>Scaffold ready</Eyebrow>
+        <h1 className="text-display-1 mt-6 max-w-3xl text-navy">
+          Foundation in place. Homepage lands in Prompt 2.
+        </h1>
+        <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground">
+          Design tokens, layout primitives, navigation, footer, and the placeholder
+          guard system are wired up. Tap the dev banner at the bottom of the screen
+          to see the unresolved values that still need verification before launch.
+        </p>
+      </Container>
+    </Section>
+  );
 }
