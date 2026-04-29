@@ -10,8 +10,16 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TermsRouteImport } from './routes/terms'
+import { Route as SellersRouteImport } from './routes/sellers'
+import { Route as RealtorsRouteImport } from './routes/realtors'
 import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as ListingsRouteImport } from './routes/listings'
+import { Route as HomeLoansRouteImport } from './routes/home-loans'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as CommunitiesRouteImport } from './routes/communities'
+import { Route as BuyersRouteImport } from './routes/buyers'
 import { Route as AccessibilityRouteImport } from './routes/accessibility'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 
 const TermsRoute = TermsRouteImport.update({
@@ -19,14 +27,54 @@ const TermsRoute = TermsRouteImport.update({
   path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SellersRoute = SellersRouteImport.update({
+  id: '/sellers',
+  path: '/sellers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RealtorsRoute = RealtorsRouteImport.update({
+  id: '/realtors',
+  path: '/realtors',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PrivacyRoute = PrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ListingsRoute = ListingsRouteImport.update({
+  id: '/listings',
+  path: '/listings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HomeLoansRoute = HomeLoansRouteImport.update({
+  id: '/home-loans',
+  path: '/home-loans',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CommunitiesRoute = CommunitiesRouteImport.update({
+  id: '/communities',
+  path: '/communities',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BuyersRoute = BuyersRouteImport.update({
+  id: '/buyers',
+  path: '/buyers',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AccessibilityRoute = AccessibilityRouteImport.update({
   id: '/accessibility',
   path: '/accessibility',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -37,35 +85,104 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/accessibility': typeof AccessibilityRoute
+  '/buyers': typeof BuyersRoute
+  '/communities': typeof CommunitiesRoute
+  '/contact': typeof ContactRoute
+  '/home-loans': typeof HomeLoansRoute
+  '/listings': typeof ListingsRoute
   '/privacy': typeof PrivacyRoute
+  '/realtors': typeof RealtorsRoute
+  '/sellers': typeof SellersRoute
   '/terms': typeof TermsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/accessibility': typeof AccessibilityRoute
+  '/buyers': typeof BuyersRoute
+  '/communities': typeof CommunitiesRoute
+  '/contact': typeof ContactRoute
+  '/home-loans': typeof HomeLoansRoute
+  '/listings': typeof ListingsRoute
   '/privacy': typeof PrivacyRoute
+  '/realtors': typeof RealtorsRoute
+  '/sellers': typeof SellersRoute
   '/terms': typeof TermsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/accessibility': typeof AccessibilityRoute
+  '/buyers': typeof BuyersRoute
+  '/communities': typeof CommunitiesRoute
+  '/contact': typeof ContactRoute
+  '/home-loans': typeof HomeLoansRoute
+  '/listings': typeof ListingsRoute
   '/privacy': typeof PrivacyRoute
+  '/realtors': typeof RealtorsRoute
+  '/sellers': typeof SellersRoute
   '/terms': typeof TermsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/accessibility' | '/privacy' | '/terms'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/accessibility'
+    | '/buyers'
+    | '/communities'
+    | '/contact'
+    | '/home-loans'
+    | '/listings'
+    | '/privacy'
+    | '/realtors'
+    | '/sellers'
+    | '/terms'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/accessibility' | '/privacy' | '/terms'
-  id: '__root__' | '/' | '/accessibility' | '/privacy' | '/terms'
+  to:
+    | '/'
+    | '/about'
+    | '/accessibility'
+    | '/buyers'
+    | '/communities'
+    | '/contact'
+    | '/home-loans'
+    | '/listings'
+    | '/privacy'
+    | '/realtors'
+    | '/sellers'
+    | '/terms'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/accessibility'
+    | '/buyers'
+    | '/communities'
+    | '/contact'
+    | '/home-loans'
+    | '/listings'
+    | '/privacy'
+    | '/realtors'
+    | '/sellers'
+    | '/terms'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
   AccessibilityRoute: typeof AccessibilityRoute
+  BuyersRoute: typeof BuyersRoute
+  CommunitiesRoute: typeof CommunitiesRoute
+  ContactRoute: typeof ContactRoute
+  HomeLoansRoute: typeof HomeLoansRoute
+  ListingsRoute: typeof ListingsRoute
   PrivacyRoute: typeof PrivacyRoute
+  RealtorsRoute: typeof RealtorsRoute
+  SellersRoute: typeof SellersRoute
   TermsRoute: typeof TermsRoute
 }
 
@@ -78,6 +195,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sellers': {
+      id: '/sellers'
+      path: '/sellers'
+      fullPath: '/sellers'
+      preLoaderRoute: typeof SellersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/realtors': {
+      id: '/realtors'
+      path: '/realtors'
+      fullPath: '/realtors'
+      preLoaderRoute: typeof RealtorsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/privacy': {
       id: '/privacy'
       path: '/privacy'
@@ -85,11 +216,53 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/listings': {
+      id: '/listings'
+      path: '/listings'
+      fullPath: '/listings'
+      preLoaderRoute: typeof ListingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/home-loans': {
+      id: '/home-loans'
+      path: '/home-loans'
+      fullPath: '/home-loans'
+      preLoaderRoute: typeof HomeLoansRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/communities': {
+      id: '/communities'
+      path: '/communities'
+      fullPath: '/communities'
+      preLoaderRoute: typeof CommunitiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/buyers': {
+      id: '/buyers'
+      path: '/buyers'
+      fullPath: '/buyers'
+      preLoaderRoute: typeof BuyersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/accessibility': {
       id: '/accessibility'
       path: '/accessibility'
       fullPath: '/accessibility'
       preLoaderRoute: typeof AccessibilityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -104,8 +277,16 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
   AccessibilityRoute: AccessibilityRoute,
+  BuyersRoute: BuyersRoute,
+  CommunitiesRoute: CommunitiesRoute,
+  ContactRoute: ContactRoute,
+  HomeLoansRoute: HomeLoansRoute,
+  ListingsRoute: ListingsRoute,
   PrivacyRoute: PrivacyRoute,
+  RealtorsRoute: RealtorsRoute,
+  SellersRoute: SellersRoute,
   TermsRoute: TermsRoute,
 }
 export const routeTree = rootRouteImport
