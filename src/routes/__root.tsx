@@ -58,11 +58,16 @@ function NotFoundComponent() {
   );
 }
 
+const DEV_NO_STORE_META = import.meta.env.DEV
+  ? [{ httpEquiv: "Cache-Control", content: "no-store" } as const]
+  : [];
+
 export const Route = createRootRoute({
   head: () => ({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
+      ...DEV_NO_STORE_META,
       { title: "Nancy Clarke — New Construction Realtor, St. Lucie County FL" },
       {
         name: "description",
