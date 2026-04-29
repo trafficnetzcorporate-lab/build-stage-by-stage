@@ -76,17 +76,28 @@ export const MORTGAGE_DISCLAIMER =
 
 /**
  * Hero slideshow images. File order = display order. hero-01 is the lead image.
- * Files live in /public/hero/ and are referenced by absolute path.
+ * Imported as ES modules so Vite emits content-hashed URLs in production
+ * (e.g. /assets/hero-01-a1b2c3d4.jpg) and serves a fresh URL in dev whenever
+ * the source bytes change — no stale-cache surprises in the preview iframe.
  */
+import hero01 from "@/assets/hero/hero-01.jpg";
+import hero02 from "@/assets/hero/hero-02.jpg";
+import hero03 from "@/assets/hero/hero-03.jpg";
+import hero04 from "@/assets/hero/hero-04.jpg";
+import hero05 from "@/assets/hero/hero-05.jpg";
+import hero06 from "@/assets/hero/hero-06.jpg";
+import hero07 from "@/assets/hero/hero-07.jpg";
+import hero08 from "@/assets/hero/hero-08.jpg";
+
 export const HERO_IMAGES = [
-  { src: "/public/hero/hero-01.jpg", alt: "Waterstone clubhouse exterior" },
-  { src: "/public/hero/hero-02.jpg", alt: "Waterstone clubhouse interior lounge" },
-  { src: "/public/hero/hero-03.jpg", alt: "Community fitness center" },
-  { src: "/public/hero/hero-04.jpg", alt: "Community kids playroom" },
-  { src: "/public/hero/hero-05.jpg", alt: "Resort-style community pool from above" },
-  { src: "/public/hero/hero-06.jpg", alt: "Pickleball court at Waterstone" },
-  { src: "/public/hero/hero-07.jpg", alt: "Community playground" },
-  { src: "/public/hero/hero-08.jpg", alt: "Aerial view of Waterstone community" },
+  { src: hero01, alt: "Waterstone clubhouse exterior" },
+  { src: hero02, alt: "Waterstone clubhouse interior lounge" },
+  { src: hero03, alt: "Community fitness center" },
+  { src: hero04, alt: "Community kids playroom" },
+  { src: hero05, alt: "Resort-style community pool from above" },
+  { src: hero06, alt: "Pickleball court at Waterstone" },
+  { src: hero07, alt: "Community playground" },
+  { src: hero08, alt: "Aerial view of Waterstone community" },
 ] as const;
 
 export const NAV_LINKS = [
