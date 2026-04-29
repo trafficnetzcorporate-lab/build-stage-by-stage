@@ -1,3 +1,4 @@
+import * as React from "react";
 import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
@@ -5,6 +6,35 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { MobileStickyCTA } from "@/components/layout/MobileStickyCTA";
 import { DevPlaceholderBanner } from "@/components/DevPlaceholderBanner";
+
+/**
+ * One-shot guard: unregister any stale service worker and purge Cache Storage.
+ * Safe in production — this site has no service worker, so the loop runs zero
+ * iterations on real visitors. Only fires once per tab via sessionStorage.
+ */
+function useExorciseStaleCaches() {
+  React.useEffect(() => {
+    if (typeof window === "undefined") return;
+    try {
+      if (sessionStorage.getItem("__sw_exorcised") === "1") return;
+      sessionStorage.setItem("__sw_exorcised", "1");
+    } catch {
+      // sessionStorage may be unavailable (private mode, etc.) — proceed anyway.
+    }
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker
+        .getRegistrations()
+        .then((regs) => regs.forEach((r) => r.unregister().catch(() => {})))
+        .catch(() => {});
+    }
+    if (typeof caches !== "undefined" && caches?.keys) {
+      caches
+        .keys()
+        .then((keys) => keys.forEach((k) => caches.delete(k).catch(() => {})))
+        .catch(() => {});
+    }
+  }, []);
+}
 
 function NotFoundComponent() {
   return (
