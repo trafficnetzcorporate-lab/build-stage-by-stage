@@ -1,3 +1,4 @@
+import * as React from "react";
 import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
@@ -5,6 +6,35 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { MobileStickyCTA } from "@/components/layout/MobileStickyCTA";
 import { DevPlaceholderBanner } from "@/components/DevPlaceholderBanner";
+
+/**
+ * One-shot guard: unregister any stale service worker and purge Cache Storage.
+ * Safe in production — this site has no service worker, so the loop runs zero
+ * iterations on real visitors. Only fires once per tab via sessionStorage.
+ */
+function useExorciseStaleCaches() {
+  React.useEffect(() => {
+    if (typeof window === "undefined") return;
+    try {
+      if (sessionStorage.getItem("__sw_exorcised") === "1") return;
+      sessionStorage.setItem("__sw_exorcised", "1");
+    } catch {
+      // sessionStorage may be unavailable (private mode, etc.) — proceed anyway.
+    }
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker
+        .getRegistrations()
+        .then((regs) => regs.forEach((r) => r.unregister().catch(() => {})))
+        .catch(() => {});
+    }
+    if (typeof caches !== "undefined" && caches?.keys) {
+      caches
+        .keys()
+        .then((keys) => keys.forEach((k) => caches.delete(k).catch(() => {})))
+        .catch(() => {});
+    }
+  }, []);
+}
 
 function NotFoundComponent() {
   return (
@@ -28,11 +58,16 @@ function NotFoundComponent() {
   );
 }
 
+const DEV_NO_STORE_META = import.meta.env.DEV
+  ? [{ httpEquiv: "Cache-Control", content: "no-store" } as const]
+  : [];
+
 export const Route = createRootRoute({
   head: () => ({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
+      ...DEV_NO_STORE_META,
       { title: "Nancy Clarke — New Construction Realtor, St. Lucie County FL" },
       {
         name: "description",
@@ -71,6 +106,7 @@ function RootShell({ children }: { children: React.ReactNode }) {
 }
 
 function RootComponent() {
+  useExorciseStaleCaches();
   return (
     <div className="flex min-h-screen flex-col bg-cream text-navy">
       <Header />
