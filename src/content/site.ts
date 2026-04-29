@@ -83,19 +83,8 @@ export const MORTGAGE_DISCLAIMER =
   "Rates, points and fees are subject to change and cannot be guaranteed. Many factors affect a loan's interest rate, such as property type, loan amount, and/or a borrower's credit-worthiness, and the information contained herein is not a credit-approval or an offer to extend credit, as defined by paragraph 226.24 of regulation Z. For more comprehensive and up-to-the-minute rate information please contact a licensed mortgage professional.";
 
 /**
- * Hero slideshow images. File order = display order. hero-01 is the lead image.
- * Imported as ES modules so Vite emits content-hashed URLs in production
- * (e.g. /assets/hero-01-a1b2c3d4.jpg) and serves a fresh URL in dev whenever
- * the source bytes change — no stale-cache surprises in the preview iframe.
+ * Hero slideshow images. Imported at top of file for Vite content-hashing.
  */
-import hero01 from "@/assets/hero/hero-01.jpg";
-import hero02 from "@/assets/hero/hero-02.jpg";
-import hero03 from "@/assets/hero/hero-03.jpg";
-import hero04 from "@/assets/hero/hero-04.jpg";
-import hero05 from "@/assets/hero/hero-05.jpg";
-import hero06 from "@/assets/hero/hero-06.jpg";
-import hero07 from "@/assets/hero/hero-07.jpg";
-import hero08 from "@/assets/hero/hero-08.jpg";
 
 export const HERO_IMAGES = [
   { src: hero01, alt: "Waterstone clubhouse exterior" },
