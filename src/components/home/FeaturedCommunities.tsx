@@ -54,7 +54,7 @@ function VideoCard({
       ref={ref as unknown as React.RefObject<HTMLButtonElement>}
       type="button"
       onClick={() => onOpen(youtubeId)}
-      className="group relative block aspect-[4/5] w-full overflow-hidden rounded-3xl bg-navy-deep text-left md:aspect-[21/9]"
+      className="group relative block aspect-square w-full overflow-hidden rounded-3xl bg-navy-deep text-left lg:aspect-[4/5]"
     >
       <img
         src={poster}
@@ -82,29 +82,25 @@ function VideoCard({
       ) : null}
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-gradient-to-t from-navy-deep/95 via-navy-deep/40 to-transparent md:bg-gradient-to-l md:from-navy-deep/95 md:via-navy-deep/50 md:to-transparent"
+        className="absolute inset-0 bg-gradient-to-t from-navy-deep/95 via-navy-deep/40 to-transparent"
       />
 
-      <div className="absolute inset-x-0 bottom-0 p-8 md:p-12">
-        <div className="md:ml-auto md:max-w-[520px] md:text-right">
-          <span className="text-eyebrow text-gold">{label}</span>
-          <h3 className="mt-3 font-display text-2xl font-medium leading-tight text-cream md:text-4xl">
-            {title}
-          </h3>
-          <p className="mt-3 text-sm leading-relaxed text-cream/80 md:ml-auto md:max-w-md md:text-base">
-            {body}
-          </p>
-          <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-gold opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-            Tour <ArrowUpRight size={16} />
-          </span>
-        </div>
+      <div className="absolute inset-x-0 bottom-0 p-8 md:p-10">
+        <span className="text-eyebrow text-gold">{label}</span>
+        <h3 className="mt-3 font-display text-2xl font-medium leading-tight text-cream md:text-3xl">
+          {title}
+        </h3>
+        <p className="mt-3 max-w-md text-sm leading-relaxed text-cream/80">{body}</p>
+        <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-gold opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+          Tour <ArrowUpRight size={16} />
+        </span>
       </div>
 
       <span
         aria-hidden="true"
-        className="absolute left-1/2 top-1/2 inline-flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-cream/15 text-cream backdrop-blur-md transition-transform duration-300 group-hover:scale-110 md:h-20 md:w-20"
+        className="absolute right-6 top-6 inline-flex h-12 w-12 items-center justify-center rounded-full bg-cream/15 text-cream backdrop-blur-md transition-transform duration-300 group-hover:scale-110"
       >
-        <Play size={22} fill="currentColor" />
+        <Play size={18} fill="currentColor" />
       </span>
     </button>
   );
@@ -178,7 +174,7 @@ export function FeaturedCommunities() {
           </p>
         </FadeInOnScroll>
 
-        <div className="mt-14">
+        <div className="mt-14 grid gap-6 lg:grid-cols-2">
           {featured.map((c, i) => (
             <FadeInOnScroll key={c.slug} delay={i * 150}>
               <VideoCard
