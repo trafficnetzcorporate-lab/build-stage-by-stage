@@ -33,7 +33,7 @@ export function Footer() {
             <ul className="mt-5 grid grid-cols-2 gap-2 text-sm">
               {NAV_LINKS.map((link) => (
                 <li key={link.to}>
-                  <Link to={link.to} className="text-cream/80 hover:text-gold">
+                  <Link to={link.to as string} className="text-cream/80 hover:text-gold">
                     {link.label}
                   </Link>
                 </li>

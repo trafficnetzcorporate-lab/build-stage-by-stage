@@ -37,7 +37,7 @@ export function Header() {
           {NAV_LINKS.map((link) => (
             <Link
               key={link.to}
-              to={link.to}
+              to={link.to as string}
               className="text-sm font-medium text-navy/80 transition-colors hover:text-navy"
               activeProps={{ className: "text-navy font-semibold" }}
             >
@@ -69,7 +69,7 @@ export function Header() {
             {NAV_LINKS.map((link) => (
               <Link
                 key={link.to}
-                to={link.to}
+                to={link.to as string}
                 onClick={() => setOpen(false)}
                 className="rounded-md px-3 py-2 text-base font-medium text-navy hover:bg-cream-deep"
               >

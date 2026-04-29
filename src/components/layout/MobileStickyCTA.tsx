@@ -14,7 +14,7 @@ export function MobileStickyCTA() {
           Call Nancy
         </a>
         <Link
-          to="/realtors"
+          to={"/realtors" as string}
           className="inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-success px-4 py-3 text-sm font-semibold text-white"
         >
           Partner With Me
