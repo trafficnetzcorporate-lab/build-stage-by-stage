@@ -7,6 +7,7 @@ import { MeetNancy } from "@/components/home/MeetNancy";
 import { VideoShowcase } from "@/components/home/VideoShowcase";
 import { Testimonials } from "@/components/home/Testimonials";
 import { DualPathCta } from "@/components/home/DualPathCta";
+import { CommunitiesGallery } from "@/components/home/CommunitiesGallery";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -39,6 +40,7 @@ function HomePage() {
       <FeaturedCommunities />
       <LiveInventory />
       <MeetNancy />
+      <CommunitiesGallery />
       <VideoShowcase />
       <Testimonials />
       <DualPathCta />
