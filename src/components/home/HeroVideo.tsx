@@ -1,4 +1,5 @@
 import * as React from "react";
+import heroPoster from "@/assets/hero/hero-01.jpg";
 
 const YT_ID = "HZet4A8DAyc";
 const START_SECONDS = 5;
@@ -73,7 +74,7 @@ export function HeroVideo() {
     <div ref={ref} className="absolute inset-0 overflow-hidden bg-navy-deep">
       {/* Poster — LCP target, permanent fallback. */}
       <img
-        src="/public/hero/hero-01.jpg"
+        src={heroPoster}
         alt=""
         aria-hidden="true"
         fetchPriority="high"
