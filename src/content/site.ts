@@ -74,6 +74,21 @@ export const MORTGAGE_PARTNERS = [
 export const MORTGAGE_DISCLAIMER =
   "Rates, points and fees are subject to change and cannot be guaranteed. Many factors affect a loan's interest rate, such as property type, loan amount, and/or a borrower's credit-worthiness, and the information contained herein is not a credit-approval or an offer to extend credit, as defined by paragraph 226.24 of regulation Z. For more comprehensive and up-to-the-minute rate information please contact a licensed mortgage professional.";
 
+/**
+ * Hero slideshow images. File order = display order. hero-01 is the lead image.
+ * Files live in /public/hero/ and are referenced by absolute path.
+ */
+export const HERO_IMAGES = [
+  { src: "/hero/hero-01.jpg", alt: "Waterstone clubhouse exterior" },
+  { src: "/hero/hero-02.jpg", alt: "Waterstone clubhouse interior lounge" },
+  { src: "/hero/hero-03.jpg", alt: "Community fitness center" },
+  { src: "/hero/hero-04.jpg", alt: "Community kids playroom" },
+  { src: "/hero/hero-05.jpg", alt: "Resort-style community pool from above" },
+  { src: "/hero/hero-06.jpg", alt: "Pickleball court at Waterstone" },
+  { src: "/hero/hero-07.jpg", alt: "Community playground" },
+  { src: "/hero/hero-08.jpg", alt: "Aerial view of Waterstone community" },
+] as const;
+
 export const NAV_LINKS = [
   { label: "Listings", to: "/listings" },
   { label: "Communities", to: "/communities" },
