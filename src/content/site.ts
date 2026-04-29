@@ -194,11 +194,18 @@ export const HOMEPAGE = {
       "Three communities. Three submarkets. Move-in-ready inventory and to-be-built floor plans across St. Lucie County.",
     featured: [
       {
+        slug: "waterstone-sfh",
+        label: "Port St. Lucie",
+        title: "Waterstone — Single Family Homes",
+        body: "1,780 to 2,557 sqft floor plans. Gated community amenities.",
+        youtubeId: "HZet4A8DAyc",
+      },
+      {
         slug: "waterstone-villas",
         label: "Port St. Lucie",
         title: "Waterstone — Villas",
         body:
-          "Low-maintenance living. Attached single-story plans. Resort-style community pool. Step inside the villas your buyer would call home.",
+          "Low-maintenance living. Attached single-story plans. Resort-style community pool.",
         youtubeId: "K6ay8m8pl1w",
       },
     ],

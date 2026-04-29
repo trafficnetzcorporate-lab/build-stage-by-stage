@@ -174,7 +174,7 @@ export function FeaturedCommunities() {
           </p>
         </FadeInOnScroll>
 
-        <div className="mt-14">
+        <div className="mt-14 grid gap-6 lg:grid-cols-2">
           {featured.map((c, i) => (
             <FadeInOnScroll key={c.slug} delay={i * 150}>
               <VideoCard
