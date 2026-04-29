@@ -3,7 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { HOMEPAGE } from "@/content/site";
-import { HeroSlideshow } from "./HeroSlideshow";
+import { HeroVideo } from "./HeroVideo";
 
 export function Hero() {
   const { eyebrow, headlineLines, subhead, primaryCta, secondaryCta, trustStrip } =
@@ -11,13 +11,18 @@ export function Hero() {
 
   return (
     <section className="relative isolate flex min-h-[92vh] w-full items-center overflow-hidden bg-navy-deep text-cream md:min-h-screen">
-      {/* Ken Burns slideshow background */}
-      <HeroSlideshow />
+      {/* YouTube video background — Waterstone Single Family (HZet4A8DAyc) */}
+      <HeroVideo />
 
-      {/* Gradient overlay */}
+      {/* Top gradient — guarantees nav legibility against bright video moments */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-gradient-to-r from-navy-deep/85 via-navy-deep/65 to-navy-deep/40"
+        className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-navy-deep/40 to-transparent"
+      />
+      {/* Left-to-right gradient overlay for headline legibility */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 bg-gradient-to-r from-navy-deep/85 via-navy-deep/65 to-navy-deep/35"
       />
       {/* Bottom vignette for trust strip legibility */}
       <div

@@ -194,21 +194,20 @@ export const HOMEPAGE = {
       "Three communities. Three submarkets. Move-in-ready inventory and to-be-built floor plans across St. Lucie County.",
     featured: [
       {
-        slug: "waterstone-sfh",
-        label: "Port St. Lucie",
-        title: "Waterstone — Single Family Homes",
-        body: "1,780 to 2,557 sqft floor plans. Gated community amenities.",
-        youtubeId: "HZet4A8DAyc",
-      },
-      {
         slug: "waterstone-villas",
         label: "Port St. Lucie",
         title: "Waterstone — Villas",
         body:
-          "Low-maintenance living. Attached single-story plans. Resort-style community pool.",
+          "Low-maintenance living. Attached single-story plans. Resort-style community pool. Step inside the villas your buyer would call home.",
         youtubeId: "K6ay8m8pl1w",
       },
     ],
+    gallery: {
+      eyebrow: "Inside the Communities",
+      headline: "What you're selling your buyer.",
+      subhead:
+        "A look inside Adams Homes new construction across St. Lucie County. Brand-new builds, designed for how Florida actually lives.",
+    },
     submarkets: [
       { name: "Port St. Lucie", to: "/communities" },
       { name: "Fort Pierce", to: "/communities" },
