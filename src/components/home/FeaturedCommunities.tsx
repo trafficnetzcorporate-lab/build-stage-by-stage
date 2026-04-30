@@ -1,10 +1,11 @@
 import * as React from "react";
-import { Link } from "@tanstack/react-router";
-import { ArrowUpRight, Play, X } from "lucide-react";
+import { ArrowUpRight, Play } from "lucide-react";
 import { Section } from "@/components/layout/Section";
 import { Container } from "@/components/layout/Container";
 import { Eyebrow } from "@/components/layout/Eyebrow";
 import { FadeInOnScroll } from "@/components/layout/FadeInOnScroll";
+import { VideoLightbox } from "@/components/shared/VideoLightbox";
+import { SubmarketCard } from "@/components/shared/SubmarketCard";
 import { HOMEPAGE } from "@/content/site";
 
 function VideoCard({
@@ -106,59 +107,6 @@ function VideoCard({
   );
 }
 
-function VideoLightbox({
-  videoId,
-  onClose,
-}: {
-  videoId: string | null;
-  onClose: () => void;
-}) {
-  React.useEffect(() => {
-    if (!videoId) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    };
-    document.body.style.overflow = "hidden";
-    window.addEventListener("keydown", onKey);
-    return () => {
-      document.body.style.overflow = "";
-      window.removeEventListener("keydown", onKey);
-    };
-  }, [videoId, onClose]);
-
-  if (!videoId) return null;
-  return (
-    <div
-      role="dialog"
-      aria-modal="true"
-      onClick={onClose}
-      className="fixed inset-0 z-[200] flex items-center justify-center bg-navy-deep/95 p-4 backdrop-blur-md"
-    >
-      <button
-        type="button"
-        onClick={onClose}
-        aria-label="Close video"
-        className="absolute right-5 top-5 inline-flex h-11 w-11 items-center justify-center rounded-full bg-cream/10 text-cream transition-colors hover:bg-cream/20"
-      >
-        <X size={20} />
-      </button>
-      <div
-        onClick={(e) => e.stopPropagation()}
-        className="aspect-video w-full max-w-5xl overflow-hidden rounded-2xl bg-black shadow-2xl"
-      >
-        <iframe
-          src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`}
-          title="Community tour video"
-          className="h-full w-full"
-          style={{ border: 0 }}
-          allow="autoplay; encrypted-media; fullscreen"
-          allowFullScreen
-        />
-      </div>
-    </div>
-  );
-}
-
 export function FeaturedCommunities() {
   const { eyebrow, headline, subhead, featured, submarkets } = HOMEPAGE.communities;
   const [open, setOpen] = React.useState<string | null>(null);
@@ -191,19 +139,7 @@ export function FeaturedCommunities() {
         <div className="mt-10 grid gap-4 md:grid-cols-3">
           {submarkets.map((sm, i) => (
             <FadeInOnScroll key={sm.name} delay={i * 100}>
-              <Link
-                to={sm.to}
-                className="group block rounded-2xl bg-navy/60 p-7 ring-1 ring-cream/10 transition-all duration-300 hover:bg-navy/80 hover:ring-gold/40"
-              >
-                <div className="font-display text-2xl font-medium text-cream">{sm.name}</div>
-                <span className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-gold">
-                  <span className="relative">
-                    View available homes
-                    <span className="absolute inset-x-0 -bottom-0.5 h-px origin-left scale-x-0 bg-gold transition-transform duration-300 group-hover:scale-x-100" />
-                  </span>
-                  <ArrowUpRight size={14} />
-                </span>
-              </Link>
+              <SubmarketCard name={sm.name} to={sm.to} />
             </FadeInOnScroll>
           ))}
         </div>
