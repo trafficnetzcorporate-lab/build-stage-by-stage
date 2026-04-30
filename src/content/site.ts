@@ -283,3 +283,322 @@ export const HOMEPAGE = {
     },
   },
 } as const;
+
+/**
+ * Inner content pages. Single source of truth for every word on /realtors,
+ * /buyers, /communities, /about, /sellers. Closing band headlines are
+ * intentionally distinct per page.
+ */
+export const PAGES = {
+  realtors: {
+    hero: {
+      eyebrow: "For Realtors",
+      headline: "Refer your buyer. Keep your full commission.",
+      subhead:
+        "When your buyer wants new construction in St. Lucie County, send them to me. Adams Homes pays your buyer-side commission in full, paid separately from mine. You keep your client. I handle the build.",
+    },
+    whyPartner: {
+      eyebrow: "Why partner with Nancy",
+      headline: "New construction is a different game. I play it for you.",
+      lead:
+        "You spent years building your buyer relationships. New construction shouldn't put any of that at risk. When you refer to me, your client gets a brand-new Adams Home, you get paid in full, and you stay the agent of record for everything that comes after.",
+      cards: [
+        {
+          icon: "DollarSign",
+          title: "100% of your buyer-side commission",
+          body:
+            "Paid directly by Adams Homes, in full, at closing. No split with me, no carve-out, no negotiation. Your commission agreement is honored as written.",
+        },
+        {
+          icon: "HardHat",
+          title: "I handle the build, you keep the client",
+          body:
+            "Floor plans, options, lender coordination, construction timelines, walk-throughs, closing — all on my desk. You stay focused on the buyer relationship and your next deal.",
+        },
+        {
+          icon: "Home",
+          title: "Inventory and to-be-built across three submarkets",
+          body:
+            "Active Adams Homes inventory in Port St. Lucie, Fort Pierce, and Vero Beach. Move-in ready or build-to-order — there's almost always a fit.",
+        },
+      ],
+    },
+    process: {
+      eyebrow: "How a referral works",
+      headline: "Three steps. Then a closing.",
+      steps: [
+        {
+          n: "01",
+          title: "Send me a quick intro",
+          body:
+            "Email or text with your buyer's name, what they're looking for, and a budget range. I respond same-day.",
+        },
+        {
+          n: "02",
+          title: "I work with your buyer directly",
+          body:
+            "Tours, floor plan selection, financing intros, contract — I keep you copied on the milestones that matter.",
+        },
+        {
+          n: "03",
+          title: "You get paid at close",
+          body:
+            "Adams Homes pays your buyer-side commission directly. You sign nothing with me; the builder handles the disbursement.",
+        },
+      ],
+    },
+    faq: {
+      eyebrow: "Realtor FAQ",
+      headline: "What partner agents ask before sending the first buyer.",
+      items: [
+        {
+          q: "Do I have to give up the client?",
+          a: "No. The buyer is yours. I'm working the new-construction transaction with them, but you stay in the relationship for everything that comes next — resale, referrals, future moves.",
+        },
+        {
+          q: "How much do I actually get paid?",
+          a: "Your full buyer-side commission as published by Adams Homes for that community, paid by the builder at closing. There is no split with me and no reduction.",
+        },
+        {
+          q: "What if my buyer needs to sell their current home first?",
+          a: "I work both sides of those transactions. Send the referral and we'll talk through whether a contingent contract, a bridge timeline, or listing first makes the most sense.",
+        },
+        {
+          q: "Do I need to do anything special to register my buyer?",
+          a: "Be present for the first visit, or call or email me before they tour. That's it — that registers the referral.",
+        },
+        {
+          q: "Which communities are eligible?",
+          a: "All Adams Homes communities I represent in St. Lucie County, including Waterstone single-family and villas in Port St. Lucie, plus inventory in Fort Pierce and Vero Beach.",
+        },
+      ],
+    },
+    closing: {
+      headline: "Have a buyer headed to St. Lucie County? Send them to Nancy.",
+      ctaLabel: "Refer a buyer",
+      ctaTo: "/contact",
+    },
+  },
+
+  buyers: {
+    hero: {
+      eyebrow: "For Buyers",
+      headline: "Buying new construction, the simple way.",
+      subhead:
+        "A brand-new Adams Home in St. Lucie County — with a sales associate who's done this 60+ times in the last year alone. Move-in ready or build-to-order. I'll match you to the right floor plan.",
+    },
+    whyNew: {
+      eyebrow: "Why a new build",
+      headline: "What you get with new that you don't get with resale.",
+      cards: [
+        {
+          title: "Builder warranty",
+          body:
+            "Structural, mechanical, and workmanship coverage backed by Adams Homes from day one. No surprise repairs in year two.",
+        },
+        {
+          title: "Today's floor plans",
+          body:
+            "Open kitchens, larger primary suites, dedicated home offices, and the storage modern families actually use.",
+        },
+        {
+          title: "Builder incentives",
+          body:
+            "Adams Homes regularly offers closing-cost help, rate buydowns, and design-center credits that resale sellers don't match.",
+        },
+      ],
+    },
+    process: {
+      eyebrow: "What to expect",
+      headline: "From first tour to keys in hand.",
+      steps: [
+        {
+          n: "01",
+          title: "Tour models and inventory",
+          body:
+            "Walk through the Waterstone models, see what's actually being built, and get a feel for the differences between communities.",
+        },
+        {
+          n: "02",
+          title: "Pick your floor plan and home",
+          body:
+            "Move-in ready, mid-build, or fresh-start build-to-order — we'll match the timeline to your move date.",
+        },
+        {
+          n: "03",
+          title: "Lender intro and contract",
+          body:
+            "Trusted lenders who know new construction. Pre-approval, contract, design-center selections.",
+        },
+        {
+          n: "04",
+          title: "Build, walk, and close",
+          body:
+            "Photo updates through construction, a thorough pre-closing walk-through, and a smooth handoff at closing.",
+        },
+      ],
+    },
+    snapshot: {
+      eyebrow: "Communities snapshot",
+      headline: "Three submarkets. Pick the one that fits your life.",
+      subhead:
+        "Port St. Lucie for amenities and gated convenience. Fort Pierce for new construction near the working waterfront. Vero Beach for an established market with a brand-new home.",
+    },
+    closing: {
+      headline: "Ready to find the right floor plan?",
+      ctaLabel: "Browse communities",
+      ctaTo: "/communities",
+    },
+  },
+
+  communities: {
+    hero: {
+      eyebrow: "Communities",
+      headline: "Adams Homes in St. Lucie County.",
+      subhead:
+        "Two flagship Waterstone communities in Port St. Lucie, plus Adams Homes inventory in Fort Pierce and Vero Beach. Tour a model, then check what's available right now.",
+    },
+    waterstone: {
+      eyebrow: "Featured · Port St. Lucie",
+      headline: "Waterstone — the flagship.",
+      subhead:
+        "Two product lines inside a single gated community: traditional single-family homes and low-maintenance villas. Resort-style pool, fitness center, playground, pickleball.",
+    },
+    submarkets: {
+      eyebrow: "By submarket",
+      headline: "Three places to land.",
+      subhead:
+        "Port St. Lucie, Fort Pierce, Vero Beach — pick the one your life fits into.",
+    },
+    inventoryGateway: {
+      eyebrow: "Already toured? Check what's available.",
+      headline: "Current Adams Homes inventory.",
+      subhead:
+        "After you've narrowed the community, jump straight to the current inventory page for available units, pricing, and move-in dates.",
+      cardEyebrow: "Property Search",
+      cardTitle: "Browse all available listings",
+      cardBody:
+        "Updated regularly. Filter by community, price, beds, and move-in date.",
+    },
+    closing: {
+      headline: "The best way to choose is to walk through one in person.",
+      ctaLabel: "Schedule a tour",
+      ctaTo: "/contact",
+    },
+  },
+
+  about: {
+    hero: {
+      eyebrow: "About Nancy",
+      headline: "60.5 closings last year. The right fit, every time.",
+      subhead:
+        "Sales Associate, Adams Homes of Northwest Florida — and the #1 sales associate in St. Lucie County.",
+    },
+    bio: [
+      "I've been the top-performing sales associate for Adams Homes in St. Lucie County, and the way I got there is the same way I plan to keep going: by treating every realtor partnership and every buyer like a long game.",
+      "I'd rather walk a buyer away from the wrong floor plan and earn your trust forever than push a quick close. New construction is a serious decision — for the buyer, and for the agent who refers them.",
+      "The realtors who send me buyers know I'll never put a deal at risk to hit a number. The families I close with stay in touch long after they get their keys. That's the standard.",
+    ] as const,
+    stats: [
+      { value: "60.5", label: "Closings in 2025" },
+      { value: "#1", label: "Adams Homes agent in St. Lucie County" },
+    ] as const,
+    values: {
+      eyebrow: "How I work",
+      headline: "Three things I won't compromise on.",
+      cards: [
+        {
+          title: "Right fit over fast close",
+          body:
+            "If the floor plan, the budget, or the community isn't right, I'll say so. A bad fit costs everyone more in the end.",
+        },
+        {
+          title: "Realtor relationships are sacred",
+          body:
+            "Your buyer is your buyer. I'm here to close the new-construction piece — never to take the relationship.",
+        },
+        {
+          title: "Communication you don't have to chase",
+          body:
+            "Buyers and partner agents get updates without having to ask. If something changes, you hear it from me first.",
+        },
+      ],
+    },
+    testimonialsBlock: {
+      eyebrow: "What families say",
+      headline: "Trusted to handle one of life's biggest decisions.",
+    },
+    closing: {
+      headline: "If we're a fit, let's get to work.",
+      ctaLabel: "Start a conversation",
+      ctaTo: "/contact",
+    },
+  },
+
+  sellers: {
+    hero: {
+      eyebrow: "For Sellers",
+      headline: "Selling so you can move into a new build.",
+      subhead:
+        "Most of my sellers are also my next new-construction buyers. I bridge both sides of the move so the timeline actually works.",
+    },
+    bridge: {
+      eyebrow: "The bridge transaction",
+      headline: "One agent for the home you're leaving and the one you're moving into.",
+      lead:
+        "Selling and buying at the same time is the hardest move in real estate. When the same agent is on both sides, the timing, the contingencies, and the closing dates can actually line up.",
+      cards: [
+        {
+          title: "Aligned timelines",
+          body:
+            "Your sale closing and your new-build closing are coordinated together — not by two agents who've never spoken.",
+        },
+        {
+          title: "Contingencies that actually work",
+          body:
+            "Adams Homes accepts contingent contracts in many cases. I'll tell you straight whether yours is a fit and how to structure it.",
+        },
+        {
+          title: "One conversation, not three",
+          body:
+            "Pricing your current home, picking your floor plan, and lining up financing — handled together, not in parallel.",
+        },
+      ],
+    },
+    process: {
+      eyebrow: "How a bridge sale works",
+      headline: "Four steps from listed to keys in hand.",
+      steps: [
+        {
+          n: "01",
+          title: "Walk both sides with me",
+          body:
+            "We tour a few Adams Homes options and look at your current home together. You leave with a realistic price for your home and a realistic timeline for the new one.",
+        },
+        {
+          n: "02",
+          title: "List and reserve in parallel",
+          body:
+            "Your current home goes on the market while we reserve a build slot or hold an inventory home with the right contingency.",
+        },
+        {
+          n: "03",
+          title: "Coordinate the closings",
+          body:
+            "I work the dates with the builder and the buyer's agent so you don't end up between two homes — or paying two mortgages.",
+        },
+        {
+          n: "04",
+          title: "Move once",
+          body:
+            "Same-week closings when possible, a short rent-back when not. The goal is one move, not two.",
+        },
+      ],
+    },
+    closing: {
+      headline: "One agent for the home you're leaving and the one you're moving into.",
+      ctaLabel: "Talk to Nancy",
+      ctaTo: "/contact",
+    },
+  },
+} as const;
