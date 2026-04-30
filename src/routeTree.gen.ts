@@ -13,7 +13,6 @@ import { Route as TermsRouteImport } from './routes/terms'
 import { Route as SellersRouteImport } from './routes/sellers'
 import { Route as RealtorsRouteImport } from './routes/realtors'
 import { Route as PrivacyRouteImport } from './routes/privacy'
-import { Route as ListingsRouteImport } from './routes/listings'
 import { Route as HomeLoansRouteImport } from './routes/home-loans'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CommunitiesRouteImport } from './routes/communities'
@@ -40,11 +39,6 @@ const RealtorsRoute = RealtorsRouteImport.update({
 const PrivacyRoute = PrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ListingsRoute = ListingsRouteImport.update({
-  id: '/listings',
-  path: '/listings',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HomeLoansRoute = HomeLoansRouteImport.update({
@@ -91,7 +85,6 @@ export interface FileRoutesByFullPath {
   '/communities': typeof CommunitiesRoute
   '/contact': typeof ContactRoute
   '/home-loans': typeof HomeLoansRoute
-  '/listings': typeof ListingsRoute
   '/privacy': typeof PrivacyRoute
   '/realtors': typeof RealtorsRoute
   '/sellers': typeof SellersRoute
@@ -105,7 +98,6 @@ export interface FileRoutesByTo {
   '/communities': typeof CommunitiesRoute
   '/contact': typeof ContactRoute
   '/home-loans': typeof HomeLoansRoute
-  '/listings': typeof ListingsRoute
   '/privacy': typeof PrivacyRoute
   '/realtors': typeof RealtorsRoute
   '/sellers': typeof SellersRoute
@@ -120,7 +112,6 @@ export interface FileRoutesById {
   '/communities': typeof CommunitiesRoute
   '/contact': typeof ContactRoute
   '/home-loans': typeof HomeLoansRoute
-  '/listings': typeof ListingsRoute
   '/privacy': typeof PrivacyRoute
   '/realtors': typeof RealtorsRoute
   '/sellers': typeof SellersRoute
@@ -136,7 +127,6 @@ export interface FileRouteTypes {
     | '/communities'
     | '/contact'
     | '/home-loans'
-    | '/listings'
     | '/privacy'
     | '/realtors'
     | '/sellers'
@@ -150,7 +140,6 @@ export interface FileRouteTypes {
     | '/communities'
     | '/contact'
     | '/home-loans'
-    | '/listings'
     | '/privacy'
     | '/realtors'
     | '/sellers'
@@ -164,7 +153,6 @@ export interface FileRouteTypes {
     | '/communities'
     | '/contact'
     | '/home-loans'
-    | '/listings'
     | '/privacy'
     | '/realtors'
     | '/sellers'
@@ -179,7 +167,6 @@ export interface RootRouteChildren {
   CommunitiesRoute: typeof CommunitiesRoute
   ContactRoute: typeof ContactRoute
   HomeLoansRoute: typeof HomeLoansRoute
-  ListingsRoute: typeof ListingsRoute
   PrivacyRoute: typeof PrivacyRoute
   RealtorsRoute: typeof RealtorsRoute
   SellersRoute: typeof SellersRoute
@@ -214,13 +201,6 @@ declare module '@tanstack/react-router' {
       path: '/privacy'
       fullPath: '/privacy'
       preLoaderRoute: typeof PrivacyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/listings': {
-      id: '/listings'
-      path: '/listings'
-      fullPath: '/listings'
-      preLoaderRoute: typeof ListingsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/home-loans': {
@@ -283,7 +263,6 @@ const rootRouteChildren: RootRouteChildren = {
   CommunitiesRoute: CommunitiesRoute,
   ContactRoute: ContactRoute,
   HomeLoansRoute: HomeLoansRoute,
-  ListingsRoute: ListingsRoute,
   PrivacyRoute: PrivacyRoute,
   RealtorsRoute: RealtorsRoute,
   SellersRoute: SellersRoute,
