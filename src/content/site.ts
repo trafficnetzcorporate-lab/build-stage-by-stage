@@ -98,7 +98,6 @@ export const HERO_IMAGES = [
 ] as const;
 
 export const NAV_LINKS = [
-  { label: "Listings", to: "/listings" },
   { label: "Communities", to: "/communities" },
   { label: "For Realtors", to: "/realtors" },
   { label: "Buyers", to: "/buyers" },
