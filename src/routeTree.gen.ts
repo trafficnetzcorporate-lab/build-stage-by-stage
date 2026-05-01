@@ -13,6 +13,7 @@ import { Route as TermsRouteImport } from './routes/terms'
 import { Route as SellersRouteImport } from './routes/sellers'
 import { Route as RealtorsRouteImport } from './routes/realtors'
 import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as HomeLoansRouteImport } from './routes/home-loans'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CommunitiesRouteImport } from './routes/communities'
@@ -20,7 +21,12 @@ import { Route as BuyersRouteImport } from './routes/buyers'
 import { Route as AccessibilityRouteImport } from './routes/accessibility'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as OnboardingIndexRouteImport } from './routes/onboarding.index'
+import { Route as OnboardingIntakeRouteImport } from './routes/onboarding.intake'
+import { Route as OnboardingAgreementRouteImport } from './routes/onboarding.agreement'
 import { Route as CommunitiesInventoryRouteImport } from './routes/communities.inventory'
+import { Route as OnboardingIntakeSuccessRouteImport } from './routes/onboarding.intake.success'
+import { Route as OnboardingAgreementSuccessRouteImport } from './routes/onboarding.agreement.success'
 
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
@@ -40,6 +46,11 @@ const RealtorsRoute = RealtorsRouteImport.update({
 const PrivacyRoute = PrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnboardingRoute = OnboardingRouteImport.update({
+  id: '/onboarding',
+  path: '/onboarding',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HomeLoansRoute = HomeLoansRouteImport.update({
@@ -77,11 +88,37 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OnboardingIndexRoute = OnboardingIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => OnboardingRoute,
+} as any)
+const OnboardingIntakeRoute = OnboardingIntakeRouteImport.update({
+  id: '/intake',
+  path: '/intake',
+  getParentRoute: () => OnboardingRoute,
+} as any)
+const OnboardingAgreementRoute = OnboardingAgreementRouteImport.update({
+  id: '/agreement',
+  path: '/agreement',
+  getParentRoute: () => OnboardingRoute,
+} as any)
 const CommunitiesInventoryRoute = CommunitiesInventoryRouteImport.update({
   id: '/inventory',
   path: '/inventory',
   getParentRoute: () => CommunitiesRoute,
 } as any)
+const OnboardingIntakeSuccessRoute = OnboardingIntakeSuccessRouteImport.update({
+  id: '/success',
+  path: '/success',
+  getParentRoute: () => OnboardingIntakeRoute,
+} as any)
+const OnboardingAgreementSuccessRoute =
+  OnboardingAgreementSuccessRouteImport.update({
+    id: '/success',
+    path: '/success',
+    getParentRoute: () => OnboardingAgreementRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -91,11 +128,17 @@ export interface FileRoutesByFullPath {
   '/communities': typeof CommunitiesRouteWithChildren
   '/contact': typeof ContactRoute
   '/home-loans': typeof HomeLoansRoute
+  '/onboarding': typeof OnboardingRouteWithChildren
   '/privacy': typeof PrivacyRoute
   '/realtors': typeof RealtorsRoute
   '/sellers': typeof SellersRoute
   '/terms': typeof TermsRoute
   '/communities/inventory': typeof CommunitiesInventoryRoute
+  '/onboarding/agreement': typeof OnboardingAgreementRouteWithChildren
+  '/onboarding/intake': typeof OnboardingIntakeRouteWithChildren
+  '/onboarding/': typeof OnboardingIndexRoute
+  '/onboarding/agreement/success': typeof OnboardingAgreementSuccessRoute
+  '/onboarding/intake/success': typeof OnboardingIntakeSuccessRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -110,6 +153,11 @@ export interface FileRoutesByTo {
   '/sellers': typeof SellersRoute
   '/terms': typeof TermsRoute
   '/communities/inventory': typeof CommunitiesInventoryRoute
+  '/onboarding/agreement': typeof OnboardingAgreementRouteWithChildren
+  '/onboarding/intake': typeof OnboardingIntakeRouteWithChildren
+  '/onboarding': typeof OnboardingIndexRoute
+  '/onboarding/agreement/success': typeof OnboardingAgreementSuccessRoute
+  '/onboarding/intake/success': typeof OnboardingIntakeSuccessRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -120,11 +168,17 @@ export interface FileRoutesById {
   '/communities': typeof CommunitiesRouteWithChildren
   '/contact': typeof ContactRoute
   '/home-loans': typeof HomeLoansRoute
+  '/onboarding': typeof OnboardingRouteWithChildren
   '/privacy': typeof PrivacyRoute
   '/realtors': typeof RealtorsRoute
   '/sellers': typeof SellersRoute
   '/terms': typeof TermsRoute
   '/communities/inventory': typeof CommunitiesInventoryRoute
+  '/onboarding/agreement': typeof OnboardingAgreementRouteWithChildren
+  '/onboarding/intake': typeof OnboardingIntakeRouteWithChildren
+  '/onboarding/': typeof OnboardingIndexRoute
+  '/onboarding/agreement/success': typeof OnboardingAgreementSuccessRoute
+  '/onboarding/intake/success': typeof OnboardingIntakeSuccessRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -136,11 +190,17 @@ export interface FileRouteTypes {
     | '/communities'
     | '/contact'
     | '/home-loans'
+    | '/onboarding'
     | '/privacy'
     | '/realtors'
     | '/sellers'
     | '/terms'
     | '/communities/inventory'
+    | '/onboarding/agreement'
+    | '/onboarding/intake'
+    | '/onboarding/'
+    | '/onboarding/agreement/success'
+    | '/onboarding/intake/success'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -155,6 +215,11 @@ export interface FileRouteTypes {
     | '/sellers'
     | '/terms'
     | '/communities/inventory'
+    | '/onboarding/agreement'
+    | '/onboarding/intake'
+    | '/onboarding'
+    | '/onboarding/agreement/success'
+    | '/onboarding/intake/success'
   id:
     | '__root__'
     | '/'
@@ -164,11 +229,17 @@ export interface FileRouteTypes {
     | '/communities'
     | '/contact'
     | '/home-loans'
+    | '/onboarding'
     | '/privacy'
     | '/realtors'
     | '/sellers'
     | '/terms'
     | '/communities/inventory'
+    | '/onboarding/agreement'
+    | '/onboarding/intake'
+    | '/onboarding/'
+    | '/onboarding/agreement/success'
+    | '/onboarding/intake/success'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -179,6 +250,7 @@ export interface RootRouteChildren {
   CommunitiesRoute: typeof CommunitiesRouteWithChildren
   ContactRoute: typeof ContactRoute
   HomeLoansRoute: typeof HomeLoansRoute
+  OnboardingRoute: typeof OnboardingRouteWithChildren
   PrivacyRoute: typeof PrivacyRoute
   RealtorsRoute: typeof RealtorsRoute
   SellersRoute: typeof SellersRoute
@@ -213,6 +285,13 @@ declare module '@tanstack/react-router' {
       path: '/privacy'
       fullPath: '/privacy'
       preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onboarding': {
+      id: '/onboarding'
+      path: '/onboarding'
+      fullPath: '/onboarding'
+      preLoaderRoute: typeof OnboardingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/home-loans': {
@@ -264,12 +343,47 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/onboarding/': {
+      id: '/onboarding/'
+      path: '/'
+      fullPath: '/onboarding/'
+      preLoaderRoute: typeof OnboardingIndexRouteImport
+      parentRoute: typeof OnboardingRoute
+    }
+    '/onboarding/intake': {
+      id: '/onboarding/intake'
+      path: '/intake'
+      fullPath: '/onboarding/intake'
+      preLoaderRoute: typeof OnboardingIntakeRouteImport
+      parentRoute: typeof OnboardingRoute
+    }
+    '/onboarding/agreement': {
+      id: '/onboarding/agreement'
+      path: '/agreement'
+      fullPath: '/onboarding/agreement'
+      preLoaderRoute: typeof OnboardingAgreementRouteImport
+      parentRoute: typeof OnboardingRoute
+    }
     '/communities/inventory': {
       id: '/communities/inventory'
       path: '/inventory'
       fullPath: '/communities/inventory'
       preLoaderRoute: typeof CommunitiesInventoryRouteImport
       parentRoute: typeof CommunitiesRoute
+    }
+    '/onboarding/intake/success': {
+      id: '/onboarding/intake/success'
+      path: '/success'
+      fullPath: '/onboarding/intake/success'
+      preLoaderRoute: typeof OnboardingIntakeSuccessRouteImport
+      parentRoute: typeof OnboardingIntakeRoute
+    }
+    '/onboarding/agreement/success': {
+      id: '/onboarding/agreement/success'
+      path: '/success'
+      fullPath: '/onboarding/agreement/success'
+      preLoaderRoute: typeof OnboardingAgreementSuccessRouteImport
+      parentRoute: typeof OnboardingAgreementRoute
     }
   }
 }
@@ -286,6 +400,44 @@ const CommunitiesRouteWithChildren = CommunitiesRoute._addFileChildren(
   CommunitiesRouteChildren,
 )
 
+interface OnboardingAgreementRouteChildren {
+  OnboardingAgreementSuccessRoute: typeof OnboardingAgreementSuccessRoute
+}
+
+const OnboardingAgreementRouteChildren: OnboardingAgreementRouteChildren = {
+  OnboardingAgreementSuccessRoute: OnboardingAgreementSuccessRoute,
+}
+
+const OnboardingAgreementRouteWithChildren =
+  OnboardingAgreementRoute._addFileChildren(OnboardingAgreementRouteChildren)
+
+interface OnboardingIntakeRouteChildren {
+  OnboardingIntakeSuccessRoute: typeof OnboardingIntakeSuccessRoute
+}
+
+const OnboardingIntakeRouteChildren: OnboardingIntakeRouteChildren = {
+  OnboardingIntakeSuccessRoute: OnboardingIntakeSuccessRoute,
+}
+
+const OnboardingIntakeRouteWithChildren =
+  OnboardingIntakeRoute._addFileChildren(OnboardingIntakeRouteChildren)
+
+interface OnboardingRouteChildren {
+  OnboardingAgreementRoute: typeof OnboardingAgreementRouteWithChildren
+  OnboardingIntakeRoute: typeof OnboardingIntakeRouteWithChildren
+  OnboardingIndexRoute: typeof OnboardingIndexRoute
+}
+
+const OnboardingRouteChildren: OnboardingRouteChildren = {
+  OnboardingAgreementRoute: OnboardingAgreementRouteWithChildren,
+  OnboardingIntakeRoute: OnboardingIntakeRouteWithChildren,
+  OnboardingIndexRoute: OnboardingIndexRoute,
+}
+
+const OnboardingRouteWithChildren = OnboardingRoute._addFileChildren(
+  OnboardingRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
@@ -294,6 +446,7 @@ const rootRouteChildren: RootRouteChildren = {
   CommunitiesRoute: CommunitiesRouteWithChildren,
   ContactRoute: ContactRoute,
   HomeLoansRoute: HomeLoansRoute,
+  OnboardingRoute: OnboardingRouteWithChildren,
   PrivacyRoute: PrivacyRoute,
   RealtorsRoute: RealtorsRoute,
   SellersRoute: SellersRoute,
