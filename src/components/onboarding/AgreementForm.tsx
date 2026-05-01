@@ -85,10 +85,8 @@ export function AgreementForm({ clientSlug, clientName }: AgreementFormProps) {
       URL.revokeObjectURL(url);
 
       // 4. Redirect to success
-      void navigate({
-        to: "/onboarding/agreement/success" as never,
-        search: { id: result.id },
-      });
+      void navigate({ to: "/onboarding/agreement/success" });
+      void result;
     } catch (err) {
       console.error("[AgreementForm] submit failed:", err);
       setError(err instanceof Error ? err.message : "Submission failed. Please try again.");
