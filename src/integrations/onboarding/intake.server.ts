@@ -18,15 +18,17 @@ export async function saveIntakeDraft(input: SaveIntakeDraftInput) {
   const { data, error } = await supabaseAdmin
     .from("intake_submissions")
     .upsert(
-      {
-        client_slug: client.slug,
-        client_name: client.name,
-        client_email: client.email ?? null,
-        form_data: input.formData,
-        current_section_index: input.currentSectionIndex,
-        status: "draft",
-        is_complete: false,
-      },
+      [
+        {
+          client_slug: client.slug,
+          client_name: client.name,
+          client_email: client.email ?? null,
+          form_data: input.formData as never,
+          current_section_index: input.currentSectionIndex,
+          status: "draft",
+          is_complete: false,
+        },
+      ],
       { onConflict: "client_slug,status" },
     )
     .select("id, updated_at")
@@ -75,16 +77,18 @@ export async function submitIntake(input: SubmitIntakeInput) {
   const { data, error } = await supabaseAdmin
     .from("intake_submissions")
     .upsert(
-      {
-        client_slug: client.slug,
-        client_name: client.name,
-        client_email: client.email ?? null,
-        form_data: input.formData,
-        current_section_index: 0,
-        status: "submitted",
-        is_complete: true,
-        submitted_at: now,
-      },
+      [
+        {
+          client_slug: client.slug,
+          client_name: client.name,
+          client_email: client.email ?? null,
+          form_data: input.formData as never,
+          current_section_index: 0,
+          status: "submitted",
+          is_complete: true,
+          submitted_at: now,
+        },
+      ],
       { onConflict: "client_slug,status" },
     )
     .select("id, submitted_at")
