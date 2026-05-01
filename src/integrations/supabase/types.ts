@@ -14,7 +14,90 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      agreements: {
+        Row: {
+          agreement_version: string
+          client_email: string | null
+          client_name: string
+          client_slug: string
+          id: string
+          ip_address: string | null
+          pdf_storage_path: string | null
+          signature_data_url: string
+          signed_at: string
+          status: string
+          user_agent: string | null
+        }
+        Insert: {
+          agreement_version?: string
+          client_email?: string | null
+          client_name: string
+          client_slug: string
+          id?: string
+          ip_address?: string | null
+          pdf_storage_path?: string | null
+          signature_data_url: string
+          signed_at?: string
+          status?: string
+          user_agent?: string | null
+        }
+        Update: {
+          agreement_version?: string
+          client_email?: string | null
+          client_name?: string
+          client_slug?: string
+          id?: string
+          ip_address?: string | null
+          pdf_storage_path?: string | null
+          signature_data_url?: string
+          signed_at?: string
+          status?: string
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
+      intake_submissions: {
+        Row: {
+          client_email: string | null
+          client_name: string | null
+          client_slug: string
+          created_at: string
+          current_section_index: number
+          form_data: Json
+          id: string
+          is_complete: boolean
+          status: string
+          submitted_at: string | null
+          updated_at: string
+        }
+        Insert: {
+          client_email?: string | null
+          client_name?: string | null
+          client_slug: string
+          created_at?: string
+          current_section_index?: number
+          form_data?: Json
+          id?: string
+          is_complete?: boolean
+          status?: string
+          submitted_at?: string | null
+          updated_at?: string
+        }
+        Update: {
+          client_email?: string | null
+          client_name?: string | null
+          client_slug?: string
+          created_at?: string
+          current_section_index?: number
+          form_data?: Json
+          id?: string
+          is_complete?: boolean
+          status?: string
+          submitted_at?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
