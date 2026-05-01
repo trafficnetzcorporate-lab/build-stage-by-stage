@@ -1,21 +1,20 @@
+// EMERGENCY REVERT ONLY — production renders <InventoryCarousel />.
+// This component is retained as a one-line revert option in case the
+// Adams Homes scraper integration needs to be temporarily disabled.
+// See post-call change 5.
 import { ArrowRight, Phone } from "lucide-react";
 import { GuardedExternalLink } from "@/components/shared/GuardedExternalLink";
 import { FadeInOnScroll } from "@/components/layout/FadeInOnScroll";
-import { SITE, PROAGENT_SEARCH_URL, PROAGENT_PSL_URL, PROAGENT_FP_URL, PROAGENT_VB_URL } from "@/content/site";
+import { SITE } from "@/content/site";
 import interiorImg from "@/assets/inventory-interior.jpg";
 
+const FALLBACK_URL = "PROAGENT_SEARCH_URL_TBD";
 const QUICK_LINKS = [
-  { label: "Port St. Lucie listings", url: PROAGENT_PSL_URL },
-  { label: "Fort Pierce listings", url: PROAGENT_FP_URL },
-  { label: "Vero Beach listings", url: PROAGENT_VB_URL },
+  { label: "Port St. Lucie listings", url: "PROAGENT_PSL_URL_TBD" },
+  { label: "Fort Pierce listings", url: "PROAGENT_FP_URL_TBD" },
+  { label: "Okeechobee County listings", url: "PROAGENT_OKE_URL_TBD" },
 ];
 
-/**
- * Live inventory CTA card + quick-link chips. Single source of truth, used by
- * the homepage LiveInventory section and /communities Section 3. Visual
- * differentiation between contexts comes from the wrapping <Section> tone and
- * surrounding eyebrow / headline / subhead — not from this component.
- */
 export function InventoryGateway({
   cardEyebrow,
   cardTitle,
@@ -50,7 +49,7 @@ export function InventoryGateway({
             </p>
             <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
               <GuardedExternalLink
-                url={PROAGENT_SEARCH_URL}
+                url={FALLBACK_URL}
                 primary
                 className="group inline-flex h-14 items-center justify-center gap-2 rounded-full bg-success px-8 text-sm font-semibold text-cream shadow-lg shadow-success/20 transition-all duration-300 hover:-translate-y-0.5"
               >

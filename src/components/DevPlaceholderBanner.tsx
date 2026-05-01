@@ -1,32 +1,23 @@
 import * as React from "react";
 import { isPlaceholder } from "@/lib/safe-link";
-import {
-  PROAGENT_SEARCH_URL,
-  PROAGENT_PSL_URL,
-  PROAGENT_FP_URL,
-  PROAGENT_VB_URL,
-  MORTGAGE_PARTNERS,
-} from "@/content/site";
+import { MORTGAGE_PARTNERS } from "@/content/site";
 
 type Finding = { key: string; value: string };
 
 function collect(): Finding[] {
   const findings: Finding[] = [];
-  const urls: Array<[string, string]> = [
-    ["PROAGENT_SEARCH_URL", PROAGENT_SEARCH_URL],
-    ["PROAGENT_PSL_URL", PROAGENT_PSL_URL],
-    ["PROAGENT_FP_URL", PROAGENT_FP_URL],
-    ["PROAGENT_VB_URL", PROAGENT_VB_URL],
-  ];
-  for (const [k, v] of urls) {
-    if (isPlaceholder(v)) findings.push({ key: k, value: v });
-  }
   MORTGAGE_PARTNERS.forEach((p, i) => {
     (["address", "phone", "nmls"] as const).forEach((field) => {
       const v = p[field];
       if (isPlaceholder(v))
         findings.push({ key: `MORTGAGE_PARTNERS[${i}].${field} (${p.name})`, value: v });
     });
+    if ((p as { logoPlaceholder?: boolean }).logoPlaceholder) {
+      findings.push({
+        key: `MORTGAGE_PARTNERS[${i}].logo (${p.name})`,
+        value: "awaiting real logo upload",
+      });
+    }
   });
   return findings;
 }

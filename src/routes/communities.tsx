@@ -6,7 +6,7 @@ import { FadeInOnScroll } from "@/components/layout/FadeInOnScroll";
 import { PageHero } from "@/components/pages/PageHero";
 import { ClosingBand } from "@/components/pages/ClosingBand";
 import { SubmarketCard } from "@/components/shared/SubmarketCard";
-import { InventoryGateway } from "@/components/shared/InventoryGateway";
+import { InventoryCarousel } from "@/components/inventory/InventoryCarousel";
 import { PAGES, COMMUNITIES } from "@/content/site";
 
 const META_TITLE = "Adams Homes Communities — St. Lucie County | Nancy Clarke";
@@ -26,7 +26,7 @@ export const Route = createFileRoute("/communities")({
 });
 
 function CommunitiesPage() {
-  const { hero, waterstone, submarkets, inventoryGateway, closing } = PAGES.communities;
+  const { hero, waterstone, submarkets, inventory, closing } = PAGES.communities;
 
   return (
     <>
@@ -97,22 +97,18 @@ function CommunitiesPage() {
           <FadeInOnScroll>
             <div className="text-center">
               <div className="flex justify-center">
-                <Eyebrow>{inventoryGateway.eyebrow}</Eyebrow>
+                <Eyebrow>{inventory.eyebrow}</Eyebrow>
               </div>
               <h2 className="text-display-2 mt-6 text-navy">
-                {inventoryGateway.headline}
+                {inventory.headline}
               </h2>
               <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground">
-                {inventoryGateway.subhead}
+                {inventory.subhead}
               </p>
             </div>
           </FadeInOnScroll>
           <div className="mt-14">
-            <InventoryGateway
-              cardEyebrow={inventoryGateway.cardEyebrow}
-              cardTitle={inventoryGateway.cardTitle}
-              cardBody={inventoryGateway.cardBody}
-            />
+            <InventoryCarousel />
           </div>
         </Container>
       </Section>
