@@ -9,7 +9,7 @@ import {
 } from "./intake-schema";
 import { IntakeField } from "./IntakeField";
 import { Button } from "@/components/ui/button";
-import { StatusPill } from "./StatusPill";
+// StatusPill imported on demand if needed
 import { ChevronLeft, ChevronRight, CheckCircle2, Loader2, AlertCircle } from "lucide-react";
 import {
   saveIntakeDraftFn,
