@@ -22,17 +22,7 @@ export const SITE = {
   domain: "nancyclarkerealtor.com",
 } as const;
 
-// TODO before launch: Replace these placeholder URLs.
-// Nancy's existing ProAgent search currently lives at the root nancyclarkerealtor.com,
-// which the new site will replace at DNS swap. Before launch, decide one of:
-//   (a) Have ProAgent move her search to a subdomain (e.g. listings.nancyclarkerealtor.com)
-//   (b) Link directly to her ProAgent-hosted account URL
-//   (c) Drop the link-out entirely and replace this section with a curated showcase
-// Add the chosen URLs here and commit before DNS swap.
-export const PROAGENT_SEARCH_URL = "PROAGENT_SEARCH_URL_TBD";
-export const PROAGENT_PSL_URL = "PROAGENT_PSL_URL_TBD";
-export const PROAGENT_FP_URL = "PROAGENT_FP_URL_TBD";
-export const PROAGENT_VB_URL = "PROAGENT_VB_URL_TBD";
+// ProAgent dependency retired in favor of Adams Homes integration. See src/integrations/adams-homes/.
 
 export const COMMUNITIES = [
   {
@@ -50,32 +40,34 @@ export const COMMUNITIES = [
       "Brand-new Adams Homes inventory near the Treasure Coast's working waterfront, with floor plans built for Florida living.",
   },
   {
-    slug: "vero-beach",
-    name: "Vero Beach",
-    tagline: "Established market, new homes",
+    slug: "okeechobee-county",
+    name: "Okeechobee County",
+    tagline: "Rural-edge new construction",
     blurb:
-      "New construction inside a market buyers already know — Vero's lifestyle with the warranty, finishes, and incentives of a brand-new build.",
+      "Brand-new Adams Homes on the rural edge of the Treasure Coast — more land, quieter roads, and the same builder warranty and finishes as Nancy's other communities.",
   },
 ] as const;
 
 export const MORTGAGE_PARTNERS = [
   {
     name: "The Stinson Team",
-    company: "FBC Mortgage",
+    company: "Acrisure Mortgage",
     title: "Mortgage Loan Origination",
-    address: "[VERIFY: 132 W. Plant Street, Suite 210, Winter Garden FL 34787]",
-    phone: "[VERIFY: (407) 377-0305]",
-    nmls: "[VERIFY: 319684]",
-    photoPlaceholder: true,
+    address: "[VERIFY: address for Acrisure Mortgage partner]",
+    phone: "[VERIFY: phone for Acrisure Mortgage partner]",
+    nmls: "[VERIFY: NMLS for Acrisure Mortgage partner]",
+    logo: "/src/assets/acrisure-mortgage-logo.png",
+    logoPlaceholder: true,
   },
   {
     name: "Gino Giandurco",
-    company: "Bay Equity Home Loans",
+    company: "Guild Mortgage",
     title: "Area Sales Manager",
-    address: "[VERIFY: 1531 SE Port St. Lucie Blvd, Suite 106, Port St. Lucie FL 34952]",
-    phone: "[VERIFY: (954) 423-5534]",
-    nmls: "[VERIFY: 76988]",
-    photoPlaceholder: true,
+    address: "[VERIFY: address for Guild Mortgage partner]",
+    phone: "[VERIFY: phone for Guild Mortgage partner]",
+    nmls: "[VERIFY: NMLS for Guild Mortgage partner]",
+    logo: "/src/assets/guild-mortgage-logo.png",
+    logoPlaceholder: true,
   },
 ] as const;
 
@@ -164,7 +156,7 @@ export const HOMEPAGE = {
       "I'm Nancy Clarke — the #1 sales associate for Adams Homes in St. Lucie County. When you bring your buyer to one of my new construction properties, you keep 100% of your buyer-side commission, paid directly by the builder. No split. No competition. Just closings.",
     primaryCta: { label: "Partner With Me", to: "/realtors" },
     secondaryCta: { label: "I'm a buyer · Browse homes", to: "/buyers" },
-    trustStrip: ["60+ closings in 2025", "#1 in territory", "Port St. Lucie · Fort Pierce · Vero Beach"],
+    trustStrip: ["60+ closings in 2025", "#1 in territory", "Port St. Lucie · Fort Pierce · Okeechobee County"],
   },
   partnership: {
     eyebrow: "Why realtors work with me",
@@ -225,23 +217,14 @@ export const HOMEPAGE = {
     submarkets: [
       { name: "Port St. Lucie", to: "/communities" },
       { name: "Fort Pierce", to: "/communities" },
-      { name: "Vero Beach", to: "/communities" },
+      { name: "Okeechobee County", to: "/communities" },
     ],
   },
   inventory: {
     eyebrow: "Live Inventory",
-    headline: "Homes your buyers can move into now.",
+    headline: "Homes your buyers can plan for or move into now.",
     subhead:
       "Real-time availability across all three communities. Send the link, or call me to walk through what's a fit for your client.",
-    cardEyebrow: "Property Search",
-    cardTitle: "Browse all available listings",
-    cardBody:
-      "Updated in real time. Filter by community, price, beds, and move-in date.",
-    quickLinks: [
-      { label: "Port St. Lucie listings", url: PROAGENT_PSL_URL },
-      { label: "Fort Pierce listings", url: PROAGENT_FP_URL },
-      { label: "Vero Beach listings", url: PROAGENT_VB_URL },
-    ],
   },
   meetNancy: {
     eyebrow: "Meet Nancy",
@@ -319,7 +302,7 @@ export const PAGES = {
           icon: "Home",
           title: "Inventory and to-be-built across three submarkets",
           body:
-            "Active Adams Homes inventory in Port St. Lucie, Fort Pierce, and Vero Beach. Move-in ready or build-to-order — there's almost always a fit.",
+            "Active Adams Homes inventory in Port St. Lucie, Fort Pierce, and Okeechobee County. Move-in ready or build-to-order — there's almost always a fit.",
         },
       ],
     },
@@ -369,7 +352,7 @@ export const PAGES = {
         },
         {
           q: "Which communities are eligible?",
-          a: "All Adams Homes communities I represent in St. Lucie County, including Waterstone single-family and villas in Port St. Lucie, plus inventory in Fort Pierce and Vero Beach.",
+          a: "All Adams Homes communities I represent in St. Lucie County, including Waterstone single-family and villas in Port St. Lucie, plus inventory in Fort Pierce and Okeechobee County.",
         },
       ],
     },
@@ -442,7 +425,7 @@ export const PAGES = {
       eyebrow: "Communities snapshot",
       headline: "Three submarkets. Pick the one that fits your life.",
       subhead:
-        "Port St. Lucie for amenities and gated convenience. Fort Pierce for new construction near the working waterfront. Vero Beach for an established market with a brand-new home.",
+        "Port St. Lucie for amenities and gated convenience. Fort Pierce for new construction near the working waterfront. Okeechobee County for more land and quieter roads with the same brand-new build.",
     },
     closing: {
       headline: "Ready to find the right floor plan?",
@@ -456,7 +439,7 @@ export const PAGES = {
       eyebrow: "Communities",
       headline: "Adams Homes in St. Lucie County.",
       subhead:
-        "Two flagship Waterstone communities in Port St. Lucie, plus Adams Homes inventory in Fort Pierce and Vero Beach. Tour a model, then check what's available right now.",
+        "Two flagship Waterstone communities in Port St. Lucie, plus Adams Homes inventory in Fort Pierce and Okeechobee County. Tour a model, then check what's available right now.",
     },
     waterstone: {
       eyebrow: "Featured · Port St. Lucie",
@@ -468,17 +451,13 @@ export const PAGES = {
       eyebrow: "By submarket",
       headline: "Three places to land.",
       subhead:
-        "Port St. Lucie, Fort Pierce, Vero Beach — pick the one your life fits into.",
+        "Port St. Lucie, Fort Pierce, Okeechobee County — pick the one your life fits into.",
     },
-    inventoryGateway: {
-      eyebrow: "Already toured? Check what's available.",
+    inventory: {
+      eyebrow: "Live Inventory",
       headline: "Current Adams Homes inventory.",
       subhead:
-        "After you've narrowed the community, jump straight to the current inventory page for available units, pricing, and move-in dates.",
-      cardEyebrow: "Property Search",
-      cardTitle: "Browse all available listings",
-      cardBody:
-        "Updated regularly. Filter by community, price, beds, and move-in date.",
+        "Active homes from the Adams Homes feed, filtered to Nancy's territory. Sorted by price.",
     },
     closing: {
       headline: "The best way to choose is to walk through one in person.",
