@@ -2,12 +2,11 @@ import { Section } from "@/components/layout/Section";
 import { Container } from "@/components/layout/Container";
 import { Eyebrow } from "@/components/layout/Eyebrow";
 import { FadeInOnScroll } from "@/components/layout/FadeInOnScroll";
-import { InventoryGateway } from "@/components/shared/InventoryGateway";
+import { InventoryCarousel } from "@/components/inventory/InventoryCarousel";
 import { HOMEPAGE } from "@/content/site";
 
 export function LiveInventory() {
-  const { eyebrow, headline, subhead, cardEyebrow, cardTitle, cardBody } =
-    HOMEPAGE.inventory;
+  const { eyebrow, headline, subhead } = HOMEPAGE.inventory;
 
   return (
     <Section tone="cream" size="lg">
@@ -25,11 +24,7 @@ export function LiveInventory() {
         </FadeInOnScroll>
 
         <div className="mt-14">
-          <InventoryGateway
-            cardEyebrow={cardEyebrow}
-            cardTitle={cardTitle}
-            cardBody={cardBody}
-          />
+          <InventoryCarousel />
         </div>
       </Container>
     </Section>
