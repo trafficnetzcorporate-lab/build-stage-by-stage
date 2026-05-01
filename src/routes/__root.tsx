@@ -84,7 +84,7 @@ export const Route = createRootRoute({
         content:
           "The #1 Adams Homes sales associate in St. Lucie County. Realtors keep 100% of their buyer-side commission.",
       },
-      { property: "og:image", content: "/og-image.png?v=1" },
+      { property: "og:image", content: "/og-image.png?v=2" },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
       { property: "og:image:alt", content: "Nancy Clarke — New Construction Realtor, St. Lucie County FL" },
@@ -94,7 +94,7 @@ export const Route = createRootRoute({
         name: "twitter:description",
         content: "The #1 Adams Homes sales associate in St. Lucie County, Florida.",
       },
-      { name: "twitter:image", content: "/og-image.png?v=1" },
+      { name: "twitter:image", content: "/og-image.png?v=2" },
       { name: "twitter:image:alt", content: "Nancy Clarke — New Construction Realtor, St. Lucie County FL" },
     ],
     links: [
