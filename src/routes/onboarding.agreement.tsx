@@ -1,4 +1,4 @@
-import { createFileRoute, Link, redirect } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { Container } from "@/components/layout/Container";
 import { AgreementForm } from "@/components/onboarding/AgreementForm";
 import { getAgreementStatusFn } from "@/integrations/onboarding/onboarding.functions";
