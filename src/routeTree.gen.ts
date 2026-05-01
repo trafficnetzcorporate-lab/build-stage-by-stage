@@ -20,6 +20,7 @@ import { Route as BuyersRouteImport } from './routes/buyers'
 import { Route as AccessibilityRouteImport } from './routes/accessibility'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CommunitiesInventoryRouteImport } from './routes/communities.inventory'
 
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
@@ -76,32 +77,39 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CommunitiesInventoryRoute = CommunitiesInventoryRouteImport.update({
+  id: '/inventory',
+  path: '/inventory',
+  getParentRoute: () => CommunitiesRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/accessibility': typeof AccessibilityRoute
   '/buyers': typeof BuyersRoute
-  '/communities': typeof CommunitiesRoute
+  '/communities': typeof CommunitiesRouteWithChildren
   '/contact': typeof ContactRoute
   '/home-loans': typeof HomeLoansRoute
   '/privacy': typeof PrivacyRoute
   '/realtors': typeof RealtorsRoute
   '/sellers': typeof SellersRoute
   '/terms': typeof TermsRoute
+  '/communities/inventory': typeof CommunitiesInventoryRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/accessibility': typeof AccessibilityRoute
   '/buyers': typeof BuyersRoute
-  '/communities': typeof CommunitiesRoute
+  '/communities': typeof CommunitiesRouteWithChildren
   '/contact': typeof ContactRoute
   '/home-loans': typeof HomeLoansRoute
   '/privacy': typeof PrivacyRoute
   '/realtors': typeof RealtorsRoute
   '/sellers': typeof SellersRoute
   '/terms': typeof TermsRoute
+  '/communities/inventory': typeof CommunitiesInventoryRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -109,13 +117,14 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/accessibility': typeof AccessibilityRoute
   '/buyers': typeof BuyersRoute
-  '/communities': typeof CommunitiesRoute
+  '/communities': typeof CommunitiesRouteWithChildren
   '/contact': typeof ContactRoute
   '/home-loans': typeof HomeLoansRoute
   '/privacy': typeof PrivacyRoute
   '/realtors': typeof RealtorsRoute
   '/sellers': typeof SellersRoute
   '/terms': typeof TermsRoute
+  '/communities/inventory': typeof CommunitiesInventoryRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -131,6 +140,7 @@ export interface FileRouteTypes {
     | '/realtors'
     | '/sellers'
     | '/terms'
+    | '/communities/inventory'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -144,6 +154,7 @@ export interface FileRouteTypes {
     | '/realtors'
     | '/sellers'
     | '/terms'
+    | '/communities/inventory'
   id:
     | '__root__'
     | '/'
@@ -157,6 +168,7 @@ export interface FileRouteTypes {
     | '/realtors'
     | '/sellers'
     | '/terms'
+    | '/communities/inventory'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -164,7 +176,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   AccessibilityRoute: typeof AccessibilityRoute
   BuyersRoute: typeof BuyersRoute
-  CommunitiesRoute: typeof CommunitiesRoute
+  CommunitiesRoute: typeof CommunitiesRouteWithChildren
   ContactRoute: typeof ContactRoute
   HomeLoansRoute: typeof HomeLoansRoute
   PrivacyRoute: typeof PrivacyRoute
@@ -252,15 +264,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/communities/inventory': {
+      id: '/communities/inventory'
+      path: '/inventory'
+      fullPath: '/communities/inventory'
+      preLoaderRoute: typeof CommunitiesInventoryRouteImport
+      parentRoute: typeof CommunitiesRoute
+    }
   }
 }
+
+interface CommunitiesRouteChildren {
+  CommunitiesInventoryRoute: typeof CommunitiesInventoryRoute
+}
+
+const CommunitiesRouteChildren: CommunitiesRouteChildren = {
+  CommunitiesInventoryRoute: CommunitiesInventoryRoute,
+}
+
+const CommunitiesRouteWithChildren = CommunitiesRoute._addFileChildren(
+  CommunitiesRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   AccessibilityRoute: AccessibilityRoute,
   BuyersRoute: BuyersRoute,
-  CommunitiesRoute: CommunitiesRoute,
+  CommunitiesRoute: CommunitiesRouteWithChildren,
   ContactRoute: ContactRoute,
   HomeLoansRoute: HomeLoansRoute,
   PrivacyRoute: PrivacyRoute,
