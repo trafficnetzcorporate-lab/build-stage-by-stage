@@ -4,6 +4,7 @@
  * No client-trusted upload paths.
  */
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
+import { EMAIL_FROM } from "@/integrations/email/config";
 import { getClient } from "./types";
 
 const SIGNED_BUCKET = "signed-agreements";
@@ -160,7 +161,7 @@ export async function sendAgreementEmail(input: SendAgreementEmailInput): Promis
       Authorization: `Bearer ${RESEND_API_KEY}`,
     },
     body: JSON.stringify({
-      from: "JMS Web Studio <onboarding@resend.dev>",
+      from: EMAIL_FROM,
       to: recipients,
       subject: `Service Agreement Signed — ${input.clientName}`,
       html,
