@@ -153,32 +153,18 @@ function classifyStatus(headline: string | undefined): "move-in" | "under-constr
  * never blows up.
  */
 export async function fetchAdamsInventory(): Promise<AdamsHomeProperty[]> {
-  const fetchStartedAt = new Date().toISOString();
-  console.log(`[Adams scraper] === FETCH STARTED at ${fetchStartedAt} ===`);
-
   const res = await fetch(SOURCE_URL, {
     headers: {
+      // Custom UA so Adams Homes can identify the source if they look at logs.
       "User-Agent": USER_AGENT,
       Accept: "text/html,application/xhtml+xml",
       "Accept-Language": "en-US,en;q=0.9",
     },
   });
-  console.log(`[Adams scraper] HTTP status: ${res.status} ${res.statusText}`);
-  console.log(`[Adams scraper] HTML content-length header: ${res.headers.get("content-length") ?? "(none)"}`);
   if (!res.ok) {
     throw new Error(`Adams Homes fetch failed: ${res.status} ${res.statusText}`);
   }
   const html = await res.text();
-  console.log(`[Adams scraper] HTML body length: ${html.length} chars`);
-
-  const markerIdx = html.indexOf("window.__PRELOADED_STATE__");
-  console.log(`[Adams scraper] PRELOADED_STATE marker index: ${markerIdx}`);
-  if (markerIdx < 0) {
-    const scriptIdx = html.indexOf("<script");
-    console.log(`[Adams scraper] First <script tag at: ${scriptIdx}`);
-    console.log(`[Adams scraper] Sample HTML around script: ${html.slice(scriptIdx, scriptIdx + 500)}`);
-  }
-
   const state = extractPreloadedState(html) as {
     cloudData?: {
       homes?: Record<string, { data?: RawHome[] }>;
@@ -186,65 +172,19 @@ export async function fetchAdamsInventory(): Promise<AdamsHomeProperty[]> {
     };
   };
 
-  const cloudDataKeys = state.cloudData ? Object.keys(state.cloudData) : [];
-  console.log(`[Adams scraper] state.cloudData keys: ${JSON.stringify(cloudDataKeys)}`);
-
-  const homesByBuilder = state.cloudData?.homes ?? {};
-  const homesBuilderIds = Object.keys(homesByBuilder);
-  console.log(`[Adams scraper] homes builder IDs: ${JSON.stringify(homesBuilderIds)}`);
-  for (const builderId of homesBuilderIds) {
-    const count = homesByBuilder[builderId]?.data?.length ?? 0;
-    const isExpected = builderId === BUILDER_ID;
-    console.log(`[Adams scraper] homes[${builderId}].data.length = ${count}${isExpected ? " (EXPECTED BUILDER_ID)" : ""}`);
-  }
-
-  const homes = homesByBuilder[BUILDER_ID]?.data ?? [];
-  console.log(`[Adams scraper] RAW HOMES FROM STATE for our BUILDER_ID: ${homes.length}`);
-
-  const statusCounts: Record<string, number> = {};
-  const countyCounts: Record<string, number> = {};
-  const cityCounts: Record<string, number> = {};
-  for (const h of homes) {
-    const s = String(h.status ?? "(undefined)");
-    const c = String(h.addressCounty ?? "(undefined)");
-    const ci = String(h.address?.addressLocality ?? "(undefined)");
-    statusCounts[s] = (statusCounts[s] ?? 0) + 1;
-    countyCounts[c] = (countyCounts[c] ?? 0) + 1;
-    cityCounts[ci] = (cityCounts[ci] ?? 0) + 1;
-  }
-  console.log(`[Adams scraper] status distribution: ${JSON.stringify(statusCounts)}`);
-  console.log(`[Adams scraper] addressCounty distribution: ${JSON.stringify(countyCounts)}`);
-  console.log(`[Adams scraper] addressLocality distribution: ${JSON.stringify(cityCounts)}`);
-
+  const homes = state.cloudData?.homes?.[BUILDER_ID]?.data ?? [];
   const communities = state.cloudData?.communities?.[BUILDER_ID]?.data ?? [];
   const communityNameById = new Map<string, string>();
   for (const c of communities) {
     if (c._id && c.name) communityNameById.set(c._id, c.name);
   }
 
-  const drops = { availability: 0, territory: 0, territory_county_failed: 0, territory_city_failed: 0 };
-
   const fetchedAt = new Date().toISOString();
   const out: AdamsHomeProperty[] = [];
   for (const h of homes) {
-    if (!isAvailable(h)) {
-      drops.availability++;
-      continue;
-    }
+    if (!isAvailable(h)) continue;
     const city = normalizeCity(h.address?.addressLocality);
-    const county = normalizeCounty(h.addressCounty);
-    const inT =
-      (county === "St. Lucie" || county === "Okeechobee") &&
-      (city === "Port St. Lucie" || city === "Fort Pierce" || city === "Okeechobee");
-    if (!inT) {
-      drops.territory++;
-      if (county !== "St. Lucie" && county !== "Okeechobee") {
-        drops.territory_county_failed++;
-      } else {
-        drops.territory_city_failed++;
-      }
-      continue;
-    }
+    if (!inTerritory(h.addressCounty, city)) continue;
 
     const id = h._id ?? h.uniqueName ?? `${h.address?.streetAddress ?? "unknown"}-${out.length}`;
     out.push({
@@ -263,13 +203,6 @@ export async function fetchAdamsInventory(): Promise<AdamsHomeProperty[]> {
       fetchedAt,
     });
   }
-
-  console.log(`[Adams scraper] === RESULT ===`);
-  console.log(`[Adams scraper] raw homes: ${homes.length}`);
-  console.log(`[Adams scraper] kept: ${out.length}`);
-  console.log(`[Adams scraper] dropped availability: ${drops.availability}`);
-  console.log(`[Adams scraper] dropped territory: ${drops.territory} (county_failed=${drops.territory_county_failed}, city_failed=${drops.territory_city_failed})`);
-  console.log(`[Adams scraper] === FETCH ENDED ===`);
 
   // Default sort: price ascending. Nulls sink to the bottom.
   out.sort((a, b) => {

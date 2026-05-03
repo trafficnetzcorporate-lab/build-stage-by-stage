@@ -1,8 +1,7 @@
 import type { AdamsHomeProperty } from "./types";
 import { fetchAdamsInventory } from "./scraper.server";
 
-// const FRESH_MS = 4 * 60 * 60 * 1000; // 4 hours — restore after diagnostic
-const FRESH_MS = 0; // DIAGNOSTIC: force fresh fetch every request
+const FRESH_MS = 4 * 60 * 60 * 1000; // 4 hours
 const STALE_MS = 24 * 60 * 60 * 1000; // 24 hours absolute
 
 type CacheEntry = {
@@ -42,10 +41,6 @@ export type CachedInventory = {
  */
 export async function getCachedInventory(): Promise<CachedInventory> {
   const now = Date.now();
-  const cacheState = memo
-    ? `memo exists, age=${Math.round((now - memo.fetchedAt) / 1000)}s, properties=${memo.properties.length}`
-    : "memo is null (cold)";
-  console.log(`[Adams cache] getCachedInventory() called. Cache state: ${cacheState}`);
 
   if (memo && now - memo.fetchedAt < FRESH_MS) {
     return {
