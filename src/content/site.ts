@@ -22,6 +22,13 @@ export const SITE = {
   domain: "nancyclarkerealtor.com",
 } as const;
 
+/**
+ * Compliance text shown next to the required consent checkbox on /contact.
+ * Single source of truth — re-use anywhere consent is captured.
+ */
+export const CONTACT_CONSENT =
+  "By submitting this form, I agree to be contacted by Nancy Clarke and Adams Homes of Northwest Florida by phone, text message, or email regarding my real estate inquiry. Message and data rates may apply. Consent is not a condition of purchase. I can opt out at any time.";
+
 // ProAgent dependency retired in favor of Adams Homes integration. See src/integrations/adams-homes/.
 
 export const COMMUNITIES = [
