@@ -257,6 +257,8 @@ export async function fetchAdamsInventory(): Promise<AdamsHomeProperty[]> {
     });
   }
 
+  console.log(`[Adams scraper] === RESULT === raw=${homes.length} kept=${out.length} drops=${JSON.stringify(drops)}`);
+
   // Default sort: price ascending. Nulls sink to the bottom.
   out.sort((a, b) => {
     if (a.price == null && b.price == null) return 0;
