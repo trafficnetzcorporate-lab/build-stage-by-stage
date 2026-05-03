@@ -1,7 +1,8 @@
 import type { AdamsHomeProperty } from "./types";
 import { fetchAdamsInventory } from "./scraper.server";
 
-const FRESH_MS = 4 * 60 * 60 * 1000; // 4 hours
+// const FRESH_MS = 4 * 60 * 60 * 1000; // 4 hours — restore after diagnostic
+const FRESH_MS = 0; // DIAGNOSTIC: force fresh fetch every request
 const STALE_MS = 24 * 60 * 60 * 1000; // 24 hours absolute
 
 type CacheEntry = {
