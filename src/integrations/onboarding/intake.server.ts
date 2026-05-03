@@ -44,7 +44,7 @@ export async function getIntakeDraft(clientSlug: string) {
   // Prefer submitted, fall back to draft
   const { data, error } = await supabaseAdmin
     .from("intake_submissions")
-    .select("id, form_data, current_section_index, status, is_complete, updated_at")
+    .select("id, form_data, current_section_index, status, is_complete, updated_at, submitted_at")
     .eq("client_slug", clientSlug)
     .order("updated_at", { ascending: false })
     .limit(1)
