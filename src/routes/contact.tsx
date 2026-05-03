@@ -13,7 +13,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { SITE, CONTACT_CONSENT } from "@/content/site";
 import { submitContactFn } from "@/integrations/contact/contact.functions";
-import { ContactSchema } from "@/integrations/contact/contact.server";
+import { ContactSchema } from "@/integrations/contact/contact-schema";
 
 // TODO(prompt-3B): Preserve this validateSearch contract when building the
 // real contact form. The InventoryCard CTA on the homepage carousel,
