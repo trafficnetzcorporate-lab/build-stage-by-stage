@@ -87,7 +87,8 @@ function extractPreloadedState(html: string): unknown {
 
 /** WHITELIST availability check. See types.ts comment + plan. */
 function isAvailable(p: RawHome): boolean {
-  if (p.status !== "Active") return false;
+  const status = (p.status ?? "").trim().toLowerCase();
+  if (status !== "active" && status !== "for sale") return false;
   if (p.underContractDate) return false;
   if (p.pendingDate) return false;
   if (p.reservedDate) return false;
@@ -117,8 +118,23 @@ function normalizeCity(raw: string | undefined): string {
   return t;
 }
 
+/**
+ * Adams Homes' upstream data uses a few different spellings for St. Lucie
+ * County (e.g. "St. Lucie", "St Lucie", "Saint Lucie"). Normalize before
+ * comparing so we don't silently drop the entire territory on a string
+ * mismatch.
+ */
+function normalizeCounty(raw: string | undefined): string {
+  if (!raw) return "";
+  const t = raw.trim().toLowerCase();
+  if (/^(saint|st\.?)\s+lucie$/i.test(t)) return "St. Lucie";
+  if (/^okeechobee$/i.test(t)) return "Okeechobee";
+  return raw.trim();
+}
+
 function inTerritory(county: string | undefined, city: string): boolean {
-  if (county !== "Saint Lucie" && county !== "Okeechobee") return false;
+  const normalized = normalizeCounty(county);
+  if (normalized !== "St. Lucie" && normalized !== "Okeechobee") return false;
   return (
     city === "Port St. Lucie" ||
     city === "Fort Pierce" ||
@@ -175,7 +191,7 @@ export async function fetchAdamsInventory(): Promise<AdamsHomeProperty[]> {
       id,
       address: h.address?.streetAddress ?? "",
       city,
-      county: h.addressCounty ?? "",
+      county: normalizeCounty(h.addressCounty),
       beds: h.beds ?? null,
       baths: h.baths ?? h.bathsFull ?? null,
       sqft: typeof h.sqft === "number" ? h.sqft : null,

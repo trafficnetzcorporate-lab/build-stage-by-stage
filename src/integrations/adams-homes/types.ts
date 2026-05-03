@@ -9,7 +9,7 @@ export type AdamsHomeProperty = {
   address: string;
   /** Display city, normalized: "Port St. Lucie" | "Fort Pierce" | "Okeechobee" */
   city: string;
-  /** Raw upstream county: "Saint Lucie" | "Okeechobee" */
+  /** Normalized county: "St. Lucie" | "Okeechobee" */
   county: string;
   beds: number | string | null;
   baths: number | string | null;
