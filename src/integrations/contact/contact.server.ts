@@ -2,57 +2,9 @@
  * Server-only helper for the public /contact form.
  * Resend wiring mirrors intake.server.ts.
  */
-import { z } from "zod";
 import { EMAIL_FROM } from "@/integrations/email/config";
 import { escapeHtml } from "@/lib/email-utils";
-
-const SharedFields = {
-  firstName: z.string().min(1).max(80),
-  lastName: z.string().min(1).max(80),
-  email: z.string().email().max(200),
-  phone: z.string().min(7).max(40),
-  message: z.string().max(4000).optional().default(""),
-  consent: z.literal(true),
-  property: z.string().max(200).optional().default(""),
-  community: z.string().max(200).optional().default(""),
-};
-
-const RealtorSchema = z.object({
-  audience: z.literal("realtor"),
-  ...SharedFields,
-  brokerage: z.string().min(1).max(200),
-  buyerArea: z.enum([
-    "Port St. Lucie",
-    "Fort Pierce",
-    "Okeechobee County",
-    "Other",
-    "Buyer is exploring",
-  ]),
-  buyerTimeline: z.enum(["Ready now", "30 days", "60-90 days", "Just exploring"]),
-});
-
-const BuyerSchema = z.object({
-  audience: z.literal("buyer"),
-  ...SharedFields,
-  preferredCommunity: z.enum([
-    "Waterstone",
-    "Bayshore",
-    "Gatlin",
-    "Indian River Estates",
-    "Torino & St. James",
-    "Okeechobee",
-    "Not sure",
-  ]),
-  budget: z.enum(["Under $300k", "$300-400k", "$400-500k", "$500k+"]),
-  moveInTimeline: z.enum(["ASAP", "3 months", "6 months", "Just researching"]),
-});
-
-export const ContactSchema = z.discriminatedUnion("audience", [
-  RealtorSchema,
-  BuyerSchema,
-]);
-
-export type ContactInput = z.infer<typeof ContactSchema>;
+import type { ContactInput } from "./contact-schema";
 
 export async function submitContactForm(input: ContactInput): Promise<{ ok: true }> {
   const RESEND_API_KEY = process.env.RESEND_API_KEY;
@@ -60,7 +12,6 @@ export async function submitContactForm(input: ContactInput): Promise<{ ok: true
 
   if (!RESEND_API_KEY || !NOTIFY_EMAIL_J) {
     console.error("[submitContactForm] secrets missing; skipping send");
-    // Don't throw — the user shouldn't see a failure for missing infra.
     return { ok: true };
   }
 
