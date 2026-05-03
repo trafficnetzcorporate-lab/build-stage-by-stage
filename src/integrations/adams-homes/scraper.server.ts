@@ -264,6 +264,13 @@ export async function fetchAdamsInventory(): Promise<AdamsHomeProperty[]> {
     });
   }
 
+  console.log(`[Adams scraper] === RESULT ===`);
+  console.log(`[Adams scraper] raw homes: ${homes.length}`);
+  console.log(`[Adams scraper] kept: ${out.length}`);
+  console.log(`[Adams scraper] dropped availability: ${drops.availability}`);
+  console.log(`[Adams scraper] dropped territory: ${drops.territory} (county_failed=${drops.territory_county_failed}, city_failed=${drops.territory_city_failed})`);
+  console.log(`[Adams scraper] === FETCH ENDED ===`);
+
   // Default sort: price ascending. Nulls sink to the bottom.
   out.sort((a, b) => {
     if (a.price == null && b.price == null) return 0;
