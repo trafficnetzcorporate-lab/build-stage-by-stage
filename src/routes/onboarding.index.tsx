@@ -8,6 +8,7 @@ import {
 import { StatusPill } from "@/components/onboarding/StatusPill";
 import { Container } from "@/components/layout/Container";
 import { ArrowRight, FileSignature, ClipboardList, Lock } from "lucide-react";
+import { getSectionsForClient } from "@/components/onboarding/intake-schema";
 
 const CLIENT_SLUG = "nancy-clarke";
 
@@ -36,9 +37,11 @@ export const Route = createFileRoute("/onboarding/")({
 function OnboardingIndex() {
   const { agreement, intake } = Route.useLoaderData();
   const agreementSigned = agreement.signed;
-  const intakeStatus = intake?.status ?? null;
   const intakeStarted = !!intake;
   const intakeComplete = intake?.is_complete === true;
+  const totalSections = getSectionsForClient(CLIENT_SLUG).length;
+  const currentIndex = intake?.current_section_index ?? 0;
+  const submittedAt = intake?.submitted_at ?? null;
 
   return (
     <Container className="max-w-3xl py-16 md:py-24">
@@ -86,10 +89,14 @@ function OnboardingIndex() {
               </StatusPill>
             ) : intakeComplete ? (
               <StatusPill tone="success" icon="check">
-                Submitted
+                {submittedAt
+                  ? `Completed on ${new Date(submittedAt).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}`
+                  : "Submitted"}
               </StatusPill>
             ) : intakeStarted ? (
-              <StatusPill tone="gold">In progress</StatusPill>
+              <StatusPill tone="gold">
+                Started · {Math.min(currentIndex + 1, totalSections)} of {totalSections} sections
+              </StatusPill>
             ) : (
               <StatusPill tone="gold">Not started</StatusPill>
             )

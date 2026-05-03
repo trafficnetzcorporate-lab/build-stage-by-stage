@@ -22,22 +22,47 @@ export function InventoryGrid() {
     properties: AdamsHomeProperty[];
     loading: boolean;
     error: string | null;
-  }>({ properties: [], loading: true, error: null });
+    lastFetched: string | null;
+  }>({ properties: [], loading: true, error: null, lastFetched: null });
 
   React.useEffect(() => {
     let mounted = true;
     getAdamsInventory()
-      .then((r) => mounted && setState({ properties: r.properties, loading: false, error: r.error }))
-      .catch((e: unknown) => mounted && setState({ properties: [], loading: false, error: e instanceof Error ? e.message : String(e) }));
+      .then((r) => mounted && setState({ properties: r.properties, loading: false, error: r.error, lastFetched: r.lastFetched }))
+      .catch((e: unknown) => mounted && setState({ properties: [], loading: false, error: e instanceof Error ? e.message : String(e), lastFetched: null }));
     return () => { mounted = false; };
   }, []);
 
-  const filtered = state.properties.filter((h) => matches(h, filter));
+  const filtered = React.useMemo(
+    () => state.properties.filter((h) => matches(h, filter)),
+    [state.properties, filter],
+  );
+
+  const availableCities = React.useMemo(() => {
+    const s = new Set<string>();
+    for (const h of state.properties) s.add(h.city);
+    return s;
+  }, [state.properties]);
+
+  const visiblePills = React.useMemo(
+    () =>
+      PILLS.filter((p) => {
+        if (p.value === "all") return true;
+        if (p.value === "Okeechobee County") return availableCities.has("Okeechobee");
+        return availableCities.has(p.value);
+      }),
+    [availableCities],
+  );
+
+  React.useEffect(() => {
+    if (state.loading) return;
+    if (!visiblePills.some((p) => p.value === filter)) setFilter("all");
+  }, [visiblePills, filter, state.loading]);
 
   return (
     <div>
       <div className="mb-8 flex flex-wrap items-center justify-center gap-2">
-        {PILLS.map((p) => {
+        {visiblePills.map((p) => {
           const active = filter === p.value;
           return (
             <button
@@ -76,6 +101,13 @@ export function InventoryGrid() {
       <p className="mt-10 text-center text-xs text-muted-foreground">
         Inventory sourced from adamshomes.com. Updated every 4 hours.
       </p>
+
+      {import.meta.env.DEV ? (
+        <div className="mt-4 rounded border border-amber-300 bg-amber-50 px-3 py-2 text-center text-[11px] font-mono text-amber-900">
+          inventory: total={state.properties.length} filtered={filtered.length}{" "}
+          last={state.lastFetched ?? "—"} {state.error ? `err=${state.error}` : ""}
+        </div>
+      ) : null}
     </div>
   );
 }

@@ -2,6 +2,8 @@
  * Server-only helpers for intake form auto-save and submission.
  */
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
+import { EMAIL_FROM } from "@/integrations/email/config";
+import { escapeHtml } from "@/lib/email-utils";
 import { getClient } from "./types";
 
 export interface SaveIntakeDraftInput {
@@ -42,7 +44,7 @@ export async function getIntakeDraft(clientSlug: string) {
   // Prefer submitted, fall back to draft
   const { data, error } = await supabaseAdmin
     .from("intake_submissions")
-    .select("id, form_data, current_section_index, status, is_complete, updated_at")
+    .select("id, form_data, current_section_index, status, is_complete, updated_at, submitted_at")
     .eq("client_slug", clientSlug)
     .order("updated_at", { ascending: false })
     .limit(1)
@@ -161,7 +163,7 @@ async function sendIntakeNotification(input: SendIntakeNotificationInput): Promi
       Authorization: `Bearer ${RESEND_API_KEY}`,
     },
     body: JSON.stringify({
-      from: "JMS Web Studio <onboarding@resend.dev>",
+      from: EMAIL_FROM,
       to: [NOTIFY_EMAIL_J],
       subject: `Intake Submitted — ${input.clientName}`,
       html,
@@ -172,13 +174,4 @@ async function sendIntakeNotification(input: SendIntakeNotificationInput): Promi
     const text = await res.text();
     console.error("[sendIntakeNotification] Resend error:", res.status, text);
   }
-}
-
-function escapeHtml(s: string): string {
-  return s
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
 }
