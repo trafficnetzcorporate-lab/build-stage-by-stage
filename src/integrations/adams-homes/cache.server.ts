@@ -42,6 +42,10 @@ export type CachedInventory = {
  */
 export async function getCachedInventory(): Promise<CachedInventory> {
   const now = Date.now();
+  const cacheState = memo
+    ? `memo exists, age=${Math.round((now - memo.fetchedAt) / 1000)}s, properties=${memo.properties.length}`
+    : "memo is null (cold)";
+  console.log(`[Adams cache] getCachedInventory() called. Cache state: ${cacheState}`);
 
   if (memo && now - memo.fetchedAt < FRESH_MS) {
     return {
