@@ -88,7 +88,7 @@ function extractPreloadedState(html: string): unknown {
 /** WHITELIST availability check. See types.ts comment + plan. */
 function isAvailable(p: RawHome): boolean {
   const status = (p.status ?? "").trim().toLowerCase();
-  if (status !== "active" && status !== "for sale") return false;
+  if (status !== "active" && status !== "under construction") return false;
   if (p.underContractDate) return false;
   if (p.pendingDate) return false;
   if (p.reservedDate) return false;
@@ -114,7 +114,7 @@ function normalizeCity(raw: string | undefined): string {
   if (/^port\s+saint\s+lucie$/i.test(t)) return "Port St. Lucie";
   if (/^port\s+st\.?\s+lucie$/i.test(t)) return "Port St. Lucie";
   if (/^fort\s+pierce$/i.test(t)) return "Fort Pierce";
-  if (/^okeechobee$/i.test(t)) return "Okeechobee";
+  if (/^okee?chobee$/i.test(t)) return "Okeechobee";
   return t;
 }
 
@@ -127,8 +127,8 @@ function normalizeCity(raw: string | undefined): string {
 function normalizeCounty(raw: string | undefined): string {
   if (!raw) return "";
   const t = raw.trim().toLowerCase();
-  if (/^(saint|st\.?)\s+lucie$/i.test(t)) return "St. Lucie";
-  if (/^okeechobee$/i.test(t)) return "Okeechobee";
+  if (/^(saint|st\.?)\s+lucie(\s+county)?$/i.test(t)) return "St. Lucie";
+  if (/^okee?chobee$/i.test(t)) return "Okeechobee";
   return raw.trim();
 }
 
@@ -181,10 +181,12 @@ export async function fetchAdamsInventory(): Promise<AdamsHomeProperty[]> {
 
   const fetchedAt = new Date().toISOString();
   const out: AdamsHomeProperty[] = [];
+  let droppedUnavailable = 0;
+  let droppedOffTerritory = 0;
   for (const h of homes) {
-    if (!isAvailable(h)) continue;
+    if (!isAvailable(h)) { droppedUnavailable++; continue; }
     const city = normalizeCity(h.address?.addressLocality);
-    if (!inTerritory(h.addressCounty, city)) continue;
+    if (!inTerritory(h.addressCounty, city)) { droppedOffTerritory++; continue; }
 
     const id = h._id ?? h.uniqueName ?? `${h.address?.streetAddress ?? "unknown"}-${out.length}`;
     out.push({
@@ -202,6 +204,13 @@ export async function fetchAdamsInventory(): Promise<AdamsHomeProperty[]> {
       headline: h.headline ?? "",
       fetchedAt,
     });
+  }
+
+  if (import.meta.env.DEV) {
+    // eslint-disable-next-line no-console
+    console.info(
+      `[adams-inventory] total=${homes.length} dropped_unavailable=${droppedUnavailable} dropped_off_territory=${droppedOffTerritory} kept=${out.length}`,
+    );
   }
 
   // Default sort: price ascending. Nulls sink to the bottom.
