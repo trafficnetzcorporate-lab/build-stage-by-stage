@@ -88,7 +88,7 @@ function extractPreloadedState(html: string): unknown {
 /** WHITELIST availability check. See types.ts comment + plan. */
 function isAvailable(p: RawHome): boolean {
   const status = (p.status ?? "").trim().toLowerCase();
-  if (status !== "active" && status !== "for sale") return false;
+  if (status !== "active" && status !== "under construction") return false;
   if (p.underContractDate) return false;
   if (p.pendingDate) return false;
   if (p.reservedDate) return false;
