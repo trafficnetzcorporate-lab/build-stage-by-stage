@@ -114,7 +114,7 @@ function normalizeCity(raw: string | undefined): string {
   if (/^port\s+saint\s+lucie$/i.test(t)) return "Port St. Lucie";
   if (/^port\s+st\.?\s+lucie$/i.test(t)) return "Port St. Lucie";
   if (/^fort\s+pierce$/i.test(t)) return "Fort Pierce";
-  if (/^okeechobee$/i.test(t)) return "Okeechobee";
+  if (/^okee?chobee$/i.test(t)) return "Okeechobee";
   return t;
 }
 
