@@ -20,18 +20,21 @@ export const Route = createFileRoute("/communities/inventory")({
 
 function InventoryPage() {
   return (
-    <Section tone="cream" size="lg" className="pt-32 md:pt-40">
+    <Section tone="cream" size="sm" className="pt-24 md:pt-28">
       <Container>
-        <Eyebrow>Inventory</Eyebrow>
-        <h1 className="text-display-1 mt-6 max-w-3xl text-navy">
-          Every active Adams Home in Nancy's territory.
-        </h1>
-        <p className="mt-6 max-w-[640px] text-[17px] leading-relaxed text-muted-foreground">
-          Sorted by price. Filter by city. Updated from the live Adams Homes feed
-          every four hours.
-        </p>
+        <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+          <div>
+            <Eyebrow>Inventory</Eyebrow>
+            <h1 className="text-display-3 mt-2 text-navy">
+              Every active Adams Home in Nancy's territory
+            </h1>
+          </div>
+          <p className="text-sm text-muted-foreground md:max-w-xs md:text-right">
+            Sorted by price · Filter by city · Updated every 4 hours
+          </p>
+        </div>
 
-        <div className="mt-14">
+        <div className="mt-6">
           <InventoryGrid />
         </div>
       </Container>
