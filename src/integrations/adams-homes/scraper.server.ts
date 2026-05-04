@@ -181,10 +181,12 @@ export async function fetchAdamsInventory(): Promise<AdamsHomeProperty[]> {
 
   const fetchedAt = new Date().toISOString();
   const out: AdamsHomeProperty[] = [];
+  let droppedUnavailable = 0;
+  let droppedOffTerritory = 0;
   for (const h of homes) {
-    if (!isAvailable(h)) continue;
+    if (!isAvailable(h)) { droppedUnavailable++; continue; }
     const city = normalizeCity(h.address?.addressLocality);
-    if (!inTerritory(h.addressCounty, city)) continue;
+    if (!inTerritory(h.addressCounty, city)) { droppedOffTerritory++; continue; }
 
     const id = h._id ?? h.uniqueName ?? `${h.address?.streetAddress ?? "unknown"}-${out.length}`;
     out.push({
@@ -202,6 +204,13 @@ export async function fetchAdamsInventory(): Promise<AdamsHomeProperty[]> {
       headline: h.headline ?? "",
       fetchedAt,
     });
+  }
+
+  if (import.meta.env.DEV) {
+    // eslint-disable-next-line no-console
+    console.info(
+      `[adams-inventory] total=${homes.length} dropped_unavailable=${droppedUnavailable} dropped_off_territory=${droppedOffTerritory} kept=${out.length}`,
+    );
   }
 
   // Default sort: price ascending. Nulls sink to the bottom.
