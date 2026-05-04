@@ -1,37 +1,34 @@
-## Filter fixes for Adams Homes inventory
+## Root cause
 
-### 1. `src/integrations/adams-homes/scraper.server.ts` — `isAvailable()`
+Every page header and most page sections are wrapped in `<FadeInOnScroll>`, which starts at `opacity-0` and only reveals on IntersectionObserver firing. In the in-app preview iframe (and sometimes after client-side navigation), IO doesn't fire reliably for content that is already visible at mount, so heroes and sections stay invisible forever. The inventory grid renders because it's not wrapped.
 
-Replace the status whitelist. Drop the `"for sale"` branch (never appears upstream) and accept `"active"` or `"under construction"`:
+The carousel + hero render only because they're either not wrapped or get an IO event from the initial scroll.
 
-```ts
-const s = String(p.status ?? "").trim().toLowerCase();
-if (s !== "active" && s !== "under construction") return false;
-```
+The slow page-transitions + late contact rendering are symptoms of the same wrapper plus loaders/components that gate render on data without an immediate fallback.
 
-Keep the date-rejection sweep (underContractDate, pendingDate, reservedDate, holdDate, contractDate, soldDate, plus the regex defensive scan) exactly as-is. Pending/Sold/etc. continue to be rejected.
+## Fix
 
-### 2. `src/integrations/adams-homes/scraper.server.ts` — `normalizeCounty()`
+**1. `src/components/layout/FadeInOnScroll.tsx` — make the wrapper safe**
 
-Tighten both regexes:
+- On mount, measure the element's bounding rect. If it intersects the viewport already, set `visible=true` immediately (no IO wait).
+- Lower IO threshold from 0.12 → 0.05 and rootMargin from `-60px` → `-40px` so off-screen-but-near content reveals sooner.
+- Add a 1200ms safety `setTimeout` fallback that forces `visible=true` no matter what — content will never be permanently hidden.
+- Keep cleanup for both observer and timeout.
 
-- St. Lucie: `/^(saint|st\.?)\s+lucie(\s+county)?$/i`
-- Okeechobee (catches the "Okechobee" typo on one record): `/^okee?chobee$/i`
+**2. Verify after the fix**
 
-Also update `normalizeCity()` Okeechobee check to the same `/^okee?chobee$/i` pattern so the typo doesn't drop on the city axis either.
+- Navigate via in-app preview to `/about`, `/buyers`, `/sellers`, `/realtors`, `/home-loans`, `/contact`, `/communities`, `/communities/inventory`.
+- Confirm hero + below-the-fold sections render immediately (not blank).
+- Confirm `/contact` paints instantly.
 
-### 3. Cache + logging
+**3. Page-transition slowness — separate diagnosis**
 
-- `cache.server.ts` `FRESH_MS` is already `4 * 60 * 60 * 1000` — no change needed.
-- No verbose distribution / HTML-sample logs were ever committed in the current scraper, so nothing to strip.
-- Add a single DEV-only drop counter inside `fetchAdamsInventory()` that tallies `total`, `dropped_unavailable`, `dropped_off_territory`, and `kept`, then `console.info` once per fetch behind `if (import.meta.env.DEV)`. This is the permanent regression-detection hook.
+Once visibility is fixed, re-test navigation speed. If pages still feel slow, the cause is most likely:
+- `getAdamsInventory()` server fn being called on routes that don't need it, or
+- large image assets without preloading.
 
-### Expected outcome
+I'll profile with `browser--performance_profile` and report findings before making further changes.
 
-Carousel total ~30–35. Okeechobee pill populates (≈8 raw, all under-construction). Fort Pierce ≈12+, Port St. Lucie ≈6+.
+## Out of scope this pass
 
-### Verification (after switch to build mode)
-
-1. Hit `/`, read dev banner — confirm `total >= 30`.
-2. Click each city pill, confirm counts above.
-3. Check server logs for the one-line drop summary.
+- "Pages are incomplete" — needs a separate pass per page once they're actually visible. Right now we can't tell what's incomplete vs. just hidden.

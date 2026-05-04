@@ -18,10 +18,20 @@ export function FadeInOnScroll({
   React.useEffect(() => {
     const node = ref.current;
     if (!node) return;
+
+    // If already in viewport on mount, show immediately (handles iframes / hydration)
+    const rect = node.getBoundingClientRect();
+    const vh = window.innerHeight || document.documentElement.clientHeight;
+    if (rect.top < vh && rect.bottom > 0) {
+      setVisible(true);
+      return;
+    }
+
     if (typeof IntersectionObserver === "undefined") {
       setVisible(true);
       return;
     }
+
     const obs = new IntersectionObserver(
       (entries) => {
         for (const e of entries) {
@@ -32,10 +42,17 @@ export function FadeInOnScroll({
           }
         }
       },
-      { threshold: 0.12, rootMargin: "0px 0px -60px 0px" },
+      { threshold: 0.05, rootMargin: "0px 0px -40px 0px" },
     );
     obs.observe(node);
-    return () => obs.disconnect();
+
+    // Safety fallback: never leave content invisible
+    const fallback = window.setTimeout(() => setVisible(true), 1200);
+
+    return () => {
+      obs.disconnect();
+      window.clearTimeout(fallback);
+    };
   }, []);
 
   return (
