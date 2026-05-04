@@ -20,7 +20,7 @@ export const Route = createFileRoute("/communities/inventory")({
 
 function InventoryPage() {
   return (
-    <Section tone="cream" size="md" className="pt-24 md:pt-28">
+    <Section tone="cream" size="sm" className="pt-24 md:pt-28">
       <Container>
         <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
           <div>
