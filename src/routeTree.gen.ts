@@ -24,7 +24,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as OnboardingIndexRouteImport } from './routes/onboarding.index'
 import { Route as OnboardingIntakeRouteImport } from './routes/onboarding.intake'
 import { Route as OnboardingAgreementRouteImport } from './routes/onboarding.agreement'
-import { Route as CommunitiesInventoryRouteImport } from './routes/communities.inventory'
+import { Route as CommunitiesInventoryRouteImport } from './routes/communities_.inventory'
 import { Route as OnboardingIntakeSuccessRouteImport } from './routes/onboarding.intake.success'
 import { Route as OnboardingAgreementSuccessRouteImport } from './routes/onboarding.agreement.success'
 
@@ -104,9 +104,9 @@ const OnboardingAgreementRoute = OnboardingAgreementRouteImport.update({
   getParentRoute: () => OnboardingRoute,
 } as any)
 const CommunitiesInventoryRoute = CommunitiesInventoryRouteImport.update({
-  id: '/inventory',
-  path: '/inventory',
-  getParentRoute: () => CommunitiesRoute,
+  id: '/communities_/inventory',
+  path: '/communities/inventory',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const OnboardingIntakeSuccessRoute = OnboardingIntakeSuccessRouteImport.update({
   id: '/success',
@@ -125,7 +125,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/accessibility': typeof AccessibilityRoute
   '/buyers': typeof BuyersRoute
-  '/communities': typeof CommunitiesRouteWithChildren
+  '/communities': typeof CommunitiesRoute
   '/contact': typeof ContactRoute
   '/home-loans': typeof HomeLoansRoute
   '/onboarding': typeof OnboardingRouteWithChildren
@@ -145,7 +145,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/accessibility': typeof AccessibilityRoute
   '/buyers': typeof BuyersRoute
-  '/communities': typeof CommunitiesRouteWithChildren
+  '/communities': typeof CommunitiesRoute
   '/contact': typeof ContactRoute
   '/home-loans': typeof HomeLoansRoute
   '/privacy': typeof PrivacyRoute
@@ -165,7 +165,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/accessibility': typeof AccessibilityRoute
   '/buyers': typeof BuyersRoute
-  '/communities': typeof CommunitiesRouteWithChildren
+  '/communities': typeof CommunitiesRoute
   '/contact': typeof ContactRoute
   '/home-loans': typeof HomeLoansRoute
   '/onboarding': typeof OnboardingRouteWithChildren
@@ -173,7 +173,7 @@ export interface FileRoutesById {
   '/realtors': typeof RealtorsRoute
   '/sellers': typeof SellersRoute
   '/terms': typeof TermsRoute
-  '/communities/inventory': typeof CommunitiesInventoryRoute
+  '/communities_/inventory': typeof CommunitiesInventoryRoute
   '/onboarding/agreement': typeof OnboardingAgreementRouteWithChildren
   '/onboarding/intake': typeof OnboardingIntakeRouteWithChildren
   '/onboarding/': typeof OnboardingIndexRoute
@@ -234,7 +234,7 @@ export interface FileRouteTypes {
     | '/realtors'
     | '/sellers'
     | '/terms'
-    | '/communities/inventory'
+    | '/communities_/inventory'
     | '/onboarding/agreement'
     | '/onboarding/intake'
     | '/onboarding/'
@@ -247,7 +247,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   AccessibilityRoute: typeof AccessibilityRoute
   BuyersRoute: typeof BuyersRoute
-  CommunitiesRoute: typeof CommunitiesRouteWithChildren
+  CommunitiesRoute: typeof CommunitiesRoute
   ContactRoute: typeof ContactRoute
   HomeLoansRoute: typeof HomeLoansRoute
   OnboardingRoute: typeof OnboardingRouteWithChildren
@@ -255,6 +255,7 @@ export interface RootRouteChildren {
   RealtorsRoute: typeof RealtorsRoute
   SellersRoute: typeof SellersRoute
   TermsRoute: typeof TermsRoute
+  CommunitiesInventoryRoute: typeof CommunitiesInventoryRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -364,12 +365,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OnboardingAgreementRouteImport
       parentRoute: typeof OnboardingRoute
     }
-    '/communities/inventory': {
-      id: '/communities/inventory'
-      path: '/inventory'
+    '/communities_/inventory': {
+      id: '/communities_/inventory'
+      path: '/communities/inventory'
       fullPath: '/communities/inventory'
       preLoaderRoute: typeof CommunitiesInventoryRouteImport
-      parentRoute: typeof CommunitiesRoute
+      parentRoute: typeof rootRouteImport
     }
     '/onboarding/intake/success': {
       id: '/onboarding/intake/success'
@@ -387,18 +388,6 @@ declare module '@tanstack/react-router' {
     }
   }
 }
-
-interface CommunitiesRouteChildren {
-  CommunitiesInventoryRoute: typeof CommunitiesInventoryRoute
-}
-
-const CommunitiesRouteChildren: CommunitiesRouteChildren = {
-  CommunitiesInventoryRoute: CommunitiesInventoryRoute,
-}
-
-const CommunitiesRouteWithChildren = CommunitiesRoute._addFileChildren(
-  CommunitiesRouteChildren,
-)
 
 interface OnboardingAgreementRouteChildren {
   OnboardingAgreementSuccessRoute: typeof OnboardingAgreementSuccessRoute
@@ -443,7 +432,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   AccessibilityRoute: AccessibilityRoute,
   BuyersRoute: BuyersRoute,
-  CommunitiesRoute: CommunitiesRouteWithChildren,
+  CommunitiesRoute: CommunitiesRoute,
   ContactRoute: ContactRoute,
   HomeLoansRoute: HomeLoansRoute,
   OnboardingRoute: OnboardingRouteWithChildren,
@@ -451,6 +440,7 @@ const rootRouteChildren: RootRouteChildren = {
   RealtorsRoute: RealtorsRoute,
   SellersRoute: SellersRoute,
   TermsRoute: TermsRoute,
+  CommunitiesInventoryRoute: CommunitiesInventoryRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
