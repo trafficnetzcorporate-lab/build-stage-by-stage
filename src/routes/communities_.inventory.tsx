@@ -4,7 +4,7 @@ import { Container } from "@/components/layout/Container";
 import { Eyebrow } from "@/components/layout/Eyebrow";
 import { InventoryGrid } from "@/components/inventory/InventoryGrid";
 
-export const Route = createFileRoute("/communities/inventory")({
+export const Route = createFileRoute("/communities_/inventory")({
   head: () => ({
     meta: [
       { title: "Available Adams Homes Inventory — St. Lucie County" },
