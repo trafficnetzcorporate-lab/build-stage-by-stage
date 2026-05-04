@@ -127,8 +127,8 @@ function normalizeCity(raw: string | undefined): string {
 function normalizeCounty(raw: string | undefined): string {
   if (!raw) return "";
   const t = raw.trim().toLowerCase();
-  if (/^(saint|st\.?)\s+lucie$/i.test(t)) return "St. Lucie";
-  if (/^okeechobee$/i.test(t)) return "Okeechobee";
+  if (/^(saint|st\.?)\s+lucie(\s+county)?$/i.test(t)) return "St. Lucie";
+  if (/^okee?chobee$/i.test(t)) return "Okeechobee";
   return raw.trim();
 }
 
