@@ -1,22 +1,32 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowUpRight } from "lucide-react";
 
+type CityFilterValue = "all" | "Port St. Lucie" | "Fort Pierce" | "Okeechobee County";
+
 /**
  * Submarket / city card with the gold underline animation. Shared by the
  * homepage Featured Communities row and the /buyers communities snapshot.
+ *
+ * Always deep-links into the inventory grid pre-filtered to this city so the
+ * user lands directly on homes — no extra hero in between.
  */
 export function SubmarketCard({
   name,
-  to,
   blurb,
 }: {
   name: string;
-  to: string;
+  /** Legacy prop, ignored — kept so existing call sites compile. */
+  to?: string;
   blurb?: string;
 }) {
+  const city: CityFilterValue =
+    name === "Port St. Lucie" || name === "Fort Pierce" || name === "Okeechobee County"
+      ? name
+      : "all";
   return (
     <Link
-      to={to}
+      to="/communities/inventory"
+      search={{ city }}
       className="group block h-full rounded-2xl bg-navy/60 p-7 ring-1 ring-cream/10 transition-all duration-300 hover:bg-navy/80 hover:ring-gold/40"
     >
       <div className="font-display text-2xl font-medium text-cream">{name}</div>

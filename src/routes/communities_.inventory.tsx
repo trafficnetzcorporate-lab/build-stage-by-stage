@@ -1,10 +1,20 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { zodValidator, fallback } from "@tanstack/zod-adapter";
+import { z } from "zod";
 import { Section } from "@/components/layout/Section";
 import { Container } from "@/components/layout/Container";
-import { Eyebrow } from "@/components/layout/Eyebrow";
 import { InventoryGrid } from "@/components/inventory/InventoryGrid";
+import type { CityFilter } from "@/integrations/adams-homes/types";
+
+const searchSchema = z.object({
+  city: fallback(
+    z.enum(["all", "Port St. Lucie", "Fort Pierce", "Okeechobee County"]),
+    "all",
+  ).default("all"),
+});
 
 export const Route = createFileRoute("/communities_/inventory")({
+  validateSearch: zodValidator(searchSchema),
   head: () => ({
     meta: [
       { title: "Available Adams Homes Inventory — St. Lucie County" },
@@ -19,24 +29,11 @@ export const Route = createFileRoute("/communities_/inventory")({
 });
 
 function InventoryPage() {
+  const { city } = Route.useSearch();
   return (
     <Section tone="cream" size="sm" className="pt-24 md:pt-28">
       <Container>
-        <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
-          <div>
-            <Eyebrow>Inventory</Eyebrow>
-            <h1 className="text-display-3 mt-2 text-navy">
-              Every active Adams Home in Nancy's territory
-            </h1>
-          </div>
-          <p className="text-sm text-muted-foreground md:max-w-xs md:text-right">
-            Sorted by price · Filter by city · Updated every 4 hours
-          </p>
-        </div>
-
-        <div className="mt-6">
-          <InventoryGrid />
-        </div>
+        <InventoryGrid initialFilter={city as CityFilter} />
       </Container>
     </Section>
   );

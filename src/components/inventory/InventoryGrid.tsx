@@ -16,8 +16,8 @@ function matches(home: AdamsHomeProperty, filter: CityFilter): boolean {
   return home.city === filter;
 }
 
-export function InventoryGrid() {
-  const [filter, setFilter] = React.useState<CityFilter>("all");
+export function InventoryGrid({ initialFilter = "all" }: { initialFilter?: CityFilter } = {}) {
+  const [filter, setFilter] = React.useState<CityFilter>(initialFilter);
   const [state, setState] = React.useState<{
     properties: AdamsHomeProperty[];
     loading: boolean;
