@@ -201,14 +201,14 @@ export const HOMEPAGE = {
     featured: [
       {
         slug: "waterstone-sfh",
-        label: "Port St. Lucie",
+        label: "Fort Pierce",
         title: "Waterstone — Single Family Homes",
         body: "1,780 to 2,557 sqft floor plans. Gated community amenities.",
         youtubeId: "HZet4A8DAyc",
       },
       {
         slug: "waterstone-villas",
-        label: "Port St. Lucie",
+        label: "Fort Pierce",
         title: "Waterstone — Villas",
         body:
           "Low-maintenance living. Attached single-story plans. Resort-style community pool.",
@@ -446,10 +446,10 @@ export const PAGES = {
       eyebrow: "Communities",
       headline: "Adams Homes in St. Lucie County.",
       subhead:
-        "Two flagship Waterstone communities in Port St. Lucie, plus Adams Homes inventory in Fort Pierce and Okeechobee County. Tour a model, then check what's available right now.",
+        "Two flagship Waterstone communities in Fort Pierce, plus Adams Homes inventory across Port St. Lucie and Okeechobee County. Tour a model, then check what's available right now.",
     },
     waterstone: {
-      eyebrow: "Featured · Port St. Lucie",
+      eyebrow: "Featured · Fort Pierce",
       headline: "Waterstone — the flagship.",
       subhead:
         "Two product lines inside a single gated community: traditional single-family homes and low-maintenance villas. Resort-style pool, fitness center, playground, pickleball.",
