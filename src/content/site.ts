@@ -359,7 +359,7 @@ export const PAGES = {
         },
         {
           q: "Which communities are eligible?",
-          a: "All Adams Homes communities I represent in St. Lucie County, including Waterstone single-family and villas in Port St. Lucie, plus inventory in Fort Pierce and Okeechobee County.",
+          a: "All Adams Homes communities I represent in St. Lucie County, including Waterstone single-family and villas in Fort Pierce, plus inventory in Port St. Lucie and Okeechobee County.",
         },
       ],
     },
