@@ -63,7 +63,7 @@ function OnboardingIndex() {
           icon={<FileSignature className="h-5 w-5" />}
           title="Service Agreement"
           description="Read and sign the JMS Web Studio service agreement."
-          to="/onboarding/agreement"
+          to={agreementSigned ? "/onboarding/agreement/review" : "/onboarding/agreement"}
           status={
             agreementSigned ? (
               <StatusPill tone="success" icon="check">
@@ -73,7 +73,7 @@ function OnboardingIndex() {
               <StatusPill tone="gold">Not yet signed</StatusPill>
             )
           }
-          ctaLabel={agreementSigned ? "Review" : "Sign agreement"}
+          ctaLabel={agreementSigned ? "Review signed agreement" : "Sign agreement"}
         />
 
         <StepCard
