@@ -27,6 +27,7 @@ import { Route as OnboardingAgreementRouteImport } from './routes/onboarding.agr
 import { Route as CommunitiesInventoryRouteImport } from './routes/communities_.inventory'
 import { Route as OnboardingIntakeSuccessRouteImport } from './routes/onboarding.intake.success'
 import { Route as OnboardingAgreementSuccessRouteImport } from './routes/onboarding.agreement.success'
+import { Route as OnboardingAgreementReviewRouteImport } from './routes/onboarding.agreement.review'
 
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
@@ -119,6 +120,12 @@ const OnboardingAgreementSuccessRoute =
     path: '/success',
     getParentRoute: () => OnboardingAgreementRoute,
   } as any)
+const OnboardingAgreementReviewRoute =
+  OnboardingAgreementReviewRouteImport.update({
+    id: '/review',
+    path: '/review',
+    getParentRoute: () => OnboardingAgreementRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -137,6 +144,7 @@ export interface FileRoutesByFullPath {
   '/onboarding/agreement': typeof OnboardingAgreementRouteWithChildren
   '/onboarding/intake': typeof OnboardingIntakeRouteWithChildren
   '/onboarding/': typeof OnboardingIndexRoute
+  '/onboarding/agreement/review': typeof OnboardingAgreementReviewRoute
   '/onboarding/agreement/success': typeof OnboardingAgreementSuccessRoute
   '/onboarding/intake/success': typeof OnboardingIntakeSuccessRoute
 }
@@ -156,6 +164,7 @@ export interface FileRoutesByTo {
   '/onboarding/agreement': typeof OnboardingAgreementRouteWithChildren
   '/onboarding/intake': typeof OnboardingIntakeRouteWithChildren
   '/onboarding': typeof OnboardingIndexRoute
+  '/onboarding/agreement/review': typeof OnboardingAgreementReviewRoute
   '/onboarding/agreement/success': typeof OnboardingAgreementSuccessRoute
   '/onboarding/intake/success': typeof OnboardingIntakeSuccessRoute
 }
@@ -177,6 +186,7 @@ export interface FileRoutesById {
   '/onboarding/agreement': typeof OnboardingAgreementRouteWithChildren
   '/onboarding/intake': typeof OnboardingIntakeRouteWithChildren
   '/onboarding/': typeof OnboardingIndexRoute
+  '/onboarding/agreement/review': typeof OnboardingAgreementReviewRoute
   '/onboarding/agreement/success': typeof OnboardingAgreementSuccessRoute
   '/onboarding/intake/success': typeof OnboardingIntakeSuccessRoute
 }
@@ -199,6 +209,7 @@ export interface FileRouteTypes {
     | '/onboarding/agreement'
     | '/onboarding/intake'
     | '/onboarding/'
+    | '/onboarding/agreement/review'
     | '/onboarding/agreement/success'
     | '/onboarding/intake/success'
   fileRoutesByTo: FileRoutesByTo
@@ -218,6 +229,7 @@ export interface FileRouteTypes {
     | '/onboarding/agreement'
     | '/onboarding/intake'
     | '/onboarding'
+    | '/onboarding/agreement/review'
     | '/onboarding/agreement/success'
     | '/onboarding/intake/success'
   id:
@@ -238,6 +250,7 @@ export interface FileRouteTypes {
     | '/onboarding/agreement'
     | '/onboarding/intake'
     | '/onboarding/'
+    | '/onboarding/agreement/review'
     | '/onboarding/agreement/success'
     | '/onboarding/intake/success'
   fileRoutesById: FileRoutesById
@@ -386,14 +399,23 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OnboardingAgreementSuccessRouteImport
       parentRoute: typeof OnboardingAgreementRoute
     }
+    '/onboarding/agreement/review': {
+      id: '/onboarding/agreement/review'
+      path: '/review'
+      fullPath: '/onboarding/agreement/review'
+      preLoaderRoute: typeof OnboardingAgreementReviewRouteImport
+      parentRoute: typeof OnboardingAgreementRoute
+    }
   }
 }
 
 interface OnboardingAgreementRouteChildren {
+  OnboardingAgreementReviewRoute: typeof OnboardingAgreementReviewRoute
   OnboardingAgreementSuccessRoute: typeof OnboardingAgreementSuccessRoute
 }
 
 const OnboardingAgreementRouteChildren: OnboardingAgreementRouteChildren = {
+  OnboardingAgreementReviewRoute: OnboardingAgreementReviewRoute,
   OnboardingAgreementSuccessRoute: OnboardingAgreementSuccessRoute,
 }
 
