@@ -6,10 +6,12 @@ import { FadeInOnScroll } from "@/components/layout/FadeInOnScroll";
 import { MORTGAGE_PARTNERS, MORTGAGE_DISCLAIMER } from "@/content/site";
 import acrisureLogo from "@/assets/acrisure-mortgage-logo.png";
 import guildLogo from "@/assets/guild-mortgage-logo.png";
+import scottHeadshot from "@/assets/scott-stinson-headshot.jpg";
+import ginoHeadshot from "@/assets/gino-giandurco-headshot.jpg";
 
-const LOGO_BY_COMPANY: Record<string, string> = {
-  "Acrisure Mortgage": acrisureLogo,
-  "Guild Mortgage": guildLogo,
+const ASSETS_BY_NAME: Record<string, { logo: string; headshot: string }> = {
+  "Scott A. Stinson": { logo: acrisureLogo, headshot: scottHeadshot },
+  "Gino Giandurco": { logo: guildLogo, headshot: ginoHeadshot },
 };
 
 export const Route = createFileRoute("/home-loans")({
@@ -42,15 +44,14 @@ function HomeLoansPage() {
 
         <div className="mt-14 grid gap-8 md:grid-cols-2">
           {MORTGAGE_PARTNERS.map((p, i) => {
-            const logo = LOGO_BY_COMPANY[p.company];
+            const assets = ASSETS_BY_NAME[p.name];
             return (
               <FadeInOnScroll key={p.company} delay={i * 120}>
                 <article className="flex h-full flex-col rounded-2xl border border-gold-soft/60 bg-white p-8">
-                  {/* Fixed-height logo container so both partners visually align */}
                   <div className="flex h-12 items-center md:h-14">
-                    {logo ? (
+                    {assets?.logo ? (
                       <img
-                        src={logo}
+                        src={assets.logo}
                         alt={`${p.company} logo`}
                         className="h-8 w-auto object-contain md:h-10"
                       />
@@ -61,11 +62,56 @@ function HomeLoansPage() {
                     )}
                   </div>
 
-                  <h2 className="mt-6 font-display text-2xl text-navy">{p.name}</h2>
-                  <p className="mt-1 text-sm text-muted-foreground">{p.title}</p>
-                  <p className="mt-4 text-sm text-navy">{p.address}</p>
-                  <p className="mt-1 text-sm text-navy">{p.phone}</p>
-                  <p className="mt-1 text-xs text-muted-foreground">NMLS {p.nmls}</p>
+                  <div className="mt-6 flex items-start gap-5">
+                    {assets?.headshot && (
+                      <img
+                        src={assets.headshot}
+                        alt={`${p.name} headshot`}
+                        className="h-24 w-24 flex-none rounded-full object-cover ring-1 ring-gold-soft/60"
+                      />
+                    )}
+                    <div className="min-w-0">
+                      <h2 className="font-display text-2xl text-navy">{p.name}</h2>
+                      <p className="mt-1 text-sm text-muted-foreground">{p.title}</p>
+                      <p className="mt-1 text-xs text-muted-foreground">NMLS #{p.nmls}</p>
+                    </div>
+                  </div>
+
+                  <dl className="mt-6 space-y-2 text-sm text-navy">
+                    <div>
+                      <dt className="sr-only">Address</dt>
+                      <dd>{p.address}</dd>
+                    </div>
+                    <div>
+                      <dt className="sr-only">Phone</dt>
+                      <dd>
+                        <a href={p.phoneHref} className="hover:text-gold">
+                          {p.phone}
+                        </a>
+                      </dd>
+                    </div>
+                    <div>
+                      <dt className="sr-only">Email</dt>
+                      <dd className="break-all">
+                        <a href={`mailto:${p.email}`} className="hover:text-gold">
+                          {p.email}
+                        </a>
+                      </dd>
+                    </div>
+                    <div>
+                      <dt className="sr-only">Website</dt>
+                      <dd>
+                        <a
+                          href={p.website}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="font-medium text-gold hover:underline"
+                        >
+                          Apply online at {p.websiteLabel}
+                        </a>
+                      </dd>
+                    </div>
+                  </dl>
                 </article>
               </FadeInOnScroll>
             );
