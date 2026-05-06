@@ -18,7 +18,7 @@ const ICONS = { DollarSign, HardHat, Home } as const;
 
 const META_TITLE = "For Realtors — Refer to Nancy Clarke | Adams Homes";
 const META_DESC =
-  "Refer your buyer to Nancy and keep 100% of your commission. The #1 Adams Homes sales associate in St. Lucie County, Florida.";
+  "Refer your buyer to Nancy and keep 100% of your commission. The #1 Adams Homes Sales Associate in St. Lucie County, Florida.";
 
 export const Route = createFileRoute("/realtors")({
   head: () => ({
