@@ -381,7 +381,7 @@ export const PAGES = {
       eyebrow: "For Buyers",
       headline: "Buying new construction, the simple way.",
       subhead:
-        "A brand-new Adams Home in St. Lucie County — with a sales associate who's done this 60+ times in the last year alone. Move-in ready or build-to-order. I'll match you to the right floor plan.",
+        "A brand-new Adams Home in St. Lucie County — with a Sales Associate who's done this 60+ times in the last year alone. Move-in ready or build-to-order. I'll match you to the right floor plan.",
     },
     whyNew: {
       eyebrow: "Why a new build",

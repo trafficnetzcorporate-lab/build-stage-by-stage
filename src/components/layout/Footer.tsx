@@ -74,7 +74,7 @@ export function Footer() {
             </span>
           </div>
           <div className="text-xs text-cream/60">
-            Independent sales associate with Adams Homes of Northwest Florida.
+            Independent Sales Associate with Adams Homes of Northwest Florida.
           </div>
         </div>
 
