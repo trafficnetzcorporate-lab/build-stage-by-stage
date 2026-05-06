@@ -72,14 +72,14 @@ export const Route = createRootRoute({
       {
         name: "description",
         content:
-          "Nancy Clarke is the #1 sales associate for Adams Homes in St. Lucie County, Florida. Partnering with realtors whose buyers want a brand-new Adams Home.",
+          "Nancy Clarke is the #1 Sales Associate for Adams Homes in St. Lucie County, Florida. Partnering with realtors whose buyers want a brand-new Adams Home.",
       },
       { name: "author", content: "Nancy Clarke" },
       { property: "og:title", content: "Nancy Clarke — New Construction Realtor, St. Lucie County FL" },
       {
         property: "og:description",
         content:
-          "The #1 Adams Homes sales associate in St. Lucie County. Realtors keep 100% of their buyer-side commission.",
+          "The #1 Adams Homes Sales Associate in St. Lucie County. Realtors keep 100% of their buyer-side commission.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

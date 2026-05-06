@@ -166,7 +166,7 @@ export const HOMEPAGE = {
       "I'll close the deal.",
     ] as const,
     subhead:
-      "I'm Nancy Clarke — the #1 sales associate for Adams Homes in St. Lucie County. When you bring your buyer to one of my new construction properties, you keep 100% of your buyer-side commission, paid directly by the builder. No split. No competition. Just closings.",
+      "I'm Nancy Clarke — the #1 Sales Associate for Adams Homes in St. Lucie County. When you bring your buyer to one of my new construction properties, you keep 100% of your buyer-side commission, paid directly by the builder. No split. No competition. Just closings.",
     primaryCta: { label: "Partner With Me", to: "/realtors" },
     secondaryCta: { label: "I'm a buyer · Browse homes", to: "/buyers" },
     trustStrip: ["60+ closings in 2025", "#1 in territory", "Port St. Lucie · Fort Pierce · Okeechobee County"],
@@ -245,7 +245,7 @@ export const HOMEPAGE = {
     headline:
       "60.5 closings last year. I'm not in this for volume — I'm in it for the right fit.",
     body:
-      "I've been the top-performing sales associate for Adams Homes in St. Lucie County, and the way I got there is the same way I plan to keep going: by treating every realtor partnership and every buyer like a long game. I'd rather walk a buyer away from the wrong floor plan and earn your trust forever than push a quick close. New construction is a serious decision. The realtors who send me buyers know I'll never put a deal at risk to hit a number.",
+      "I've been the top-performing Sales Associate for Adams Homes in St. Lucie County, and the way I got there is the same way I plan to keep going: by treating every realtor partnership and every buyer like a long game. I'd rather walk a buyer away from the wrong floor plan and earn your trust forever than push a quick close. New construction is a serious decision. The realtors who send me buyers know I'll never put a deal at risk to hit a number.",
     stats: [
       { value: "60.5", label: "Closings in 2025" },
       { value: "#1", label: "Adams Homes agent in territory" },
@@ -484,10 +484,10 @@ export const PAGES = {
       eyebrow: "About Nancy",
       headline: "60.5 closings last year. The right fit, every time.",
       subhead:
-        "Sales Associate, Adams Homes of Northwest Florida — and the #1 sales associate in St. Lucie County.",
+        "Sales Associate, Adams Homes of Northwest Florida — and the #1 Sales Associate in St. Lucie County.",
     },
     bio: [
-      "I've been the top-performing sales associate for Adams Homes in St. Lucie County, and the way I got there is the same way I plan to keep going: by treating every realtor partnership and every buyer like a long game.",
+      "I've been the top-performing Sales Associate for Adams Homes in St. Lucie County, and the way I got there is the same way I plan to keep going: by treating every realtor partnership and every buyer like a long game.",
       "I'd rather walk a buyer away from the wrong floor plan and earn your trust forever than push a quick close. New construction is a serious decision — for the buyer, and for the agent who refers them.",
       "The realtors who send me buyers know I'll never put a deal at risk to hit a number. The families I close with stay in touch long after they get their keys. That's the standard.",
     ] as const,

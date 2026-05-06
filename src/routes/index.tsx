@@ -17,7 +17,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Bring your buyer. Keep your full commission. Nancy Clarke is the #1 sales associate for Adams Homes in St. Lucie County — partnering with realtors whose buyers want a brand-new Adams Home.",
+          "Bring your buyer. Keep your full commission. Nancy Clarke is the #1 Sales Associate for Adams Homes in St. Lucie County — partnering with realtors whose buyers want a brand-new Adams Home.",
       },
       {
         property: "og:title",
