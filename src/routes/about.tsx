@@ -11,7 +11,7 @@ import portrait from "@/assets/nancy-portrait.jpg";
 
 const META_TITLE = "About Nancy Clarke — #1 Adams Homes Realtor, St. Lucie County";
 const META_DESC =
-  "Meet Nancy Clarke: top-performing Adams Homes sales associate in St. Lucie County. Read her story, stats, and client testimonials.";
+  "Meet Nancy Clarke: top-performing Sales Associate for Adams Homes in St. Lucie County. Read her story, stats, and client testimonials.";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
