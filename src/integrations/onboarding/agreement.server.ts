@@ -181,6 +181,51 @@ export async function sendAgreementEmail(input: SendAgreementEmailInput): Promis
   }
 }
 
+export async function getAgreementReview(clientSlug: string) {
+  const { data, error } = await supabaseAdmin
+    .from("agreements")
+    .select(
+      "id, client_slug, client_name, client_email, signature_data_url, signed_at, ip_address, user_agent, agreement_version, pdf_storage_path, status"
+    )
+    .eq("client_slug", clientSlug)
+    .eq("status", "signed")
+    .order("signed_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  if (error) {
+    console.error("[getAgreementReview] error:", error.message);
+    throw new Error(error.message);
+  }
+  if (!data) return null;
+
+  let pdfDownloadUrl: string | null = null;
+  if (data.pdf_storage_path) {
+    const { data: signed, error: signErr } = await supabaseAdmin.storage
+      .from(SIGNED_BUCKET)
+      .createSignedUrl(data.pdf_storage_path, 60 * 60);
+    if (signErr) {
+      console.error("[getAgreementReview] sign url error:", signErr.message);
+    } else {
+      pdfDownloadUrl = signed?.signedUrl ?? null;
+    }
+  }
+
+  return {
+    id: data.id,
+    clientSlug: data.client_slug,
+    clientName: data.client_name,
+    clientEmail: data.client_email,
+    signatureDataUrl: data.signature_data_url,
+    signedAt: data.signed_at,
+    ipAddress: data.ip_address,
+    userAgent: data.user_agent,
+    agreementVersion: data.agreement_version,
+    pdfStoragePath: data.pdf_storage_path,
+    pdfDownloadUrl,
+  };
+}
+
 export async function getAgreementStatus(clientSlug: string) {
   const { data, error } = await supabaseAdmin
     .from("agreements")

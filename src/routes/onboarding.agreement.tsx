@@ -52,12 +52,20 @@ function AgreementPage() {
             You signed this agreement on{" "}
             {status.signedAt ? new Date(status.signedAt).toLocaleDateString() : "an earlier date"}.
           </p>
-          <Link
-            to="/onboarding/intake"
-            className="mt-6 inline-flex items-center gap-1.5 rounded-full bg-navy px-5 py-2.5 text-sm font-medium text-cream hover:bg-navy-deep"
-          >
-            Continue to intake →
-          </Link>
+          <div className="mt-6 flex flex-wrap justify-center gap-3">
+            <Link
+              to="/onboarding/intake"
+              className="inline-flex items-center gap-1.5 rounded-full bg-navy px-5 py-2.5 text-sm font-medium text-cream hover:bg-navy-deep"
+            >
+              Continue to intake →
+            </Link>
+            <Link
+              to="/onboarding/agreement/review"
+              className="inline-flex items-center gap-1.5 rounded-full border border-navy px-5 py-2.5 text-sm font-medium text-navy hover:bg-navy hover:text-cream"
+            >
+              Review signed agreement
+            </Link>
+          </div>
         </div>
       ) : (
         <AgreementForm clientSlug={CLIENT_SLUG} clientName={client.name} />

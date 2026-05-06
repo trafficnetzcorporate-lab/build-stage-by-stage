@@ -9,6 +9,7 @@ import {
   submitAgreement,
   sendAgreementEmail,
   getAgreementStatus,
+  getAgreementReview,
 } from "./agreement.server";
 import { saveIntakeDraft, getIntakeDraft, submitIntake } from "./intake.server";
 
@@ -60,6 +61,12 @@ export const getAgreementStatusFn = createServerFn({ method: "GET" })
   .inputValidator((input: unknown) => ClientSlugSchema.parse(input))
   .handler(async ({ data }) => {
     return getAgreementStatus(data.clientSlug);
+  });
+
+export const getAgreementReviewFn = createServerFn({ method: "GET" })
+  .inputValidator((input: unknown) => ClientSlugSchema.parse(input))
+  .handler(async ({ data }) => {
+    return getAgreementReview(data.clientSlug);
   });
 
 // ===== Intake =====
