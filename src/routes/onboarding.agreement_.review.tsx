@@ -6,7 +6,7 @@ import { ChevronLeft, Download, FileText } from "lucide-react";
 
 const CLIENT_SLUG = "nancy-clarke";
 
-export const Route = createFileRoute("/onboarding/agreement/review")({
+export const Route = createFileRoute("/onboarding/agreement_/review")({
   head: () => ({
     meta: [
       { name: "robots", content: "noindex, nofollow" },
