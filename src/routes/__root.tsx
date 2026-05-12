@@ -127,6 +127,15 @@ function RootComponent() {
       <Footer />
       <MobileStickyCTA />
       {import.meta.env.DEV ? <DevPlaceholderBanner /> : null}
+      <noscript>
+        <img
+          height="1"
+          width="1"
+          style={{ display: "none" }}
+          src="https://www.facebook.com/tr?id=956772913871538&ev=PageView&noscript=1"
+          alt=""
+        />
+      </noscript>
     </div>
   );
 }
