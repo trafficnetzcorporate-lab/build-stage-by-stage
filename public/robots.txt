@@ -1,0 +1,17 @@
+# Allow Facebook's external hit crawler
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: facebookcatalog
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
+# Allow Google's crawler
+User-agent: Googlebot
+Allow: /
+
+# Default rules for all other bots
+User-agent: *
+Allow: /
