@@ -1,34 +1,53 @@
-## Root cause
+## Goal
 
-Every page header and most page sections are wrapped in `<FadeInOnScroll>`, which starts at `opacity-0` and only reveals on IntersectionObserver firing. In the in-app preview iframe (and sometimes after client-side navigation), IO doesn't fire reliably for content that is already visible at mount, so heroes and sections stay invisible forever. The inventory grid renders because it's not wrapped.
+Fire a Meta Pixel `Lead` event on the client whenever the contact form successfully submits. Pure frontend change — no backend, no schema, no Pixel base-code edits (that's already in `__root.tsx`).
 
-The carousel + hero render only because they're either not wrapped or get an IO event from the initial scroll.
+## Scope
 
-The slow page-transitions + late contact rendering are symptoms of the same wrapper plus loaders/components that gate render on data without an immediate fallback.
+One file edited, one tiny types file added.
 
-## Fix
+### 1. `src/routes/contact.tsx`
 
-**1. `src/components/layout/FadeInOnScroll.tsx` — make the wrapper safe**
+In the submit handler (around line 171), right after `await submit({ data: parsed.data })` succeeds and before `setSubmitted(true)`, add a guarded, try/catch-wrapped Pixel call so any Pixel error (blocked by ad-blocker, fbq missing, etc.) cannot break the success state:
 
-- On mount, measure the element's bounding rect. If it intersects the viewport already, set `visible=true` immediately (no IO wait).
-- Lower IO threshold from 0.12 → 0.05 and rootMargin from `-60px` → `-40px` so off-screen-but-near content reveals sooner.
-- Add a 1200ms safety `setTimeout` fallback that forces `visible=true` no matter what — content will never be permanently hidden.
-- Keep cleanup for both observer and timeout.
+```ts
+try {
+  if (typeof window !== "undefined" && window.fbq) {
+    window.fbq("track", "Lead");
+  }
+} catch (pixelErr) {
+  // Never let Pixel issues block the success UI
+  console.warn("Meta Pixel Lead event failed:", pixelErr);
+}
+```
 
-**2. Verify after the fix**
+This guarantees the event only fires after Supabase persistence succeeds, and a Pixel failure still lets `setSubmitted(true)` run.
 
-- Navigate via in-app preview to `/about`, `/buyers`, `/sellers`, `/realtors`, `/home-loans`, `/contact`, `/communities`, `/communities/inventory`.
-- Confirm hero + below-the-fold sections render immediately (not blank).
-- Confirm `/contact` paints instantly.
+### 2. `src/types/fbq.d.ts` (new)
 
-**3. Page-transition slowness — separate diagnosis**
+Ambient type so TS doesn't complain about `window.fbq`:
 
-Once visibility is fixed, re-test navigation speed. If pages still feel slow, the cause is most likely:
-- `getAdamsInventory()` server fn being called on routes that don't need it, or
-- large image assets without preloading.
+```ts
+declare global {
+  interface Window {
+    fbq?: (...args: unknown[]) => void;
+  }
+}
+export {};
+```
 
-I'll profile with `browser--performance_profile` and report findings before making further changes.
+## Explicitly out of scope
 
-## Out of scope this pass
+- CAPI / server-side Conversions API (week 2-3, separate task)
+- Meta Event Setup Tool wiring
+- Domain verification meta tag
+- Aggregated Event Measurement priority config
+- Any change to the existing Pixel base script in `src/routes/__root.tsx`
+- Any change to `submitContactFn` or `contact.server.ts` (server fn stays untouched; Lead is a browser-only signal for now)
 
-- "Pages are incomplete" — needs a separate pass per page once they're actually visible. Right now we can't tell what's incomplete vs. just hidden.
+## Verification after implementation
+
+1. Publish to live site.
+2. Load `nancyclarkerealtor.com/contact` with Meta Pixel Helper extension → confirm PageView fires.
+3. Submit the form with a test payload → confirm a second event labelled `Lead` appears in Pixel Helper and in Events Manager → Test Events.
+4. With an ad-blocker enabled, submit again → confirm the success state still renders and a warning is logged in the console.

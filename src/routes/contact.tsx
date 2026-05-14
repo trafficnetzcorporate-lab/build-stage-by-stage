@@ -169,6 +169,13 @@ function ContactPage() {
     setSubmitting(true);
     try {
       await submit({ data: parsed.data });
+      try {
+        if (typeof window !== "undefined" && window.fbq) {
+          window.fbq("track", "Lead");
+        }
+      } catch (pixelErr) {
+        console.warn("Meta Pixel Lead event failed:", pixelErr);
+      }
       setSubmitted(true);
     } catch (err) {
       setServerError(err instanceof Error ? err.message : "Something went wrong.");
