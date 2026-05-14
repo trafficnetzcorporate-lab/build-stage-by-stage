@@ -89,6 +89,7 @@ export const Route = createRootRoute({
       { name: "twitter:description", content: "#1 Adam's Home Realtor in the Port St. Lucie Area" },
       { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/HSxz4g1v4oPiP0DMmZRXScupiIA2/social-images/social-1777676742016-og-image.webp" },
       { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/HSxz4g1v4oPiP0DMmZRXScupiIA2/social-images/social-1777676742016-og-image.webp" },
+      { name: "facebook-domain-verification", content: "0w3rj5fi9hn4d7vda4j6w4ztt8q27x" },
     ],
     links: [{ rel: "stylesheet", href: appCss }],
     scripts: [
