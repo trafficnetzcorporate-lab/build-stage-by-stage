@@ -19,7 +19,9 @@ export const Route = createFileRoute("/communities")({
       { name: "description", content: META_DESC },
       { property: "og:title", content: META_TITLE },
       { property: "og:description", content: META_DESC },
+      { property: "og:url", content: "https://nancyclarkerealtor.com/communities" },
     ],
+    links: [{ rel: "canonical", href: "https://nancyclarkerealtor.com/communities" }],
   }),
   component: CommunitiesPage,
 });
