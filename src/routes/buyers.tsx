@@ -22,7 +22,9 @@ export const Route = createFileRoute("/buyers")({
       { name: "description", content: META_DESC },
       { property: "og:title", content: META_TITLE },
       { property: "og:description", content: META_DESC },
+      { property: "og:url", content: "https://nancyclarkerealtor.com/buyers" },
     ],
+    links: [{ rel: "canonical", href: "https://nancyclarkerealtor.com/buyers" }],
   }),
   component: BuyersPage,
 });
