@@ -103,10 +103,9 @@ export const HERO_IMAGES = [
 ] as const;
 
 export const NAV_LINKS = [
-  { label: "Communities", to: "/communities" },
+  { label: "Inventory", to: "/communities" },
   { label: "For Realtors", to: "/realtors" },
   { label: "Buyers", to: "/buyers" },
-  { label: "Sellers", to: "/sellers" },
   { label: "Home Loans", to: "/home-loans" },
   { label: "About", to: "/about" },
   { label: "Contact", to: "/contact" },
@@ -282,7 +281,7 @@ export const HOMEPAGE = {
 
 /**
  * Inner content pages. Single source of truth for every word on /realtors,
- * /buyers, /communities, /about, /sellers. Closing band headlines are
+ * /buyers, /communities, /about. Closing band headlines are
  * intentionally distinct per page.
  */
 export const PAGES = {
@@ -527,70 +526,4 @@ export const PAGES = {
     },
   },
 
-  sellers: {
-    hero: {
-      eyebrow: "For Sellers",
-      headline: "Selling so you can move into a new build.",
-      subhead:
-        "Most of my sellers are also my next new-construction buyers. I bridge both sides of the move so the timeline actually works.",
-    },
-    bridge: {
-      eyebrow: "The bridge transaction",
-      headline: "One agent for the home you're leaving and the one you're moving into.",
-      lead:
-        "Selling and buying at the same time is the hardest move in real estate. When the same agent is on both sides, the timing, the contingencies, and the closing dates can actually line up.",
-      cards: [
-        {
-          title: "Aligned timelines",
-          body:
-            "Your sale closing and your new-build closing are coordinated together — not by two agents who've never spoken.",
-        },
-        {
-          title: "Contingencies that actually work",
-          body:
-            "Adams Homes accepts contingent contracts in many cases. I'll tell you straight whether yours is a fit and how to structure it.",
-        },
-        {
-          title: "One conversation, not three",
-          body:
-            "Pricing your current home, picking your floor plan, and lining up financing — handled together, not in parallel.",
-        },
-      ],
-    },
-    process: {
-      eyebrow: "How a bridge sale works",
-      headline: "Four steps from listed to keys in hand.",
-      steps: [
-        {
-          n: "01",
-          title: "Walk both sides with me",
-          body:
-            "We tour a few Adams Homes options and look at your current home together. You leave with a realistic price for your home and a realistic timeline for the new one.",
-        },
-        {
-          n: "02",
-          title: "List and reserve in parallel",
-          body:
-            "Your current home goes on the market while we reserve a build slot or hold an inventory home with the right contingency.",
-        },
-        {
-          n: "03",
-          title: "Coordinate the closings",
-          body:
-            "I work the dates with the builder and the buyer's agent so you don't end up between two homes — or paying two mortgages.",
-        },
-        {
-          n: "04",
-          title: "Move once",
-          body:
-            "Same-week closings when possible, a short rent-back when not. The goal is one move, not two.",
-        },
-      ],
-    },
-    closing: {
-      headline: "One agent for the home you're leaving and the one you're moving into.",
-      ctaLabel: "Talk to Nancy",
-      ctaTo: "/contact",
-    },
-  },
 } as const;

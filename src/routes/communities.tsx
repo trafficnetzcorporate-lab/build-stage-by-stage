@@ -3,15 +3,14 @@ import { Section } from "@/components/layout/Section";
 import { Container } from "@/components/layout/Container";
 import { Eyebrow } from "@/components/layout/Eyebrow";
 import { FadeInOnScroll } from "@/components/layout/FadeInOnScroll";
-import { PageHero } from "@/components/pages/PageHero";
 import { ClosingBand } from "@/components/pages/ClosingBand";
 import { SubmarketCard } from "@/components/shared/SubmarketCard";
 import { InventoryCarousel } from "@/components/inventory/InventoryCarousel";
 import { PAGES, COMMUNITIES } from "@/content/site";
 
-const META_TITLE = "Adams Homes Communities — St. Lucie County | Nancy Clarke";
+const META_TITLE = "Live Inventory — Adams Homes in St. Lucie County | Nancy Clarke";
 const META_DESC =
-  "Tour Waterstone single-family homes and villas, plus current Adams Homes inventory across St. Lucie County.";
+  "Browse every active Adams Homes listing in Port St. Lucie, Fort Pierce, and Okeechobee County — updated from the live builder feed.";
 
 export const Route = createFileRoute("/communities")({
   head: () => ({
@@ -26,11 +25,29 @@ export const Route = createFileRoute("/communities")({
 });
 
 function CommunitiesPage() {
-  const { hero, waterstone, submarkets, inventory, closing } = PAGES.communities;
+  const { waterstone, submarkets, closing } = PAGES.communities;
 
   return (
     <>
-      <PageHero {...hero} />
+      {/* Inventory first — the reason most visitors come to this page */}
+      <Section tone="cream" size="lg" className="pt-32 md:pt-36">
+        <Container>
+          <FadeInOnScroll>
+            <div className="text-center">
+              <div className="flex justify-center">
+                <Eyebrow>Live Inventory</Eyebrow>
+              </div>
+              <h1 className="text-display-1 mt-6 text-navy">Inventory</h1>
+              <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground">
+                Active Adams Homes listings across Port St. Lucie, Fort Pierce, and Okeechobee County — straight from the live builder feed, sorted by price.
+              </p>
+            </div>
+          </FadeInOnScroll>
+          <div className="mt-12">
+            <InventoryCarousel />
+          </div>
+        </Container>
+      </Section>
 
       <Section tone="white" size="lg">
         <Container>
@@ -88,27 +105,6 @@ function CommunitiesPage() {
                 <SubmarketCard name={c.name} to="/communities" blurb={c.blurb} />
               </FadeInOnScroll>
             ))}
-          </div>
-        </Container>
-      </Section>
-
-      <Section tone="cream-deep" size="lg">
-        <Container>
-          <FadeInOnScroll>
-            <div className="text-center">
-              <div className="flex justify-center">
-                <Eyebrow>{inventory.eyebrow}</Eyebrow>
-              </div>
-              <h2 className="text-display-2 mt-6 text-navy">
-                {inventory.headline}
-              </h2>
-              <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground">
-                {inventory.subhead}
-              </p>
-            </div>
-          </FadeInOnScroll>
-          <div className="mt-14">
-            <InventoryCarousel />
           </div>
         </Container>
       </Section>
