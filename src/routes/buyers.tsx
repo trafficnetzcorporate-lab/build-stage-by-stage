@@ -33,6 +33,26 @@ function BuyersPage() {
     <>
       <PageHero {...hero} />
 
+      {/* Stat strip — fast credibility for visiting buyers */}
+      <Section tone="navy" size="sm">
+        <Container>
+          <div className="grid gap-8 text-center sm:grid-cols-3">
+            {[
+              { value: "60+", label: "Families closed in 2025" },
+              { value: "3", label: "St. Lucie County communities" },
+              { value: "#1", label: "Adams Homes agent in territory" },
+            ].map((s, i) => (
+              <FadeInOnScroll key={s.label} delay={i * 100}>
+                <div>
+                  <div className="font-display text-5xl text-gold md:text-6xl">{s.value}</div>
+                  <div className="mt-2 text-xs uppercase tracking-widest text-cream/70">{s.label}</div>
+                </div>
+              </FadeInOnScroll>
+            ))}
+          </div>
+        </Container>
+      </Section>
+
       <Section tone="white" size="lg">
         <Container>
           <FadeInOnScroll>
@@ -42,19 +62,26 @@ function BuyersPage() {
             </h2>
           </FadeInOnScroll>
           <div className="mt-14 grid gap-8 md:grid-cols-3">
-            {whyNew.cards.map((c, i) => (
-              <FadeInOnScroll key={c.title} delay={i * 120}>
-                <article className="h-full rounded-2xl border border-gold-soft/60 bg-cream p-8 md:p-10">
-                  <h3 className="text-display-3 text-navy">{c.title}</h3>
-                  <p className="mt-4 text-base leading-relaxed text-muted-foreground">
-                    {c.body}
-                  </p>
-                </article>
-              </FadeInOnScroll>
-            ))}
+            {whyNew.cards.map((c, i) => {
+              const Icon = CARD_ICONS[i] ?? ShieldCheck;
+              return (
+                <FadeInOnScroll key={c.title} delay={i * 120}>
+                  <article className="group h-full rounded-2xl border border-gold-soft/60 bg-cream p-8 transition-all duration-500 hover:-translate-y-1 hover:border-gold hover:shadow-xl hover:shadow-gold/10 md:p-10">
+                    <div className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-gold-soft/40 text-gold">
+                      <Icon size={22} strokeWidth={1.75} />
+                    </div>
+                    <h3 className="text-display-3 mt-6 text-navy">{c.title}</h3>
+                    <p className="mt-4 text-base leading-relaxed text-muted-foreground">
+                      {c.body}
+                    </p>
+                  </article>
+                </FadeInOnScroll>
+              );
+            })}
           </div>
         </Container>
       </Section>
+
 
       <Section tone="cream" size="lg">
         <Container>
@@ -100,6 +127,45 @@ function BuyersPage() {
                 <SubmarketCard name={c.name} to="/communities" blurb={c.blurb} />
               </FadeInOnScroll>
             ))}
+          </div>
+        </Container>
+      </Section>
+
+      {/* Testimonials — three real buyer quotes */}
+      <Section tone="cream-deep" size="lg">
+        <Container>
+          <FadeInOnScroll>
+            <div className="text-center">
+              <Eyebrow>What buyers say</Eyebrow>
+              <h2 className="text-display-2 mt-6 text-navy">Families who closed with Nancy.</h2>
+            </div>
+          </FadeInOnScroll>
+          <div className="mt-12 grid gap-6 md:grid-cols-3">
+            {TESTIMONIALS.slice(0, 3).map((t, i) => (
+              <FadeInOnScroll key={t.attribution} delay={i * 120}>
+                <article className="flex h-full flex-col rounded-2xl border border-navy/10 bg-white p-8">
+                  <Quote size={28} className="text-gold" strokeWidth={1.5} />
+                  <p className="mt-5 flex-1 text-[15px] leading-relaxed text-navy/85">
+                    {t.quote}
+                  </p>
+                  <div className="mt-6 text-xs uppercase tracking-widest text-muted-foreground">
+                    — {t.attribution}
+                  </div>
+                </article>
+              </FadeInOnScroll>
+            ))}
+          </div>
+          <div className="mt-12 text-center">
+            <Link
+              to="/contact"
+              className="group inline-flex h-12 items-center gap-2 rounded-full bg-success px-7 text-sm font-semibold text-cream shadow shadow-success/20 transition-all duration-300 hover:-translate-y-0.5"
+            >
+              Start your home search with Nancy
+              <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
+            </Link>
+            <div className="mt-3 text-xs text-muted-foreground">
+              Or call directly: <a href={SITE.phoneHref} className="font-medium text-navy hover:text-gold">{SITE.phone}</a>
+            </div>
           </div>
         </Container>
       </Section>
