@@ -12,7 +12,15 @@ export const Route = createFileRoute("/privacy")({
         content:
           "How Nancy Clarke, Sales Associate with Adams Homes of Northwest Florida, collects, uses, and protects information submitted through nancyclarkerealtor.com.",
       },
+      { property: "og:title", content: "Privacy Policy — Nancy Clarke Realtor" },
+      {
+        property: "og:description",
+        content:
+          "How we collect, use, and protect information submitted through nancyclarkerealtor.com.",
+      },
+      { property: "og:url", content: "https://nancyclarkerealtor.com/privacy" },
     ],
+    links: [{ rel: "canonical", href: "https://nancyclarkerealtor.com/privacy" }],
   }),
   component: PrivacyPage,
 });
