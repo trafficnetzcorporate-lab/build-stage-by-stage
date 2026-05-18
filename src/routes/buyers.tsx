@@ -1,4 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowRight, Quote, ShieldCheck, Sparkles, Wallet } from "lucide-react";
 import { Section } from "@/components/layout/Section";
 import { Container } from "@/components/layout/Container";
 import { Eyebrow } from "@/components/layout/Eyebrow";
@@ -6,7 +7,9 @@ import { FadeInOnScroll } from "@/components/layout/FadeInOnScroll";
 import { PageHero } from "@/components/pages/PageHero";
 import { ClosingBand } from "@/components/pages/ClosingBand";
 import { SubmarketCard } from "@/components/shared/SubmarketCard";
-import { PAGES, COMMUNITIES } from "@/content/site";
+import { PAGES, COMMUNITIES, TESTIMONIALS, SITE } from "@/content/site";
+
+const CARD_ICONS = [ShieldCheck, Sparkles, Wallet] as const;
 
 const META_TITLE = "Buying New Construction in St. Lucie County — Nancy Clarke";
 const META_DESC =
