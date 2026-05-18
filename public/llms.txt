@@ -1,0 +1,20 @@
+# Nancy Clarke Realtor
+
+> Nancy Clarke is the #1 Sales Associate for Adams Homes in St. Lucie County, Florida — partnering with realtors whose buyers want a brand-new Adams Home in Port St. Lucie, Fort Pierce, or Okeechobee County.
+
+## Pages
+
+- [Home](/): Overview of Nancy's new construction partnership for realtors and buyers.
+- [Inventory](/communities): Live Adams Homes inventory across St. Lucie County.
+- [Inventory grid](/communities/inventory): Full filterable list of active Adams Homes listings.
+- [For Realtors](/realtors): How realtor referrals work — keep 100% of your buyer-side commission.
+- [For Buyers](/buyers): What to expect when buying a new Adams Home in St. Lucie County.
+- [Home Loans](/home-loans): Trusted mortgage partners for new construction buyers.
+- [About](/about): About Nancy Clarke, her stats, and client testimonials.
+- [Contact](/contact): Get in touch with Nancy for realtor partnerships or buyer inquiries.
+
+## Optional
+
+- [Privacy Policy](/privacy)
+- [Terms of Service](/terms)
+- [Accessibility](/accessibility)

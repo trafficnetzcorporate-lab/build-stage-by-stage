@@ -15,3 +15,6 @@ Allow: /
 # Default rules for all other bots
 User-agent: *
 Allow: /
+
+Sitemap: https://nancyclarkerealtor.com/sitemap.xml
+
