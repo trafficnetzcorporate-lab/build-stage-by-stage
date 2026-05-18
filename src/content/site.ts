@@ -281,7 +281,7 @@ export const HOMEPAGE = {
 
 /**
  * Inner content pages. Single source of truth for every word on /realtors,
- * /buyers, /communities, /about, /sellers. Closing band headlines are
+ * /buyers, /communities, /about. Closing band headlines are
  * intentionally distinct per page.
  */
 export const PAGES = {
