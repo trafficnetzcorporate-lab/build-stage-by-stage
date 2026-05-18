@@ -10,7 +10,6 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TermsRouteImport } from './routes/terms'
-import { Route as SellersRouteImport } from './routes/sellers'
 import { Route as RealtorsRouteImport } from './routes/realtors'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
@@ -32,11 +31,6 @@ import { Route as OnboardingAgreementSuccessRouteImport } from './routes/onboard
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
   path: '/terms',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SellersRoute = SellersRouteImport.update({
-  id: '/sellers',
-  path: '/sellers',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RealtorsRoute = RealtorsRouteImport.update({
@@ -138,7 +132,6 @@ export interface FileRoutesByFullPath {
   '/onboarding': typeof OnboardingRouteWithChildren
   '/privacy': typeof PrivacyRoute
   '/realtors': typeof RealtorsRoute
-  '/sellers': typeof SellersRoute
   '/terms': typeof TermsRoute
   '/communities/inventory': typeof CommunitiesInventoryRoute
   '/onboarding/agreement': typeof OnboardingAgreementRouteWithChildren
@@ -158,7 +151,6 @@ export interface FileRoutesByTo {
   '/home-loans': typeof HomeLoansRoute
   '/privacy': typeof PrivacyRoute
   '/realtors': typeof RealtorsRoute
-  '/sellers': typeof SellersRoute
   '/terms': typeof TermsRoute
   '/communities/inventory': typeof CommunitiesInventoryRoute
   '/onboarding/agreement': typeof OnboardingAgreementRouteWithChildren
@@ -180,7 +172,6 @@ export interface FileRoutesById {
   '/onboarding': typeof OnboardingRouteWithChildren
   '/privacy': typeof PrivacyRoute
   '/realtors': typeof RealtorsRoute
-  '/sellers': typeof SellersRoute
   '/terms': typeof TermsRoute
   '/communities_/inventory': typeof CommunitiesInventoryRoute
   '/onboarding/agreement': typeof OnboardingAgreementRouteWithChildren
@@ -203,7 +194,6 @@ export interface FileRouteTypes {
     | '/onboarding'
     | '/privacy'
     | '/realtors'
-    | '/sellers'
     | '/terms'
     | '/communities/inventory'
     | '/onboarding/agreement'
@@ -223,7 +213,6 @@ export interface FileRouteTypes {
     | '/home-loans'
     | '/privacy'
     | '/realtors'
-    | '/sellers'
     | '/terms'
     | '/communities/inventory'
     | '/onboarding/agreement'
@@ -244,7 +233,6 @@ export interface FileRouteTypes {
     | '/onboarding'
     | '/privacy'
     | '/realtors'
-    | '/sellers'
     | '/terms'
     | '/communities_/inventory'
     | '/onboarding/agreement'
@@ -266,7 +254,6 @@ export interface RootRouteChildren {
   OnboardingRoute: typeof OnboardingRouteWithChildren
   PrivacyRoute: typeof PrivacyRoute
   RealtorsRoute: typeof RealtorsRoute
-  SellersRoute: typeof SellersRoute
   TermsRoute: typeof TermsRoute
   CommunitiesInventoryRoute: typeof CommunitiesInventoryRoute
 }
@@ -278,13 +265,6 @@ declare module '@tanstack/react-router' {
       path: '/terms'
       fullPath: '/terms'
       preLoaderRoute: typeof TermsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sellers': {
-      id: '/sellers'
-      path: '/sellers'
-      fullPath: '/sellers'
-      preLoaderRoute: typeof SellersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/realtors': {
@@ -460,7 +440,6 @@ const rootRouteChildren: RootRouteChildren = {
   OnboardingRoute: OnboardingRouteWithChildren,
   PrivacyRoute: PrivacyRoute,
   RealtorsRoute: RealtorsRoute,
-  SellersRoute: SellersRoute,
   TermsRoute: TermsRoute,
   CommunitiesInventoryRoute: CommunitiesInventoryRoute,
 }

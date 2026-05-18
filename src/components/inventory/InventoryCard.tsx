@@ -35,16 +35,6 @@ export function InventoryCard({ home }: { home: AdamsHomeProperty }) {
             Photo coming soon
           </div>
         )}
-        <span
-          className={
-            "absolute left-3 top-3 inline-flex items-center rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-wider " +
-            (home.status === "move-in"
-              ? "bg-gold text-navy-deep"
-              : "bg-navy text-cream")
-          }
-        >
-          {home.status === "move-in" ? "Move-in Ready" : "Under Construction"}
-        </span>
       </div>
 
       <div className="flex flex-1 flex-col p-5">
