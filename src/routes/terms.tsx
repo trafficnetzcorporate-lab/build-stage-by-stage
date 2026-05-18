@@ -12,7 +12,15 @@ export const Route = createFileRoute("/terms")({
         content:
           "Terms governing use of nancyclarkerealtor.com, the personal site of Nancy Clarke, Sales Associate with Adams Homes of Northwest Florida.",
       },
+      { property: "og:title", content: "Terms of Service — Nancy Clarke Realtor" },
+      {
+        property: "og:description",
+        content:
+          "Terms governing use of nancyclarkerealtor.com.",
+      },
+      { property: "og:url", content: "https://nancyclarkerealtor.com/terms" },
     ],
+    links: [{ rel: "canonical", href: "https://nancyclarkerealtor.com/terms" }],
   }),
   component: TermsPage,
 });
