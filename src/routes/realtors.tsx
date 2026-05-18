@@ -1,5 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { DollarSign, HardHat, Home } from "lucide-react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { DollarSign, HardHat, Home, ArrowRight, Quote } from "lucide-react";
 import { Section } from "@/components/layout/Section";
 import { Container } from "@/components/layout/Container";
 import { Eyebrow } from "@/components/layout/Eyebrow";
@@ -12,7 +12,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { PAGES } from "@/content/site";
+import { PAGES, TESTIMONIALS, SITE } from "@/content/site";
 
 const ICONS = { DollarSign, HardHat, Home } as const;
 
@@ -37,6 +37,27 @@ function RealtorsPage() {
   return (
     <>
       <PageHero {...hero} />
+
+      {/* Stat strip — instant credibility */}
+      <Section tone="navy" size="sm">
+        <Container>
+          <div className="grid gap-8 text-center sm:grid-cols-3">
+            {[
+              { value: "60+", label: "Closings in 2025" },
+              { value: "#1", label: "Adams Homes agent in St. Lucie County" },
+              { value: "100%", label: "Of your buyer-side commission" },
+            ].map((s, i) => (
+              <FadeInOnScroll key={s.label} delay={i * 100}>
+                <div>
+                  <div className="font-display text-5xl text-gold md:text-6xl">{s.value}</div>
+                  <div className="mt-2 text-xs uppercase tracking-widest text-cream/70">{s.label}</div>
+                </div>
+              </FadeInOnScroll>
+            ))}
+          </div>
+        </Container>
+      </Section>
+
 
       <Section tone="white" size="lg">
         <Container>
