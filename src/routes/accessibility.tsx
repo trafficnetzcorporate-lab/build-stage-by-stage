@@ -12,7 +12,15 @@ export const Route = createFileRoute("/accessibility")({
         content:
           "Nancy Clarke's commitment to making nancyclarkerealtor.com usable for everyone, including people with disabilities.",
       },
+      { property: "og:title", content: "Accessibility — Nancy Clarke Realtor" },
+      {
+        property: "og:description",
+        content:
+          "Our commitment to WCAG 2.1 AA accessibility on nancyclarkerealtor.com.",
+      },
+      { property: "og:url", content: "https://nancyclarkerealtor.com/accessibility" },
     ],
+    links: [{ rel: "canonical", href: "https://nancyclarkerealtor.com/accessibility" }],
   }),
   component: AccessibilityPage,
 });
