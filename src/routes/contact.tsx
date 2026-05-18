@@ -36,7 +36,15 @@ export const Route = createFileRoute("/contact")({
         content:
           "Get in touch with Nancy Clarke. Realtor partnerships and buyer inquiries welcome.",
       },
+      { property: "og:title", content: "Contact Nancy Clarke — Adams Homes, St. Lucie County" },
+      {
+        property: "og:description",
+        content:
+          "Get in touch with Nancy Clarke. Realtor partnerships and buyer inquiries welcome.",
+      },
+      { property: "og:url", content: "https://nancyclarkerealtor.com/contact" },
     ],
+    links: [{ rel: "canonical", href: "https://nancyclarkerealtor.com/contact" }],
   }),
   component: ContactPage,
 });

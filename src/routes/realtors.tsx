@@ -27,6 +27,22 @@ export const Route = createFileRoute("/realtors")({
       { name: "description", content: META_DESC },
       { property: "og:title", content: META_TITLE },
       { property: "og:description", content: META_DESC },
+      { property: "og:url", content: "https://nancyclarkerealtor.com/realtors" },
+    ],
+    links: [{ rel: "canonical", href: "https://nancyclarkerealtor.com/realtors" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: PAGES.realtors.faq.items.map((item) => ({
+            "@type": "Question",
+            name: item.q,
+            acceptedAnswer: { "@type": "Answer", text: item.a },
+          })),
+        }),
+      },
     ],
   }),
   component: RealtorsPage,

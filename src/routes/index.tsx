@@ -17,7 +17,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Bring your buyer. Keep your full commission. Nancy Clarke is the #1 Sales Associate for Adams Homes in St. Lucie County — partnering with realtors whose buyers want a brand-new Adams Home.",
+          "Bring your buyer. Keep your full commission. Nancy Clarke is the #1 Adams Homes Sales Associate in St. Lucie County, Florida.",
       },
       {
         property: "og:title",
@@ -27,6 +27,32 @@ export const Route = createFileRoute("/")({
         property: "og:description",
         content:
           "Realtors keep 100% of their buyer-side commission. Nancy handles the build, the financing, and the close.",
+      },
+      { property: "og:url", content: "https://nancyclarkerealtor.com/" },
+    ],
+    links: [{ rel: "canonical", href: "https://nancyclarkerealtor.com/" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "RealEstateAgent",
+          name: "Nancy Clarke",
+          jobTitle: "Sales Associate, Adams Homes of Northwest Florida",
+          telephone: "+1-772-899-7333",
+          email: "nancy.clarke@adamshomes.com",
+          url: "https://nancyclarkerealtor.com/",
+          areaServed: [
+            { "@type": "City", name: "Port St. Lucie" },
+            { "@type": "City", name: "Fort Pierce" },
+            { "@type": "AdministrativeArea", name: "Okeechobee County" },
+          ],
+          address: {
+            "@type": "PostalAddress",
+            addressRegion: "FL",
+            addressCountry: "US",
+          },
+        }),
       },
     ],
   }),
