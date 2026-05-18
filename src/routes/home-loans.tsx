@@ -23,7 +23,15 @@ export const Route = createFileRoute("/home-loans")({
         content:
           "Trusted mortgage partners for Adams Homes new construction buyers in St. Lucie County.",
       },
+      { property: "og:title", content: "Home Loans — Nancy Clarke, Adams Homes" },
+      {
+        property: "og:description",
+        content:
+          "Trusted mortgage partners for Adams Homes new construction buyers in St. Lucie County.",
+      },
+      { property: "og:url", content: "https://nancyclarkerealtor.com/home-loans" },
     ],
+    links: [{ rel: "canonical", href: "https://nancyclarkerealtor.com/home-loans" }],
   }),
   component: HomeLoansPage,
 });
