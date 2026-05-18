@@ -141,6 +141,33 @@ function RealtorsPage() {
         </Container>
       </Section>
 
+      {/* Testimonial pull-quote band */}
+      <Section tone="cream-deep" size="lg">
+        <Container size="narrow">
+          <FadeInOnScroll>
+            <div className="text-center">
+              <Quote size={36} className="mx-auto text-gold" strokeWidth={1.5} />
+              <blockquote className="text-display-3 mt-6 text-navy">
+                "{TESTIMONIALS[0].quote}"
+              </blockquote>
+              <div className="mt-6 text-sm uppercase tracking-widest text-muted-foreground">
+                — {TESTIMONIALS[0].attribution} · Buyer
+              </div>
+              <Link
+                to="/contact"
+                className="group mt-10 inline-flex h-12 items-center gap-2 rounded-full bg-navy px-7 text-sm font-semibold text-cream transition-all duration-300 hover:-translate-y-0.5 hover:bg-navy-deep"
+              >
+                Refer a buyer to Nancy
+                <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
+              </Link>
+              <div className="mt-4 text-xs text-muted-foreground">
+                Or call directly: <a href={SITE.phoneHref} className="font-medium text-navy hover:text-gold">{SITE.phone}</a>
+              </div>
+            </div>
+          </FadeInOnScroll>
+        </Container>
+      </Section>
+
       <ClosingBand {...closing} />
     </>
   );
