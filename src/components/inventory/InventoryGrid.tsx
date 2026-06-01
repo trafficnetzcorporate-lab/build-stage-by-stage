@@ -3,18 +3,11 @@ import { InventoryCard } from "@/components/inventory/InventoryCard";
 import { getAdamsInventory } from "@/integrations/adams-homes/inventory.functions";
 import type { AdamsHomeProperty, CityFilter } from "@/integrations/adams-homes/types";
 
-const PILLS: { label: string; value: CityFilter }[] = [
-  { label: "All", value: "all" },
-  { label: "Port St. Lucie", value: "Port St. Lucie" },
-  { label: "Fort Pierce", value: "Fort Pierce" },
-  { label: "Okeechobee County", value: "Okeechobee County" },
-];
-
 function matches(home: AdamsHomeProperty, filter: CityFilter): boolean {
   if (filter === "all") return true;
-  if (filter === "Okeechobee County") return home.city === "Okeechobee";
   return home.city === filter;
 }
+
 
 export function InventoryGrid({ initialFilter = "all" }: { initialFilter?: CityFilter } = {}) {
   const [filter, setFilter] = React.useState<CityFilter>(initialFilter);
