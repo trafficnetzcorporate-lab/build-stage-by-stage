@@ -52,8 +52,11 @@ export function InventoryCarousel() {
   }, []);
 
   const filtered = React.useMemo(
-    () => data.properties.filter((h) => matchesCity(h, filter)),
-    [data.properties, filter],
+    () =>
+      data.properties.filter(
+        (h) => matchesCity(h, filter) && (!inDemandOnly || isHighDemand(h)),
+      ),
+    [data.properties, filter, inDemandOnly],
   );
   const visible = filtered.slice(0, 12);
   const hasMore = filtered.length > 12;
@@ -75,6 +78,11 @@ export function InventoryCarousel() {
     }
   }, [visiblePills, filter, data.loading]);
 
+  const demandCount = React.useMemo(
+    () => data.properties.filter(isHighDemand).length,
+    [data.properties],
+  );
+
 
   const scrollByCard = (dir: 1 | -1) => {
     const node = scrollerRef.current;
@@ -88,6 +96,23 @@ export function InventoryCarousel() {
     <div>
       {/* Filter pills */}
       <div className="mb-8 flex flex-wrap items-center justify-center gap-2">
+        <button
+          type="button"
+          onClick={() => setInDemandOnly((v) => !v)}
+          aria-pressed={inDemandOnly}
+          className={
+            "inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-medium transition-colors " +
+            (inDemandOnly
+              ? "bg-gold text-navy"
+              : "border border-gold/40 bg-white text-navy hover:border-gold")
+          }
+        >
+          <Sparkles size={14} aria-hidden />
+          Most In Demand
+          {demandCount > 0 ? (
+            <span className="ml-1 text-xs opacity-70">({demandCount})</span>
+          ) : null}
+        </button>
         {visiblePills.map((p) => {
           const active = filter === p.value;
           return (
@@ -107,6 +132,7 @@ export function InventoryCarousel() {
           );
         })}
       </div>
+
 
       {/* Carousel / states */}
       {data.loading ? (
