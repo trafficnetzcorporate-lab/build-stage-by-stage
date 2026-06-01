@@ -1,6 +1,10 @@
 import type { AdamsHomeProperty } from "./types";
 
-const SOURCE_URL = "https://www.adamshomes.com/homes/florida/port-st-lucie";
+const SOURCE_URLS = [
+  "https://www.adamshomes.com/homes/florida/port-st-lucie",
+  "https://www.adamshomes.com/homes/florida/fort-pierce",
+  "https://www.adamshomes.com/homes/florida/okeechobee",
+];
 const USER_AGENT =
   "Mozilla/5.0 NancyClarkeRealtor/1.0 (+https://nancyclarkerealtor.com)";
 
