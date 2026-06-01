@@ -1,6 +1,8 @@
 import * as React from "react";
+import { Sparkles } from "lucide-react";
 import { InventoryCard } from "@/components/inventory/InventoryCard";
 import { getAdamsInventory } from "@/integrations/adams-homes/inventory.functions";
+import { isHighDemand } from "@/integrations/adams-homes/demand";
 import type { AdamsHomeProperty, CityFilter } from "@/integrations/adams-homes/types";
 
 function matches(home: AdamsHomeProperty, filter: CityFilter): boolean {
@@ -9,8 +11,12 @@ function matches(home: AdamsHomeProperty, filter: CityFilter): boolean {
 }
 
 
-export function InventoryGrid({ initialFilter = "all" }: { initialFilter?: CityFilter } = {}) {
+export function InventoryGrid({
+  initialFilter = "all",
+  initialDemand = false,
+}: { initialFilter?: CityFilter; initialDemand?: boolean } = {}) {
   const [filter, setFilter] = React.useState<CityFilter>(initialFilter);
+  const [inDemandOnly, setInDemandOnly] = React.useState<boolean>(initialDemand);
   const [state, setState] = React.useState<{
     properties: AdamsHomeProperty[];
     loading: boolean;
@@ -27,8 +33,11 @@ export function InventoryGrid({ initialFilter = "all" }: { initialFilter?: CityF
   }, []);
 
   const filtered = React.useMemo(
-    () => state.properties.filter((h) => matches(h, filter)),
-    [state.properties, filter],
+    () =>
+      state.properties.filter(
+        (h) => matches(h, filter) && (!inDemandOnly || isHighDemand(h)),
+      ),
+    [state.properties, filter, inDemandOnly],
   );
 
   const visiblePills = React.useMemo<{ label: string; value: CityFilter }[]>(() => {
@@ -46,10 +55,32 @@ export function InventoryGrid({ initialFilter = "all" }: { initialFilter?: CityF
     if (!visiblePills.some((p) => p.value === filter)) setFilter("all");
   }, [visiblePills, filter, state.loading]);
 
+  const demandCount = React.useMemo(
+    () => state.properties.filter(isHighDemand).length,
+    [state.properties],
+  );
+
 
   return (
     <div>
       <div className="mb-8 flex flex-wrap items-center justify-center gap-2">
+        <button
+          type="button"
+          onClick={() => setInDemandOnly((v) => !v)}
+          aria-pressed={inDemandOnly}
+          className={
+            "inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-medium transition-colors " +
+            (inDemandOnly
+              ? "bg-gold text-navy"
+              : "border border-gold/40 bg-white text-navy hover:border-gold")
+          }
+        >
+          <Sparkles size={14} aria-hidden />
+          Most In Demand
+          {demandCount > 0 ? (
+            <span className="ml-1 text-xs opacity-70">({demandCount})</span>
+          ) : null}
+        </button>
         {visiblePills.map((p) => {
           const active = filter === p.value;
           return (
@@ -76,8 +107,11 @@ export function InventoryGrid({ initialFilter = "all" }: { initialFilter?: CityF
         </div>
       ) : filtered.length === 0 ? (
         <p className="text-center text-base text-navy">
-          No homes match this filter right now. Try All, or call Nancy directly at (772) 899-7333.
+          {inDemandOnly
+            ? "No high-demand matches in the current Adams inventory. Try All, or call Nancy at (772) 899-7333."
+            : "No homes match this filter right now. Try All, or call Nancy directly at (772) 899-7333."}
         </p>
+
       ) : (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {filtered.map((home) => (
@@ -92,7 +126,7 @@ export function InventoryGrid({ initialFilter = "all" }: { initialFilter?: CityF
 
       {import.meta.env.DEV ? (
         <div className="mt-4 rounded border border-amber-300 bg-amber-50 px-3 py-2 text-center text-[11px] font-mono text-amber-900">
-          inventory: total={state.properties.length} filtered={filtered.length}{" "}
+          inventory: total={state.properties.length} demand={demandCount} filtered={filtered.length}{" "}
           last={state.lastFetched ?? "—"} {state.error ? `err=${state.error}` : ""}
         </div>
       ) : null}

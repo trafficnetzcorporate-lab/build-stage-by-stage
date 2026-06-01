@@ -1,9 +1,10 @@
 import * as React from "react";
 import { Link } from "@tanstack/react-router";
-import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, ArrowRight, Sparkles } from "lucide-react";
 import { FadeInOnScroll } from "@/components/layout/FadeInOnScroll";
 import { InventoryCard } from "@/components/inventory/InventoryCard";
 import { getAdamsInventory } from "@/integrations/adams-homes/inventory.functions";
+import { isHighDemand } from "@/integrations/adams-homes/demand";
 import type { AdamsHomeProperty, CityFilter } from "@/integrations/adams-homes/types";
 
 function matchesCity(home: AdamsHomeProperty, filter: CityFilter): boolean {
@@ -14,6 +15,7 @@ function matchesCity(home: AdamsHomeProperty, filter: CityFilter): boolean {
 
 export function InventoryCarousel() {
   const [filter, setFilter] = React.useState<CityFilter>("all");
+  const [inDemandOnly, setInDemandOnly] = React.useState<boolean>(false);
   const [data, setData] = React.useState<{
     properties: AdamsHomeProperty[];
     loading: boolean;
@@ -50,8 +52,11 @@ export function InventoryCarousel() {
   }, []);
 
   const filtered = React.useMemo(
-    () => data.properties.filter((h) => matchesCity(h, filter)),
-    [data.properties, filter],
+    () =>
+      data.properties.filter(
+        (h) => matchesCity(h, filter) && (!inDemandOnly || isHighDemand(h)),
+      ),
+    [data.properties, filter, inDemandOnly],
   );
   const visible = filtered.slice(0, 12);
   const hasMore = filtered.length > 12;
@@ -73,6 +78,11 @@ export function InventoryCarousel() {
     }
   }, [visiblePills, filter, data.loading]);
 
+  const demandCount = React.useMemo(
+    () => data.properties.filter(isHighDemand).length,
+    [data.properties],
+  );
+
 
   const scrollByCard = (dir: 1 | -1) => {
     const node = scrollerRef.current;
@@ -86,6 +96,23 @@ export function InventoryCarousel() {
     <div>
       {/* Filter pills */}
       <div className="mb-8 flex flex-wrap items-center justify-center gap-2">
+        <button
+          type="button"
+          onClick={() => setInDemandOnly((v) => !v)}
+          aria-pressed={inDemandOnly}
+          className={
+            "inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-medium transition-colors " +
+            (inDemandOnly
+              ? "bg-gold text-navy"
+              : "border border-gold/40 bg-white text-navy hover:border-gold")
+          }
+        >
+          <Sparkles size={14} aria-hidden />
+          Most In Demand
+          {demandCount > 0 ? (
+            <span className="ml-1 text-xs opacity-70">({demandCount})</span>
+          ) : null}
+        </button>
         {visiblePills.map((p) => {
           const active = filter === p.value;
           return (
@@ -105,6 +132,7 @@ export function InventoryCarousel() {
           );
         })}
       </div>
+
 
       {/* Carousel / states */}
       {data.loading ? (
@@ -190,7 +218,7 @@ export function InventoryCarousel() {
 
       {import.meta.env.DEV ? (
         <div className="mt-4 rounded border border-amber-300 bg-amber-50 px-3 py-2 text-center text-[11px] font-mono text-amber-900">
-          inventory: total={data.properties.length} filtered={filtered.length} shown={visible.length}{" "}
+          inventory: total={data.properties.length} demand={demandCount} filtered={filtered.length} shown={visible.length}{" "}
           last={data.lastFetched ?? "—"} {data.error ? `err=${data.error}` : ""}
         </div>
       ) : null}

@@ -8,6 +8,7 @@ import type { CityFilter } from "@/integrations/adams-homes/types";
 
 const searchSchema = z.object({
   city: fallback(z.string(), "all").default("all"),
+  demand: fallback(z.boolean(), false).default(false),
 });
 
 
@@ -27,11 +28,11 @@ export const Route = createFileRoute("/communities_/inventory")({
 });
 
 function InventoryPage() {
-  const { city } = Route.useSearch();
+  const { city, demand } = Route.useSearch();
   return (
     <Section tone="cream" size="sm" className="pt-24 md:pt-28">
       <Container>
-        <InventoryGrid initialFilter={city as CityFilter} />
+        <InventoryGrid initialFilter={city as CityFilter} initialDemand={demand} />
       </Container>
     </Section>
   );
