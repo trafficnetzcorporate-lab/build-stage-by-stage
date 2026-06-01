@@ -33,5 +33,10 @@ export type InventoryResult = {
   error: string | null;
 };
 
-/** Filter pill values matched against normalized `city` */
-export type CityFilter = "all" | "Port St. Lucie" | "Fort Pierce" | "Okeechobee County";
+/**
+ * Filter pill value. Either the literal "all" or any city string returned
+ * by the scraper. Pills are derived from live scraped inventory — no
+ * hardcoded city allowlist.
+ */
+export type CityFilter = "all" | (string & {});
+
