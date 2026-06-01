@@ -1,6 +1,8 @@
 import * as React from "react";
+import { Sparkles } from "lucide-react";
 import { InventoryCard } from "@/components/inventory/InventoryCard";
 import { getAdamsInventory } from "@/integrations/adams-homes/inventory.functions";
+import { isHighDemand } from "@/integrations/adams-homes/demand";
 import type { AdamsHomeProperty, CityFilter } from "@/integrations/adams-homes/types";
 
 function matches(home: AdamsHomeProperty, filter: CityFilter): boolean {
@@ -9,8 +11,12 @@ function matches(home: AdamsHomeProperty, filter: CityFilter): boolean {
 }
 
 
-export function InventoryGrid({ initialFilter = "all" }: { initialFilter?: CityFilter } = {}) {
+export function InventoryGrid({
+  initialFilter = "all",
+  initialDemand = false,
+}: { initialFilter?: CityFilter; initialDemand?: boolean } = {}) {
   const [filter, setFilter] = React.useState<CityFilter>(initialFilter);
+  const [inDemandOnly, setInDemandOnly] = React.useState<boolean>(initialDemand);
   const [state, setState] = React.useState<{
     properties: AdamsHomeProperty[];
     loading: boolean;
