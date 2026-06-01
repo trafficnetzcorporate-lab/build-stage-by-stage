@@ -126,7 +126,7 @@ export function InventoryGrid({
 
       {import.meta.env.DEV ? (
         <div className="mt-4 rounded border border-amber-300 bg-amber-50 px-3 py-2 text-center text-[11px] font-mono text-amber-900">
-          inventory: total={state.properties.length} filtered={filtered.length}{" "}
+          inventory: total={state.properties.length} demand={demandCount} filtered={filtered.length}{" "}
           last={state.lastFetched ?? "—"} {state.error ? `err=${state.error}` : ""}
         </div>
       ) : null}
