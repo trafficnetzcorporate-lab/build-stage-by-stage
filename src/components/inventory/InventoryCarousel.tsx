@@ -1,9 +1,10 @@
 import * as React from "react";
 import { Link } from "@tanstack/react-router";
-import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, ArrowRight, Sparkles } from "lucide-react";
 import { FadeInOnScroll } from "@/components/layout/FadeInOnScroll";
 import { InventoryCard } from "@/components/inventory/InventoryCard";
 import { getAdamsInventory } from "@/integrations/adams-homes/inventory.functions";
+import { isHighDemand } from "@/integrations/adams-homes/demand";
 import type { AdamsHomeProperty, CityFilter } from "@/integrations/adams-homes/types";
 
 function matchesCity(home: AdamsHomeProperty, filter: CityFilter): boolean {
@@ -14,6 +15,7 @@ function matchesCity(home: AdamsHomeProperty, filter: CityFilter): boolean {
 
 export function InventoryCarousel() {
   const [filter, setFilter] = React.useState<CityFilter>("all");
+  const [inDemandOnly, setInDemandOnly] = React.useState<boolean>(false);
   const [data, setData] = React.useState<{
     properties: AdamsHomeProperty[];
     loading: boolean;
