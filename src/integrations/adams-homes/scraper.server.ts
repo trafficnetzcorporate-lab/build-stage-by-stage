@@ -1,6 +1,10 @@
 import type { AdamsHomeProperty } from "./types";
 
-const SOURCE_URL = "https://www.adamshomes.com/homes/florida/port-st-lucie";
+const SOURCE_URLS = [
+  "https://www.adamshomes.com/homes/florida/port-st-lucie",
+  "https://www.adamshomes.com/homes/florida/fort-pierce",
+  "https://www.adamshomes.com/homes/florida/okeechobee",
+];
 const USER_AGENT =
   "Mozilla/5.0 NancyClarkeRealtor/1.0 (+https://nancyclarkerealtor.com)";
 
@@ -153,31 +157,58 @@ function classifyStatus(headline: string | undefined): "move-in" | "under-constr
  * never blows up.
  */
 export async function fetchAdamsInventory(): Promise<AdamsHomeProperty[]> {
-  const res = await fetch(SOURCE_URL, {
-    headers: {
-      // Custom UA so Adams Homes can identify the source if they look at logs.
-      "User-Agent": USER_AGENT,
-      Accept: "text/html,application/xhtml+xml",
-      "Accept-Language": "en-US,en;q=0.9",
-    },
-  });
-  if (!res.ok) {
-    throw new Error(`Adams Homes fetch failed: ${res.status} ${res.statusText}`);
-  }
-  const html = await res.text();
-  const state = extractPreloadedState(html) as {
-    cloudData?: {
-      homes?: Record<string, { data?: RawHome[] }>;
-      communities?: Record<string, { data?: RawCommunity[] }>;
-    };
-  };
+  const results = await Promise.allSettled(
+    SOURCE_URLS.map(async (url) => {
+      const res = await fetch(url, {
+        headers: {
+          "User-Agent": USER_AGENT,
+          Accept: "text/html,application/xhtml+xml",
+          "Accept-Language": "en-US,en;q=0.9",
+        },
+      });
+      if (!res.ok) {
+        throw new Error(`Adams Homes fetch failed (${url}): ${res.status} ${res.statusText}`);
+      }
+      const html = await res.text();
+      const state = extractPreloadedState(html) as {
+        cloudData?: {
+          homes?: Record<string, { data?: RawHome[] }>;
+          communities?: Record<string, { data?: RawCommunity[] }>;
+        };
+      };
+      return {
+        homes: state.cloudData?.homes?.[BUILDER_ID]?.data ?? [],
+        communities: state.cloudData?.communities?.[BUILDER_ID]?.data ?? [],
+      };
+    }),
+  );
 
-  const homes = state.cloudData?.homes?.[BUILDER_ID]?.data ?? [];
-  const communities = state.cloudData?.communities?.[BUILDER_ID]?.data ?? [];
-  const communityNameById = new Map<string, string>();
-  for (const c of communities) {
-    if (c._id && c.name) communityNameById.set(c._id, c.name);
+  const successes = results.filter(
+    (r): r is PromiseFulfilledResult<{ homes: RawHome[]; communities: RawCommunity[] }> =>
+      r.status === "fulfilled",
+  );
+  if (successes.length === 0) {
+    const first = results[0];
+    throw first && first.status === "rejected"
+      ? (first.reason instanceof Error ? first.reason : new Error(String(first.reason)))
+      : new Error("Adams Homes fetch failed: no sources returned");
   }
+
+  // Dedupe homes by _id across the three pages.
+  const homesById = new Map<string, RawHome>();
+  const communityNameById = new Map<string, string>();
+  for (const { homes, communities } of successes.map((s) => s.value)) {
+    for (const h of homes) {
+      const key = h._id ?? h.uniqueName ?? `${h.address?.streetAddress ?? ""}-${h.address?.addressLocality ?? ""}`;
+      if (!homesById.has(key)) homesById.set(key, h);
+    }
+    for (const c of communities) {
+      if (c._id && c.name && !communityNameById.has(c._id)) {
+        communityNameById.set(c._id, c.name);
+      }
+    }
+  }
+  const homes = Array.from(homesById.values());
 
   const fetchedAt = new Date().toISOString();
   const out: AdamsHomeProperty[] = [];
