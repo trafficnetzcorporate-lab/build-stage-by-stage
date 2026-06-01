@@ -56,21 +56,15 @@ export function InventoryCarousel() {
   const visible = filtered.slice(0, 12);
   const hasMore = filtered.length > 12;
 
-  const availableCities = React.useMemo(() => {
-    const s = new Set<string>();
-    for (const h of data.properties) s.add(h.city);
-    return s;
+  const visiblePills = React.useMemo<{ label: string; value: CityFilter }[]>(() => {
+    const cities = new Set<string>();
+    for (const h of data.properties) if (h.city) cities.add(h.city);
+    const sorted = Array.from(cities).sort((a, b) => a.localeCompare(b));
+    return [
+      { label: "All", value: "all" as CityFilter },
+      ...sorted.map((c) => ({ label: c, value: c as CityFilter })),
+    ];
   }, [data.properties]);
-
-  const visiblePills = React.useMemo(
-    () =>
-      PILLS.filter((p) => {
-        if (p.value === "all") return true;
-        if (p.value === "Okeechobee County") return availableCities.has("Okeechobee");
-        return availableCities.has(p.value);
-      }),
-    [availableCities],
-  );
 
   React.useEffect(() => {
     if (data.loading) return;
@@ -78,6 +72,7 @@ export function InventoryCarousel() {
       setFilter("all");
     }
   }, [visiblePills, filter, data.loading]);
+
 
   const scrollByCard = (dir: 1 | -1) => {
     const node = scrollerRef.current;
