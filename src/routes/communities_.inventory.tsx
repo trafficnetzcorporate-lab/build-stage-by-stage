@@ -7,11 +7,9 @@ import { InventoryGrid } from "@/components/inventory/InventoryGrid";
 import type { CityFilter } from "@/integrations/adams-homes/types";
 
 const searchSchema = z.object({
-  city: fallback(
-    z.enum(["all", "Port St. Lucie", "Fort Pierce", "Okeechobee County"]),
-    "all",
-  ).default("all"),
+  city: fallback(z.string(), "all").default("all"),
 });
+
 
 export const Route = createFileRoute("/communities_/inventory")({
   validateSearch: zodValidator(searchSchema),
