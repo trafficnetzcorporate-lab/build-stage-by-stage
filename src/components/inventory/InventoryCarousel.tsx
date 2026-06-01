@@ -6,18 +6,11 @@ import { InventoryCard } from "@/components/inventory/InventoryCard";
 import { getAdamsInventory } from "@/integrations/adams-homes/inventory.functions";
 import type { AdamsHomeProperty, CityFilter } from "@/integrations/adams-homes/types";
 
-const PILLS: { label: string; value: CityFilter }[] = [
-  { label: "All", value: "all" },
-  { label: "Port St. Lucie", value: "Port St. Lucie" },
-  { label: "Fort Pierce", value: "Fort Pierce" },
-  { label: "Okeechobee County", value: "Okeechobee County" },
-];
-
 function matchesCity(home: AdamsHomeProperty, filter: CityFilter): boolean {
   if (filter === "all") return true;
-  if (filter === "Okeechobee County") return home.city === "Okeechobee";
   return home.city === filter;
 }
+
 
 export function InventoryCarousel() {
   const [filter, setFilter] = React.useState<CityFilter>("all");
@@ -63,21 +56,15 @@ export function InventoryCarousel() {
   const visible = filtered.slice(0, 12);
   const hasMore = filtered.length > 12;
 
-  const availableCities = React.useMemo(() => {
-    const s = new Set<string>();
-    for (const h of data.properties) s.add(h.city);
-    return s;
+  const visiblePills = React.useMemo<{ label: string; value: CityFilter }[]>(() => {
+    const cities = new Set<string>();
+    for (const h of data.properties) if (h.city) cities.add(h.city);
+    const sorted = Array.from(cities).sort((a, b) => a.localeCompare(b));
+    return [
+      { label: "All", value: "all" as CityFilter },
+      ...sorted.map((c) => ({ label: c, value: c as CityFilter })),
+    ];
   }, [data.properties]);
-
-  const visiblePills = React.useMemo(
-    () =>
-      PILLS.filter((p) => {
-        if (p.value === "all") return true;
-        if (p.value === "Okeechobee County") return availableCities.has("Okeechobee");
-        return availableCities.has(p.value);
-      }),
-    [availableCities],
-  );
 
   React.useEffect(() => {
     if (data.loading) return;
@@ -85,6 +72,7 @@ export function InventoryCarousel() {
       setFilter("all");
     }
   }, [visiblePills, filter, data.loading]);
+
 
   const scrollByCard = (dir: 1 | -1) => {
     const node = scrollerRef.current;

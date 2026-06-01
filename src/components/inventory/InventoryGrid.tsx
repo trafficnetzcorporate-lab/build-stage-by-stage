@@ -3,18 +3,11 @@ import { InventoryCard } from "@/components/inventory/InventoryCard";
 import { getAdamsInventory } from "@/integrations/adams-homes/inventory.functions";
 import type { AdamsHomeProperty, CityFilter } from "@/integrations/adams-homes/types";
 
-const PILLS: { label: string; value: CityFilter }[] = [
-  { label: "All", value: "all" },
-  { label: "Port St. Lucie", value: "Port St. Lucie" },
-  { label: "Fort Pierce", value: "Fort Pierce" },
-  { label: "Okeechobee County", value: "Okeechobee County" },
-];
-
 function matches(home: AdamsHomeProperty, filter: CityFilter): boolean {
   if (filter === "all") return true;
-  if (filter === "Okeechobee County") return home.city === "Okeechobee";
   return home.city === filter;
 }
+
 
 export function InventoryGrid({ initialFilter = "all" }: { initialFilter?: CityFilter } = {}) {
   const [filter, setFilter] = React.useState<CityFilter>(initialFilter);
@@ -38,26 +31,21 @@ export function InventoryGrid({ initialFilter = "all" }: { initialFilter?: CityF
     [state.properties, filter],
   );
 
-  const availableCities = React.useMemo(() => {
-    const s = new Set<string>();
-    for (const h of state.properties) s.add(h.city);
-    return s;
+  const visiblePills = React.useMemo<{ label: string; value: CityFilter }[]>(() => {
+    const cities = new Set<string>();
+    for (const h of state.properties) if (h.city) cities.add(h.city);
+    const sorted = Array.from(cities).sort((a, b) => a.localeCompare(b));
+    return [
+      { label: "All", value: "all" as CityFilter },
+      ...sorted.map((c) => ({ label: c, value: c as CityFilter })),
+    ];
   }, [state.properties]);
-
-  const visiblePills = React.useMemo(
-    () =>
-      PILLS.filter((p) => {
-        if (p.value === "all") return true;
-        if (p.value === "Okeechobee County") return availableCities.has("Okeechobee");
-        return availableCities.has(p.value);
-      }),
-    [availableCities],
-  );
 
   React.useEffect(() => {
     if (state.loading) return;
     if (!visiblePills.some((p) => p.value === filter)) setFilter("all");
   }, [visiblePills, filter, state.loading]);
+
 
   return (
     <div>
