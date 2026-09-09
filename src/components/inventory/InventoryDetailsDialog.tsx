@@ -68,7 +68,7 @@ export function InventoryDetailsDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-h-[92vh] gap-0 overflow-y-auto p-0 sm:max-w-3xl">
         {/* Top half — photos */}
-        <div className="relative aspect-[16/10] w-full shrink-0 overflow-hidden border-b border-navy/10 bg-cream-deep shadow-sm">
+        <div className="relative aspect-[16/10] w-full shrink-0 overflow-hidden bg-cream-deep">
           {gallery.length > 0 ? (
             <img
               src={gallery[index]}
@@ -106,8 +106,10 @@ export function InventoryDetailsDialog({
           ) : null}
         </div>
 
+        <div aria-hidden="true" className="h-4 shrink-0 border-y border-navy/10 bg-cream-deep" />
+
         {/* Bottom half — details */}
-        <div className="p-6 pt-8">
+        <div className="relative z-10 bg-white p-6 pt-8">
           <DialogHeader className="space-y-1 text-left">
             <div className="text-eyebrow text-gold">{home.communityName}</div>
             <DialogTitle className="font-display text-[24px] leading-snug text-navy">
