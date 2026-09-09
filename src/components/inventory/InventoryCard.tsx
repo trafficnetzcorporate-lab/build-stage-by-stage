@@ -28,7 +28,13 @@ export function InventoryCard({ home }: { home: AdamsHomeProperty }) {
       role="button"
       tabIndex={0}
       aria-label={`View details for ${home.address || "this home"}`}
-      onClick={() => setOpen(true)}
+      onClick={(e) => {
+        // The details dialog lives in a portal; React events still bubble
+        // through portals, so an outside-click that closes the dialog would
+        // otherwise reach this handler and immediately reopen it.
+        if (!e.currentTarget.contains(e.target as Node)) return;
+        setOpen(true);
+      }}
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
