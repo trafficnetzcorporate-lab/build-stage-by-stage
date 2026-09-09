@@ -70,6 +70,7 @@ export function InventoryCard({ home }: { home: AdamsHomeProperty }) {
         <Link
           to="/contact"
           search={{ property: home.id, community: home.communityName }}
+          onClick={(e) => e.stopPropagation()}
           className="group inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-success px-5 text-sm font-semibold text-cream shadow shadow-success/20 transition-all duration-300 hover:-translate-y-0.5"
         >
           Contact Nancy about this home
@@ -78,7 +79,13 @@ export function InventoryCard({ home }: { home: AdamsHomeProperty }) {
             className="transition-transform duration-300 group-hover:translate-x-1"
           />
         </Link>
+
+        <p className="mt-3 text-center text-xs text-muted-foreground">
+          Tap the card for full details
+        </p>
       </div>
+
+      <InventoryDetailsDialog home={home} open={open} onOpenChange={setOpen} />
     </article>
   );
 }
