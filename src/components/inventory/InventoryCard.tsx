@@ -1,5 +1,7 @@
+import * as React from "react";
 import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
+import { InventoryDetailsDialog } from "@/components/inventory/InventoryDetailsDialog";
 import type { AdamsHomeProperty } from "@/integrations/adams-homes/types";
 
 /**
