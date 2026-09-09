@@ -13,6 +13,7 @@ import type { AdamsHomeProperty } from "@/integrations/adams-homes/types";
  *   must keep the city / community fields sourced from the record.
  */
 export function InventoryCard({ home }: { home: AdamsHomeProperty }) {
+  const [open, setOpen] = React.useState(false);
   const priceStr =
     home.price != null
       ? `$${home.price.toLocaleString()}`
