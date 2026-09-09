@@ -247,6 +247,13 @@ export async function fetchAdamsInventory(): Promise<AdamsHomeProperty[]> {
     if (!inTerritory(h.addressCounty, city)) { droppedOffTerritory++; continue; }
 
     const id = h._id ?? h.uniqueName ?? `${h.address?.streetAddress ?? "unknown"}-${out.length}`;
+    const plan = h.plan ? planById.get(h.plan) : undefined;
+    const photos = (h.photos ?? [])
+      .map((p) => p.contentUrl)
+      .filter((u): u is string => typeof u === "string" && u.length > 0);
+    const floorplanPhotos = (h.floorplanPhotos ?? [])
+      .map((p) => p.contentUrl)
+      .filter((u): u is string => typeof u === "string" && u.length > 0);
     out.push({
       id,
       address: h.address?.streetAddress ?? "",
@@ -257,10 +264,32 @@ export async function fetchAdamsInventory(): Promise<AdamsHomeProperty[]> {
       sqft: typeof h.sqft === "number" ? h.sqft : null,
       price: typeof h.price === "number" ? h.price : null,
       status: classifyStatus(h.headline),
-      imageUrl: h.photos?.[0]?.contentUrl ?? null,
+      imageUrl: photos[0] ?? null,
       communityName: communityNameById.get(h.containedIn ?? "") ?? "Adams Homes",
       headline: h.headline ?? "",
       fetchedAt,
+
+      description: h.description ?? "",
+      photos,
+      floorplanPhotos,
+      garages: typeof h.garages === "number" ? h.garages : null,
+      stories: typeof h.stories === "number" ? h.stories : null,
+      bathsFull: typeof h.bathsFull === "number" ? h.bathsFull : null,
+      bathsHalf: typeof h.bathsHalf === "number" ? h.bathsHalf : null,
+      masterBedLocation: h.masterBedLocation ?? "",
+      mls: h.mls ?? "",
+      postalCode: h.address?.postalCode ?? "",
+      propertyType: h["@type"] ?? "",
+      planName: plan?.name ?? "",
+      planFeatures: Array.isArray(plan?.features) ? plan.features : [],
+      banner: h.community_banner ?? "",
+      openHouses: (h.openHouses ?? [])
+        .filter((o) => o.date_localDate)
+        .map((o) => ({
+          date: o.date_localDate ?? "",
+          startTime: o.startTime_localTime ?? "",
+          endTime: o.endTime_localTime ?? "",
+        })),
     });
   }
 
