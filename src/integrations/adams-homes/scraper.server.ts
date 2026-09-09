@@ -25,9 +25,24 @@ type RawHome = {
   sqft?: number | null;
   price?: number | null;
   photos?: Array<{ contentUrl?: string }>;
+  floorplanPhotos?: Array<{ contentUrl?: string }>;
   containedIn?: string;
   headline?: string;
   uniqueName?: string;
+  description?: string;
+  garages?: number;
+  stories?: number;
+  bathsHalf?: number;
+  masterBedLocation?: string;
+  mls?: string;
+  community_banner?: string;
+  plan?: string;
+  "@type"?: string;
+  openHouses?: Array<{
+    date_localDate?: string;
+    startTime_localTime?: string;
+    endTime_localTime?: string;
+  }>;
   /**
    * Date markers that, if present, mean the home is no longer truly available.
    * Whitelist filter rejects anything carrying any of these. We fail closed:
