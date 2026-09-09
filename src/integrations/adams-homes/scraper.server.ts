@@ -18,6 +18,7 @@ type RawHome = {
   address?: {
     streetAddress?: string;
     addressLocality?: string;
+    postalCode?: string;
   };
   beds?: number | string;
   baths?: number | string;
