@@ -37,7 +37,7 @@ export function InventoryCard({ home }: { home: AdamsHomeProperty }) {
       }}
       className="flex h-full cursor-pointer flex-col overflow-hidden rounded-2xl bg-white ring-1 ring-navy/10 shadow-sm transition-shadow hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-gold"
     >
-      <div className="relative aspect-[4/3] w-full overflow-hidden bg-cream-deep">
+      <div className="relative aspect-[4/3] w-full shrink-0 overflow-hidden border-b border-navy/10 bg-cream-deep shadow-sm">
         {home.imageUrl ? (
           <img
             src={home.imageUrl}
@@ -52,7 +52,7 @@ export function InventoryCard({ home }: { home: AdamsHomeProperty }) {
         )}
       </div>
 
-      <div className="flex flex-1 flex-col p-5">
+      <div className="flex flex-1 flex-col p-6 pt-7">
         <div className="text-eyebrow text-gold">{home.communityName}</div>
         <h3 className="mt-2 font-display text-[20px] leading-snug text-navy">
           {home.address || "Address available on request"}
