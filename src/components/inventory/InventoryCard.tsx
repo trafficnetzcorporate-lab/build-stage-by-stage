@@ -1,5 +1,7 @@
+import * as React from "react";
 import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
+import { InventoryDetailsDialog } from "@/components/inventory/InventoryDetailsDialog";
 import type { AdamsHomeProperty } from "@/integrations/adams-homes/types";
 
 /**
@@ -11,6 +13,7 @@ import type { AdamsHomeProperty } from "@/integrations/adams-homes/types";
  *   must keep the city / community fields sourced from the record.
  */
 export function InventoryCard({ home }: { home: AdamsHomeProperty }) {
+  const [open, setOpen] = React.useState(false);
   const priceStr =
     home.price != null
       ? `$${home.price.toLocaleString()}`
@@ -21,7 +24,19 @@ export function InventoryCard({ home }: { home: AdamsHomeProperty }) {
   const baths = home.baths ?? "—";
 
   return (
-    <article className="flex h-full flex-col overflow-hidden rounded-2xl bg-white ring-1 ring-navy/10 shadow-sm">
+    <article
+      role="button"
+      tabIndex={0}
+      aria-label={`View details for ${home.address || "this home"}`}
+      onClick={() => setOpen(true)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          setOpen(true);
+        }
+      }}
+      className="flex h-full cursor-pointer flex-col overflow-hidden rounded-2xl bg-white ring-1 ring-navy/10 shadow-sm transition-shadow hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-gold"
+    >
       <div className="relative aspect-[4/3] w-full overflow-hidden bg-cream-deep">
         {home.imageUrl ? (
           <img
@@ -55,6 +70,7 @@ export function InventoryCard({ home }: { home: AdamsHomeProperty }) {
         <Link
           to="/contact"
           search={{ property: home.id, community: home.communityName }}
+          onClick={(e) => e.stopPropagation()}
           className="group inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-success px-5 text-sm font-semibold text-cream shadow shadow-success/20 transition-all duration-300 hover:-translate-y-0.5"
         >
           Contact Nancy about this home
@@ -63,7 +79,13 @@ export function InventoryCard({ home }: { home: AdamsHomeProperty }) {
             className="transition-transform duration-300 group-hover:translate-x-1"
           />
         </Link>
+
+        <p className="mt-3 text-center text-xs text-muted-foreground">
+          Tap the card for full details
+        </p>
       </div>
+
+      <InventoryDetailsDialog home={home} open={open} onOpenChange={setOpen} />
     </article>
   );
 }

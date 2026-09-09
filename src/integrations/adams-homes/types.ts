@@ -24,6 +24,32 @@ export type AdamsHomeProperty = {
   headline: string;
   /** ISO timestamp the scrape occurred */
   fetchedAt: string;
+
+  /**
+   * Detail fields. All are sourced verbatim from the Adams Homes feed and are
+   * nullable/empty when Adams does not publish them for a given home. Never
+   * synthesize a value here — an absent field must render as absent.
+   */
+  description: string;
+  /** Full photo gallery (first entry is the same as `imageUrl`). */
+  photos: string[];
+  floorplanPhotos: string[];
+  garages: number | null;
+  stories: number | null;
+  bathsFull: number | null;
+  bathsHalf: number | null;
+  masterBedLocation: string;
+  mls: string;
+  postalCode: string;
+  /** Adams' schema.org type, e.g. "SingleFamilyResidence" */
+  propertyType: string;
+  /** Floor plan name (Adams uses the plan's square footage as the name). */
+  planName: string;
+  /** Plan-level feature list from Adams. */
+  planFeatures: string[];
+  /** Community-level banner, e.g. "PRICE REDUCED!" */
+  banner: string;
+  openHouses: { date: string; startTime: string; endTime: string }[];
 };
 
 export type InventoryResult = {
