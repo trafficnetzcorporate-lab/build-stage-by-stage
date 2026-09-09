@@ -59,6 +59,8 @@ type RawHome = {
 
 type RawCommunity = { _id?: string; name?: string };
 
+type RawPlan = { _id?: string; name?: string; features?: string[] };
+
 /**
  * Extract the JSON literal that follows `window.__PRELOADED_STATE__ = `.
  * Walks the string with a brace-balancer that respects string literals + escapes.
