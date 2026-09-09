@@ -220,7 +220,8 @@ export async function fetchAdamsInventory(): Promise<AdamsHomeProperty[]> {
   // Dedupe homes by _id across the three pages.
   const homesById = new Map<string, RawHome>();
   const communityNameById = new Map<string, string>();
-  for (const { homes, communities } of successes.map((s) => s.value)) {
+  const planById = new Map<string, RawPlan>();
+  for (const { homes, communities, plans } of successes.map((s) => s.value)) {
     for (const h of homes) {
       const key = h._id ?? h.uniqueName ?? `${h.address?.streetAddress ?? ""}-${h.address?.addressLocality ?? ""}`;
       if (!homesById.has(key)) homesById.set(key, h);
@@ -229,6 +230,9 @@ export async function fetchAdamsInventory(): Promise<AdamsHomeProperty[]> {
       if (c._id && c.name && !communityNameById.has(c._id)) {
         communityNameById.set(c._id, c.name);
       }
+    }
+    for (const p of plans) {
+      if (p._id && !planById.has(p._id)) planById.set(p._id, p);
     }
   }
   const homes = Array.from(homesById.values());
