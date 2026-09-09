@@ -24,7 +24,19 @@ export function InventoryCard({ home }: { home: AdamsHomeProperty }) {
   const baths = home.baths ?? "—";
 
   return (
-    <article className="flex h-full flex-col overflow-hidden rounded-2xl bg-white ring-1 ring-navy/10 shadow-sm">
+    <article
+      role="button"
+      tabIndex={0}
+      aria-label={`View details for ${home.address || "this home"}`}
+      onClick={() => setOpen(true)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          setOpen(true);
+        }
+      }}
+      className="flex h-full cursor-pointer flex-col overflow-hidden rounded-2xl bg-white ring-1 ring-navy/10 shadow-sm transition-shadow hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-gold"
+    >
       <div className="relative aspect-[4/3] w-full overflow-hidden bg-cream-deep">
         {home.imageUrl ? (
           <img
