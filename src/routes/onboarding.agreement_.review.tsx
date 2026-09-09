@@ -77,7 +77,7 @@ function AgreementReviewPage() {
               timeStyle: "short",
             })}
           />
-          <Detail label="Status" value={agreement.status ?? "signed"} />
+          <Detail label="Status" value="signed" />
           <Detail label="IP address" value={agreement.ipAddress ?? "—"} />
           <Detail
             label="User agent"
