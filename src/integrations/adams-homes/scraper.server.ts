@@ -191,18 +191,23 @@ export async function fetchAdamsInventory(): Promise<AdamsHomeProperty[]> {
         cloudData?: {
           homes?: Record<string, { data?: RawHome[] }>;
           communities?: Record<string, { data?: RawCommunity[] }>;
+          plans?: Record<string, { data?: RawPlan[] }>;
         };
       };
       return {
         homes: state.cloudData?.homes?.[BUILDER_ID]?.data ?? [],
         communities: state.cloudData?.communities?.[BUILDER_ID]?.data ?? [],
+        plans: state.cloudData?.plans?.[BUILDER_ID]?.data ?? [],
       };
     }),
   );
 
   const successes = results.filter(
-    (r): r is PromiseFulfilledResult<{ homes: RawHome[]; communities: RawCommunity[] }> =>
-      r.status === "fulfilled",
+    (r): r is PromiseFulfilledResult<{
+      homes: RawHome[];
+      communities: RawCommunity[];
+      plans: RawPlan[];
+    }> => r.status === "fulfilled",
   );
   if (successes.length === 0) {
     const first = results[0];
